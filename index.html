@@ -130,7 +130,7 @@ function update(){
  if(e.rola==='chase'){e.x+=dx/d*e.speed;e.y+=dy/d*e.speed}
  else if(e.rola==='dash'){e.dashTimer--;if(e.dashTimer<=0&&e.dashFrames<=0){e.dashFrames=16;e.dashTimer=rand(90,140)}if(e.dashFrames>0){e.x+=dx/d*e.speed*2.7;e.y+=dy/d*e.speed*2.7;e.dashFrames--}else{e.x+=dx/d*e.speed*.55;e.y+=dy/d*e.speed*.55}}
  else{if(d>220){e.x+=dx/d*e.speed*.75;e.y+=dy/d*e.speed*.75}else if(d<150){e.x-=dx/d*e.speed*.7;e.y-=dy/d*e.speed*.7}e.phase+=.035;e.x+=Math.cos(e.phase)*.45;e.y+=Math.sin(e.phase)*.45}
- e.cooldown--;if(e.cooldown<=0&&d<430){const bulletSpeed=e.type==='spitter'?3.0:e.type==='hexer'?3.35:2.25;enemyShots.push({x:e.x,y:e.y,vx:dx/d*bulletSpeed,vy:dy/d*bulletSpeed,r:e.type==='spitter'?6:e.type==='hexer'?7:5,life:130});e.cooldown=e.type==='spitter'?rand(85,130):e.type==='hexer'?rand(65,95):rand(135,195)} 
+ if(e.rola==='ranged'){e.cooldown--;if(e.cooldown<=0&&d<430){const bulletSpeed=e.type==='spitter'?3.0:3.35;enemyShots.push({x:e.x,y:e.y,vx:dx/d*bulletSpeed,vy:dy/d*bulletSpeed,r:e.type==='spitter'?6:7,life:130});e.cooldown=e.type==='spitter'?rand(85,130):rand(65,95)}} 
  e.x=Math.max(room.x+e.r,Math.min(room.x+room.w-e.r,e.x));e.y=Math.max(room.y+e.r,Math.min(room.y+room.h-e.r,e.y));
  if(d<e.r+player.r)hitPlayer(1)}
  for(const s of enemyShots){s.x+=s.vx;s.y+=s.vy;s.life--;if(Math.hypot(s.x-player.x,s.y-player.y)<s.r+player.r){s.life=0;hitPlayer(1)}}
