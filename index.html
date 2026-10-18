@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crypt Crawler — prototype</title>
+<style>
+:root{color-scheme:dark;--bg:#101016;--panel:#1b1b27;--line:#38384b;--text:#efedf6;--muted:#a7a4ba;--red:#e75c6d;--gold:#f1c66d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#242236,#101016 60%);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
+.shell{width:min(100%,1000px)}header{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px;flex-wrap:wrap}h1{font-size:clamp(22px,4vw,34px);margin:0;letter-spacing:.08em}h1 span{color:var(--red)}.sub{color:var(--muted);font-size:12px;margin-top:5px}.hud{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.pill{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:12px}.pill b{color:var(--gold)}.stage{position:relative;border:2px solid #454257;border-radius:12px;overflow:hidden;background:#09090f;box-shadow:0 18px 60px #0008}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;cursor:crosshair}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#090910d9;padding:24px;text-align:center}.overlay.hidden{display:none}.modal{max-width:520px}.modal h2{font-size:clamp(22px,4vw,34px);margin:0 0 10px;color:var(--gold)}.modal p{line-height:1.6;color:#d0cddd}.btn{border:1px solid #75617a;background:#392b42;color:white;border-radius:8px;padding:11px 16px;font:inherit;cursor:pointer}.btn:hover{background:#513953}.controls{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:10px;line-height:1.7}.controls strong{color:var(--text)}.log{margin-top:8px;color:#c3bfd1;font-size:12px;min-height:18px}.key{border:1px solid #55536a;border-radius:4px;padding:1px 5px;color:#fff}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><div><h1>CRYPT <span>CRAWLER</span></h1><div class="sub">A room-based roguelite prototype • build 0.1.0</div></div><div class="sub">ONE RUN. NO MERCY.</div></header>
+<div class="hud">
+ <div class="pill">HP <b id="hp">♥ ♥ ♥</b></div><div class="pill">FLOOR <b id="floor">1</b></div><div class="pill">ROOM <b id="room">1</b></div><div class="pill">KILLS <b id="kills">0</b></div><div class="pill">ITEMS <b id="items">0</b></div>
+</div>
+<div class="stage">
+<canvas id="game" width="960" height="600" aria-label="Crypt Crawler gameplay"></canvas>
+<div class="overlay" id="overlay"><div class="modal"><h2 id="overlayTitle">CRYPT CRAWLER</h2><p id="overlayText">Zejdź do proceduralnego lochu, przetrwaj pokoje pełne potworów i zbieraj przedmioty, które zmieniają sposób walki.</p><button class="btn" id="startBtn">ROZPOCZNIJ RUN</button><p class="sub">WASD — ruch • Mysz — celowanie i strzał • P — pauza</p></div></div>
+</div>
+<div class="controls"><div><strong>Sterowanie</strong><br><span class="key">WASD</span> ruch · <span class="key">LPM</span> strzał · <span class="key">P</span> pauza · <span class="key">R</span> nowy run</div><div><strong>Cel</strong><br>Pokonaj wszystkie fale. Drzwi otwierają się po walce. Złoty drop wzmacnia pociski.</div></div>
+<div class="log" id="log">Wskazówka: nie stój w miejscu — przeciwnicy próbują cię otoczyć.</div>
+</div>
+<script>
+(() => {
+'use strict';
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const $=id=>document.getElementById(id);
+const W=canvas.width,H=canvas.height, room={x:72,y:58,w:816,h:484};
+const keys=new Set(); let mouse={x:W/2+100,y:H/2,down:false};
+let state='title',player, enemies=[],shots=[],enemyShots=[],drops=[],particles=[],floor=1,roomNo=1,kills=0,itemCount=0,frame=0,shake=0,doorOpen=false,roomSeed=1,spawnTimer=0;
+const rand=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.length)];
+function log(s){$('log').textContent=s}
+function startRun(){floor=1;roomNo=1;kills=0;itemCount=0;player={x:W/2,y:H/2,r:13,speed:3.15,hp:6,maxHp:6,damage:1,fireRate:17,shotSpeed:7.3,shotSize:5,invuln:0,cooldown:0};state='play';enterRoom();$('overlay').classList.add('hidden');updateHud();log('Run rozpoczęty. Znajdź rytm, unikaj kontaktu.')}
+function enterRoom(){enemies=[];shots=[];enemyShots=[];drops=[];particles=[];doorOpen=false;spawnTimer=0;
+ const count=Math.min(2+floor+Math.floor(roomNo/2),9);
+ for(let i=0;i<count;i++){let x,y,tries=0;do{x=rand(room.x+50,room.x+room.w-50);y=rand(room.y+50,room.y+room.h-50);tries++}while(Math.hypot(x-W/2,y-H/2)<150&&tries<40);
+ const type=Math.random()<.24?'spitter':'chaser';
+ enemies.push({x,y,r:type==='spitter'?14:16,hp:type==='spitter'?2:2+Math.floor(floor/3),maxHp:type==='spitter'?2:2+Math.floor(floor/3),speed:type==='spitter'?1.05:rand(1.0,1.55),type,phase:rand(0,6.28),cooldown:rand(40,100),hit:0});}
+ log(`Pokój ${roomNo}: ${count} przeciwników. Drzwi odblokują się po walce.`);updateHud()}
+function updateHud(){$('hp').textContent=Array.from({length:player?player.maxHp/2:3},(_,i)=>player&&player.hp>i*2?'♥':'♡').join(' ');$('floor').textContent=floor;$('room').textContent=roomNo;$('kills').textContent=kills;$('items').textContent=itemCount}
+function pos(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}}
+window.addEventListener('keydown',e=>{keys.add(e.key.toLowerCase());if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase()))e.preventDefault();if(e.key.toLowerCase()==='p'&&state==='play'){state='paused';showOverlay('PAUZA','Naciśnij P, aby wrócić do lochu.','WRÓĆ DO GRY',()=>{state='play';$('overlay').classList.add('hidden')})}else if(e.key.toLowerCase()==='p'&&state==='paused'){state='play';$('overlay').classList.add('hidden')}if(e.key.toLowerCase()==='r')startRun()});
+window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
+canvas.addEventListener('mousemove',e=>mouse=Object.assign(mouse,pos(e)));canvas.addEventListener('mousedown',e=>{mouse=Object.assign(mouse,pos(e));mouse.down=true});window.addEventListener('mouseup',()=>mouse.down=false);
+$('startBtn').addEventListener('click',()=>{if(state==='title'||state==='dead'||state==='win')startRun();else if(state==='paused'){state='play';$('overlay').classList.add('hidden')}});
+function showOverlay(title,txt,button,action){$('overlayTitle').textContent=title;$('overlayText').textContent=txt;$('startBtn').textContent=button;$('startBtn').onclick=action;$('overlay').classList.remove('hidden')}
+function shoot(){if(player.cooldown>0)return;let dx=mouse.x-player.x,dy=mouse.y-player.y,d=Math.hypot(dx,dy)||1;shots.push({x:player.x+dx/d*16,y:player.y+dy/d*16,vx:dx/d*player.shotSpeed,vy:dy/d*player.shotSpeed,r:player.shotSize,life:90,damage:player.damage});player.cooldown=player.fireRate;for(let i=0;i<3;i++)particles.push({x:player.x+dx/d*17,y:player.y+dy/d*17,vx:rand(-1,1),vy:rand(-1,1),life:12,r:2,color:'#f1c66d'})}
+function hitPlayer(dmg=1){if(player.invuln>0)return;player.hp-=dmg;player.invuln=65;shake=9;for(let i=0;i<12;i++)particles.push({x:player.x,y:player.y,vx:rand(-3,3),vy:rand(-3,3),life:25,r:rand(2,5),color:'#e75c6d'});updateHud();if(player.hp<=0){state='dead';showOverlay('KONIEC RUNU',`Dotarłeś do piętra ${floor}, pokój ${roomNo}. Zabójstwa: ${kills}. Każda próba uczy czegoś nowego.`,'SPRÓBUJ PONOWNIE',startRun)}}
+function nextRoom(){roomNo++;if(roomNo>6){floor++;roomNo=1;if(floor>3){state='win';showOverlay('LOCH OCZYSZCZONY','Ukończyłeś prototypową wyprawę. To dopiero początek większej gry.','ZAGRAJ PONOWNIE',startRun);return}player.hp=Math.min(player.maxHp,player.hp+2);log(`Piętro ${floor}: odzyskujesz półtora serca.`)}enterRoom()}
+function update(){
+ if(state!=='play')return;frame++;if(player.invuln>0)player.invuln--;if(player.cooldown>0)player.cooldown--;
+ let mx=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),my=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0),m=Math.hypot(mx,my)||1;
+ player.x+=mx/m*player.speed;player.y+=my/m*player.speed;
+ player.x=Math.max(room.x+player.r,Math.min(room.x+room.w-player.r,player.x));player.y=Math.max(room.y+player.r,Math.min(room.y+room.h-player.r,player.y));
+ if(mouse.down)shoot();
+ for(const s of shots){s.x+=s.vx;s.y+=s.vy;s.life--;if(s.x<room.x||s.x>room.x+room.w||s.y<room.y||s.y>room.y+room.h)s.life=0;
+  for(const e of enemies){if(e.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<s.r+e.r){e.hp-=s.damage;s.life=0;e.hit=5;for(let i=0;i<5;i++)particles.push({x:s.x,y:s.y,vx:rand(-2,2),vy:rand(-2,2),life:15,r:2,color:'#e9d8ff'});if(e.hp<=0){kills++;if(Math.random()<.25)drops.push({x:e.x,y:e.y,r:9,type:'item'});else if(Math.random()<.17)drops.push({x:e.x,y:e.y,r:8,type:'heart'});for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'})}break}}
+ }
+ shots=shots.filter(s=>s.life>0);
+ for(const e of enemies){if(e.hp<=0)continue;if(e.hit>0)e.hit--;const dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
+ if(e.type==='chaser'){e.x+=dx/d*e.speed;e.y+=dy/d*e.speed}else{if(d>220){e.x+=dx/d*e.speed*.75;e.y+=dy/d*e.speed*.75}else if(d<150){e.x-=dx/d*e.speed*.7;e.y-=dy/d*e.speed*.7}e.phase+=.035;e.x+=Math.cos(e.phase)*.45;e.y+=Math.sin(e.phase)*.45;e.cooldown--;if(e.cooldown<=0&&d<430){enemyShots.push({x:e.x,y:e.y,vx:dx/d*3,vy:dy/d*3,r:6,life:130});e.cooldown=rand(85,130)}} 
+ e.x=Math.max(room.x+e.r,Math.min(room.x+room.w-e.r,e.x));e.y=Math.max(room.y+e.r,Math.min(room.y+room.h-e.r,e.y));
+ if(d<e.r+player.r)hitPlayer(1)}
+ for(const s of enemyShots){s.x+=s.vx;s.y+=s.vy;s.life--;if(Math.hypot(s.x-player.x,s.y-player.y)<s.r+player.r){s.life=0;hitPlayer(1)}}
+ enemyShots=enemyShots.filter(s=>s.life>0&&s.x>room.x&&s.x<room.x+room.w&&s.y>room.y&&s.y<room.y+room.h);
+ for(const d of drops){if(!d.gone&&Math.hypot(player.x-d.x,player.y-d.y)<player.r+d.r+3){d.gone=true;if(d.type==='heart'){player.hp=Math.min(player.maxHp,player.hp+2);log('Zebrano serce: +1 serce.')}else{itemCount++;const item=pick(['Błyskawiczna łza: szybsze strzały!','Ciężkie łzy: większe obrażenia!','Soczewka: pociski lecą szybciej!','Głód: dodatkowe serce i leczenie!']);if(item.startsWith('Błyskawiczna'))player.fireRate=Math.max(6,player.fireRate-3);else if(item.startsWith('Ciężkie')){player.damage+=.5;player.shotSize+=.6}else if(item.startsWith('Soczewka'))player.shotSpeed+=1.2;else{player.maxHp+=2;player.hp=Math.min(player.maxHp,player.hp+2)}log(item)}updateHud()}}
+ drops=drops.filter(d=>!d.gone);
+ for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vx*=.96;p.vy*=.96;p.life--}particles=particles.filter(p=>p.life>0);
+ if(enemies.every(e=>e.hp<=0)){if(!doorOpen){doorOpen=true;log('Pokój oczyszczony! Podejdź do złotych drzwi na dole, aby przejść dalej.')}if(player.y>room.y+room.h-35&&Math.abs(player.x-W/2)<54)nextRoom()}
+ if(shake>0)shake*=.82;
+ updateHud()
+}
+function draw(){
+ ctx.save();if(shake>1)ctx.translate(rand(-shake,shake),rand(-shake,shake));ctx.fillStyle='#0d0c14';ctx.fillRect(0,0,W,H);
+ // subtle floor tiles
+ for(let y=room.y;y<room.y+room.h;y+=32)for(let x=room.x;x<room.x+room.w;x+=32){ctx.fillStyle=((x+y)/32)%2?'#171521':'#191724';ctx.fillRect(x,y,31,31)}
+ ctx.strokeStyle='#51465f';ctx.lineWidth=8;ctx.strokeRect(room.x,room.y,room.w,room.h);
+ // door at bottom
+ ctx.fillStyle=doorOpen?'#e8b95c':'#332c40';ctx.fillRect(W/2-38,room.y+room.h-7,76,15);if(doorOpen){ctx.fillStyle='#fff0a8';ctx.fillRect(W/2-25,room.y+room.h-3,50,6)}
+ // enemies
+ for(const e of enemies){if(e.hp<=0)continue;ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=e.hit>0?'#fff0f0':e.type==='spitter'?'#b88a50':'#8c526d';ctx.beginPath();ctx.arc(0,0,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#17121c';ctx.beginPath();ctx.arc(-5,-2,2.7,0,6.28);ctx.arc(5,-2,2.7,0,6.28);ctx.fill();ctx.strokeStyle='#241722';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,7);ctx.lineTo(5,7);ctx.stroke();ctx.fillStyle='#3c2435';ctx.fillRect(-e.r,-e.r-8,e.r*2,4);ctx.fillStyle='#e75c6d';ctx.fillRect(-e.r,-e.r-8,e.r*2*Math.max(0,e.hp/e.maxHp),4);ctx.restore()}
+ for(const s of shots){ctx.fillStyle='#f3d5ff';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(s.x-1,s.y-1,2,2)}
+ for(const s of enemyShots){ctx.fillStyle='#e75c6d';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill()}
+ for(const d of drops){ctx.fillStyle=d.type==='heart'?'#e75c6d':'#f1c66d';ctx.beginPath();if(d.type==='heart'){ctx.arc(d.x-3,d.y-1,5,0,6.28);ctx.arc(d.x+3,d.y-1,5,0,6.28);ctx.moveTo(d.x-8,d.y);ctx.lineTo(d.x,d.y+9);ctx.lineTo(d.x+8,d.y);ctx.fill()}else{ctx.moveTo(d.x,d.y-d.r);ctx.lineTo(d.x+d.r,d.y);ctx.lineTo(d.x,d.y+d.r);ctx.lineTo(d.x-d.r,d.y);ctx.closePath();ctx.fill();ctx.strokeStyle='#fff0a8';ctx.stroke()}}
+ for(const p of particles){ctx.globalAlpha=Math.max(0,p.life/25);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fill()}ctx.globalAlpha=1;
+ if(player){ctx.save();ctx.translate(player.x,player.y);ctx.globalAlpha=player.invuln>0&&Math.floor(frame/5)%2?.35:1;ctx.fillStyle='#d8d5e8';ctx.beginPath();ctx.arc(0,0,player.r,0,6.28);ctx.fill();ctx.fillStyle='#4b3b65';ctx.beginPath();ctx.arc(-4,-2,2.4,0,6.28);ctx.arc(4,-2,2.4,0,6.28);ctx.fill();ctx.fillStyle='#f1c66d';ctx.beginPath();ctx.arc(0,7,3,0,6.28);ctx.fill();ctx.restore()}
+ // room number label
+ ctx.fillStyle='#9a91aa';ctx.font='12px monospace';ctx.fillText(`CRYPT ${String(floor).padStart(2,'0')} / ROOM ${String(roomNo).padStart(2,'0')}`,room.x+12,room.y+20);
+ if(state==='paused'){ctx.fillStyle='#0009';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.font='bold 32px monospace';ctx.textAlign='center';ctx.fillText('PAUSED',W/2,H/2);ctx.textAlign='left'}
+ ctx.restore()
+}
+function loop(){update();draw();requestAnimationFrame(loop)}
+// Reset the button handler to be state-aware; no engine/editor setup required.
+$('startBtn').onclick=()=>{if(state==='title'||state==='dead'||state==='win')startRun();else if(state==='paused'){state='play';$('overlay').classList.add('hidden')}};
+loop();
+})();
+</script>
+</body>
+</html>
