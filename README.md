@@ -49,7 +49,6 @@ Pula przeciwników zmienia się wraz z piętrem. Zwykłe HP rośnie o 14% na pi�
 ## Znane ograniczenia i testy
 
 - To nadal prototyp: brakuje zapisu postępu między runami, trwałych odblokowań, rozbudowanego grafu pokoi i pełnego systemu synergii.
-- Efekty aktywnych przedmiotów 3, 7 i 10 nie dobijają wrogów bezpośrednio.
 - Parametry balansu wymagają testów rozgrywki; testy automatyczne nie zastępują wielokrotnego przejścia piętra.
 - `python verify.py` — statyczne sprawdzenie źródła.
 - `python tests/browser_smoke.py` — test dymny Playwright; wymaga pakietu Playwright i przeglądarki Chromium.
