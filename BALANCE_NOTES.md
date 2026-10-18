@@ -8,7 +8,7 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Boss pojawia się w ostatnim pokoju aktualnego piętra.
 - HP bossa: `45 + 12 × numer piętra` (57 HP na piętrze 1, 69 na piętrze 2, 81 na piętrze 3).
 - Boss strzela wachlarzem trzech pocisków; odstęp ataków wynosi 55–75 klatek.
-- Po oczyszczeniu pokoju szansa przejścia wynosi `min(100%, numer pokoju × 5 punktów procentowych)`: pokój 1 — 5%, pokój 2 — 10%, …, pokój 19 — 95%. Losowanie jest niezależne w każdym pokoju, więc przejście może pojawić się przed bossem.
+- Na początku piętra losowany jest jeden próg przejścia. Po oczyszczeniu pokoju porównujemy go z `numer pokoju × 5 punktów procentowych`: pokój 1 — 5%, pokój 2 — 10%, …, pokój 19 — 95%. To szansa skumulowana, a nie nowe niezależne losowanie w każdym pokoju; dzięki temu około 5% podejść dociera do bossa w pokoju 20.
 - W pokoju 20 przejście jest gwarantowane; po pokonaniu bossa wszystkie drzwi prowadzą dalej.
 - Po pokonaniu bossa wszystkie drzwi prowadzą dalej, więc na ostatnim pokoju nie ma pechowego losowania.
 
