@@ -10,6 +10,7 @@ window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:s
 window.__testExit=(r,t)=>{const old={roomNo,floorExitRoll,floorExitSpawned,doors};roomNo=r;floorExitRoll=t;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];rollFloorExit();const result=doors.map(d=>!!d.floorExit);roomNo=old.roomNo;floorExitRoll=old.floorExitRoll;floorExitSpawned=old.floorExitSpawned;doors=old.doors;return result};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
 window.__testRestart=()=>startRun();
+window.__testActiveDamage=()=>{const oldEnemies=enemies,oldItems=player.items,oldKills=kills,oldChain=killChain;const target={x:player.x+120,y:player.y,r:10,hp:1,maxHp:1,speed:0,rola:'chase',type:'chaser',phase:0,dashTimer:100,dashFrames:0,cooldown:100,hit:0};enemies=[target];const item={numer:3,kategoria:'active',nazwa:'Test'};player.items=[item];useActiveItem(item);const result=target.hp<=0&&kills===oldKills+1&&killChain===oldChain+1;enemies=oldEnemies;player.items=oldItems;updateHud();return result};
 window.__testFullHealthHeart=()=>{const d=drops.find(d=>d.type==='heart'&&!d.gone);if(!d)return false;player.hp=player.maxHp;player.x=d.x;player.y=d.y;player.invuln=999;update();return drops.some(x=>x===d&&!x.gone)};
 """
 HTML = HTML.replace(needle, instrumentation, 1)
@@ -37,6 +38,7 @@ with sync_playwright() as p:
 
     assert page.evaluate("window.__testFullHealthHeart()") is True, "Heart pickup vanished at full HP"
     assert page.evaluate("window.__testRoom2()") is True, "Shop is not guaranteed in room 2"
+    assert page.evaluate("window.__testActiveDamage()") is True, "Active damage did not count a kill through the shared death path"
     assert page.evaluate("window.__testExit(1, 0.03)").count(True) == 1, "5% threshold should allow exit at roll 3%"
     assert page.evaluate("window.__testExit(1, 0.07)").count(True) == 0, "5% threshold should reject roll 7%"
     assert page.evaluate("window.__testExit(19, 0.94)").count(True) == 1, "95% threshold should allow exit at roll 94%"
