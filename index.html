@@ -50,6 +50,39 @@ const DANE_GRY = {
 const rand=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.length)];
 const LISTA_DRZWI=Object.values(DANE_GRY.drzwi);
 const WSZYSTKIE_PRZEDMIOTY=[...DANE_GRY.przedmioty.aktywne,...DANE_GRY.przedmioty.nogi,...DANE_GRY.przedmioty.strzelanie];
+ // Progresja wrogów: wartości balansu są tymczasowe i zebrane w jednym miejscu do późniejszego strojenia.
+ const PROGRESJA_WROGOW = {
+  mnoznikHPNaPietro:0.14,
+  mnoznikSzybkosciNaPietro:0.035,
+  typy:{
+   chaser:{tier:1,hp:2,speedMin:1.0,speedMax:1.55,r:16,color:'#8c526d',rola:'chase'},
+   spitter:{tier:1,hp:2,speedMin:1.05,speedMax:1.05,r:14,color:'#b88a50',rola:'ranged'},
+   brute:{tier:2,hp:5,speedMin:0.78,speedMax:0.92,r:20,color:'#a64e58',rola:'chase'},
+   dasher:{tier:3,hp:3,speedMin:1.15,speedMax:1.35,r:15,color:'#6a8fba',rola:'dash'},
+   hexer:{tier:4,hp:4,speedMin:0.85,speedMax:1.0,r:17,color:'#9b72c7',rola:'ranged'}
+  },
+  pule:[
+   {floor:1,weights:{chaser:76,spitter:24}},
+   {floor:2,weights:{chaser:42,spitter:23,brute:35}},
+   {floor:3,weights:{chaser:12,spitter:13,brute:40,dasher:35}},
+   {floor:4,weights:{brute:25,dasher:40,hexer:35}}
+  ]
+ };
+ function enemyWeightsForFloor(f){
+  const entry=PROGRESJA_WROGOW.pule.filter(p=>p.floor<=f).slice(-1)[0];
+  return entry?entry.weights:PROGRESJA_WROGOW.pule[0].weights;
+ }
+ function createEnemy(type,x,y){
+  const cfg=PROGRESJA_WROGOW.typy[type],floorScale=Math.max(0,floor-1);
+  const hp=Math.max(1,Math.round(cfg.hp*(1+PROGRESJA_WROGOW.mnoznikHPNaPietro*floorScale)));
+  return {x,y,r:cfg.r,hp,maxHp:hp,speed:rand(cfg.speedMin,cfg.speedMax)*(1+Math.min(.3,PROGRESJA_WROGOW.mnoznikSzybkosciNaPietro*floorScale)),type,tier:cfg.tier,rola:cfg.rola,phase:rand(0,6.28),dashTimer:rand(70,125),dashFrames:0,cooldown:type==='spitter'?rand(65,100):type==='hexer'?rand(50,85):rand(100,170),hit:0};
+ }
+ function pickEnemyType(){
+  const weights=enemyWeightsForFloor(floor),entries=Object.entries(weights),total=entries.reduce((s,e)=>s+e[1],0);
+  let roll=Math.random()*total;
+  for(const [type,weight] of entries){roll-=weight;if(roll<0)return type}
+  return entries[entries.length-1][0];
+ }
 function log(s){$('log').textContent=s}
 function startRun(){clearInput();shake=0;frame=0;floor=1;roomNo=1;kills=0;coins=0;player={x:W/2,y:H/2,r:13,speed:3.15,hp:6,maxHp:6,damage:1,fireRate:17,shotSpeed:7.3,shotSize:5,luck:1,invuln:0,cooldown:0,steps:0,stepProgress:0,items:[],activeItemIndex:0};state='play';enterRoom();$('overlay').classList.add('hidden');updateHud();log('Rozpoczęto rozgrywkę. Ruszaj się i unikaj kontaktu z potworami.')}
 function enterRoom(){enemies=[];shots=[];enemyShots=[];drops=[];particles=[];doorOpen=false;floorExitSpawned=false;spawnTimer=0;
@@ -61,10 +94,11 @@ function enterRoom(){enemies=[];shots=[];enemyShots=[];drops=[];particles=[];doo
    drops.push({x,y,r:17,type:'item',itemId:item.id,item});
   }));
  }
- const count=1+Math.floor(Math.random()*20);
+ const maxEnemies=Math.max(6,20-(floor-1)*4);
+ const count=1+Math.floor(Math.random()*maxEnemies);
  for(let i=0;i<count;i++){let x,y,tries=0;do{x=rand(room.x+50,room.x+room.w-50);y=rand(room.y+50,room.y+room.h-50);tries++}while(Math.hypot(x-W/2,y-H/2)<150&&tries<40);
- const type=Math.random()<.24?'spitter':'chaser';
- enemies.push({x,y,r:type==='spitter'?14:16,hp:type==='spitter'?2:2+Math.floor(floor/3),maxHp:type==='spitter'?2:2+Math.floor(floor/3),speed:type==='spitter'?1.05:rand(1.0,1.55),type,phase:rand(0,6.28),cooldown:type==='spitter'?rand(40,100):rand(100,170),hit:0});}
+  enemies.push(createEnemy(pickEnemyType(),x,y));
+ }
  log(`Pokój ${roomNo}: ${count} potworów. Po walce odblokują się drzwi${roomNo===10?' do przejścia na następne piętro':''}.`);updateHud()}
 function updateHud(){$('hp').textContent=Array.from({length:player?player.maxHp/2:3},(_,i)=>player&&player.hp>i*2?'♥':'♡').join(' ');$('floor').textContent=floor;$('room').textContent=roomNo;$('kills').textContent=kills;$('items').textContent=player?player.items.length:0;const activeItems=player?player.items.filter(item=>item.kategoria==='active'):[],legItems=player?player.items.filter(item=>item.kategoria==='legs'):[],shotItems=player?player.items.filter(item=>item.kategoria==='shot'):[];$('activeItem').textContent=activeItems.length?activeItems.map(item=>item.numer).join(','):'—';$('legItem').textContent=legItems.length?legItems.map(item=>item.numer).join(','):'—';$('shotItem').textContent=shotItems.length?shotItems.map(item=>item.numer).join(','):'—';$('speedStat').textContent=player?player.speed.toFixed(2):'3.15';$('fireStat').textContent=player?player.fireRate:'17';$('coins').textContent=coins;$('luck').textContent=player?player.luck:'1';$('shotStat').textContent=player?player.shotSize.toFixed(1):'5.0';$('stepsStat').textContent=player?player.steps:0}
 function pos(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}}
@@ -93,7 +127,10 @@ function update(){
  }
  shots=shots.filter(s=>s.life>0);
  for(const e of enemies){if(e.hp<=0)continue;if(e.hit>0)e.hit--;const dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
- if(e.type==='chaser'){e.x+=dx/d*e.speed;e.y+=dy/d*e.speed}else{if(d>220){e.x+=dx/d*e.speed*.75;e.y+=dy/d*e.speed*.75}else if(d<150){e.x-=dx/d*e.speed*.7;e.y-=dy/d*e.speed*.7}e.phase+=.035;e.x+=Math.cos(e.phase)*.45;e.y+=Math.sin(e.phase)*.45}e.cooldown--;if(e.cooldown<=0&&d<430){const bulletSpeed=e.type==='spitter'?3:2.25;enemyShots.push({x:e.x,y:e.y,vx:dx/d*bulletSpeed,vy:dy/d*bulletSpeed,r:e.type==='spitter'?6:5,life:130});e.cooldown=e.type==='spitter'?rand(85,130):rand(135,195)} 
+ if(e.rola==='chase'){e.x+=dx/d*e.speed;e.y+=dy/d*e.speed}
+ else if(e.rola==='dash'){e.dashTimer--;if(e.dashTimer<=0&&e.dashFrames<=0){e.dashFrames=16;e.dashTimer=rand(90,140)}if(e.dashFrames>0){e.x+=dx/d*e.speed*2.7;e.y+=dy/d*e.speed*2.7;e.dashFrames--}else{e.x+=dx/d*e.speed*.55;e.y+=dy/d*e.speed*.55}}
+ else{if(d>220){e.x+=dx/d*e.speed*.75;e.y+=dy/d*e.speed*.75}else if(d<150){e.x-=dx/d*e.speed*.7;e.y-=dy/d*e.speed*.7}e.phase+=.035;e.x+=Math.cos(e.phase)*.45;e.y+=Math.sin(e.phase)*.45}
+ e.cooldown--;if(e.cooldown<=0&&d<430){const bulletSpeed=e.type==='spitter'?3.0:e.type==='hexer'?3.35:2.25;enemyShots.push({x:e.x,y:e.y,vx:dx/d*bulletSpeed,vy:dy/d*bulletSpeed,r:e.type==='spitter'?6:e.type==='hexer'?7:5,life:130});e.cooldown=e.type==='spitter'?rand(85,130):e.type==='hexer'?rand(65,95):rand(135,195)} 
  e.x=Math.max(room.x+e.r,Math.min(room.x+room.w-e.r,e.x));e.y=Math.max(room.y+e.r,Math.min(room.y+room.h-e.r,e.y));
  if(d<e.r+player.r)hitPlayer(1)}
  for(const s of enemyShots){s.x+=s.vx;s.y+=s.vy;s.life--;if(Math.hypot(s.x-player.x,s.y-player.y)<s.r+player.r){s.life=0;hitPlayer(1)}}
@@ -124,7 +161,7 @@ function draw(){
    ctx.fillStyle=door.type.poswiata;ctx.font='10px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(door.floorExit?'PIĘTRO +1':(doorOpen?'OTWARTE':'ZAMKNIĘTE'),door.x,door.y);ctx.textBaseline='alphabetic';
  }ctx.textAlign='left'
  // enemies
- for(const e of enemies){if(e.hp<=0)continue;ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=e.hit>0?'#fff0f0':e.type==='spitter'?'#b88a50':'#8c526d';ctx.beginPath();ctx.arc(0,0,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#17121c';ctx.beginPath();ctx.arc(-5,-2,2.7,0,6.28);ctx.arc(5,-2,2.7,0,6.28);ctx.fill();ctx.strokeStyle='#241722';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,7);ctx.lineTo(5,7);ctx.stroke();ctx.fillStyle='#3c2435';ctx.fillRect(-e.r,-e.r-8,e.r*2,4);ctx.fillStyle='#e75c6d';ctx.fillRect(-e.r,-e.r-8,e.r*2*Math.max(0,e.hp/e.maxHp),4);ctx.restore()}
+ for(const e of enemies){if(e.hp<=0)continue;ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=e.hit>0?'#fff0f0':(PROGRESJA_WROGOW.typy[e.type]?.color||'#8c526d');ctx.beginPath();ctx.arc(0,0,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#17121c';ctx.beginPath();ctx.arc(-5,-2,2.7,0,6.28);ctx.arc(5,-2,2.7,0,6.28);ctx.fill();ctx.strokeStyle='#241722';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,7);ctx.lineTo(5,7);ctx.stroke();ctx.fillStyle='#3c2435';ctx.fillRect(-e.r,-e.r-8,e.r*2,4);ctx.fillStyle='#e75c6d';ctx.fillRect(-e.r,-e.r-8,e.r*2*Math.max(0,e.hp/e.maxHp),4);ctx.restore()}
  for(const s of shots){ctx.fillStyle='#f3d5ff';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(s.x-1,s.y-1,2,2)}
  for(const s of enemyShots){ctx.fillStyle='#e75c6d';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill()}
  for(const d of drops){
