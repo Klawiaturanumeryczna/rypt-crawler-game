@@ -52,7 +52,7 @@ const rand=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.le
 const LISTA_DRZWI=Object.values(DANE_GRY.drzwi);
 const WSZYSTKIE_PRZEDMIOTY=[...DANE_GRY.przedmioty.aktywne,...DANE_GRY.przedmioty.nogi,...DANE_GRY.przedmioty.strzelanie];
 const OPISY_PRZEDMIOTOW={
- active:['Leczy 1 serce (+2 HP).','Daje +2 monety.','Zadaje wszystkim wrogom do 4 obrażeń, ale ich nie dobija.','Usuwa wszystkie pociski wrogów.','Daje 2 sekundy nietykalności.','Wystrzeliwuje 8 pocisków we wszystkich kierunkach.','Zadaje najbliższemu wrogowi do 10 obrażeń, ale go nie dobija.','Leczy 2 serca (+4 HP).','Daje +3 monety.','Zadaje wszystkim wrogom do 2 obrażeń (nie dobija) i usuwa wrogie pociski.'],
+ active:['Leczy 1 serce (+2 HP).','Daje +2 monety.','Zadaje wszystkim wrogom do 4 obrażeń.','Usuwa wszystkie pociski wrogów.','Daje 2 sekundy nietykalności.','Wystrzeliwuje 8 pocisków we wszystkich kierunkach.','Zadaje najbliższemu wrogowi do 10 obrażeń.','Leczy 2 serca (+4 HP).','Daje +3 monety.','Zadaje wszystkim wrogom do 2 obrażeń i usuwa wrogie pociski.'],
  legs:['Krok +0,10 — postać pokonuje większy dystans przy ruchu.','Krok +0,20 — postać pokonuje większy dystans przy ruchu.','Maksymalne zdrowie +1 serce i leczy 1 serce.','Prędkość +0,20, ale szybkostrzelność gorsza o 1 klatkę.','Czas nietykalności po trafieniu +10 klatek.','Krok +0,15 — postać pokonuje większy dystans przy ruchu.','Obrażenia pocisków +0,25.','Maksymalne zdrowie +1 serce i leczy 1 serce.','Krok +0,25, ale szybkostrzelność gorsza o 2 klatki.','Czas nietykalności +20 klatek i prędkość +0,15.'],
  shot:['Obrażenia pocisków +0,25.','Obrażenia pocisków +0,50.','Szybkostrzelność lepsza o 2 klatki.','Prędkość pocisków +1.','Rozmiar pocisku +1.','Szybkostrzelność lepsza o 3 klatki.','Obrażenia +0,25, ale szybkostrzelność gorsza o 1 klatkę.','Rozmiar pocisku +2, ale prędkość pocisku −0,5.','Prędkość pocisku +1,5.','Obrażenia +1, ale szybkostrzelność gorsza o 2 klatki.']
 };
@@ -79,7 +79,7 @@ function useActiveItem(item){
  const n=item.numer,oldHp=player.hp,oldCoins=coins;
  if(n===1||n===8){player.hp=Math.min(player.maxHp,player.hp+(n===1?2:4));log('ZDROWIE: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+'.')}
  else if(n===2||n===9){coins+=n===2?2:3;log('MONETY: '+oldCoins+' → '+coins+'.')}
- else if(n===3||n===7||n===10){const targets=n===7?enemies.filter(e=>e.hp>0).sort((a,b)=>Math.hypot(a.x-player.x,a.y-player.y)-Math.hypot(b.x-player.x,b.y-player.y)).slice(0,1):enemies.filter(e=>e.hp>0);const dmg=n===3?4:n===7?10:2;targets.forEach(e=>e.hp=Math.max(1,e.hp-dmg));log('EFEKT — '+targets.length+' wrogów otrzymuje do '+dmg+' obrażeń (ten efekt ich nie dobija).')}
+ else if(n===3||n===7||n===10){const targets=n===7?enemies.filter(e=>e.hp>0).sort((a,b)=>Math.hypot(a.x-player.x,a.y-player.y)-Math.hypot(b.x-player.x,b.y-player.y)).slice(0,1):enemies.filter(e=>e.hp>0);const dmg=n===3?4:n===7?10:2;targets.forEach(e=>damageEnemy(e,dmg,e.x,e.y));log('EFEKT — '+targets.length+' wrogów otrzymuje do '+dmg+' obrażeń.')}
  if(n===4||n===10){const old=enemyShots.length;enemyShots=[];log('Wrogie pociski: '+old+' → 0.')}
  if(n===5){player.invuln=Math.max(player.invuln,120);log('EFEKT — nietykalność przez 2 sekundy.');}
  if(n===6){for(let i=0;i<8;i++){const a=i*Math.PI/4;shots.push({x:player.x,y:player.y,vx:Math.cos(a)*player.shotSpeed,vy:Math.sin(a)*player.shotSpeed,r:player.shotSize,life:90,damage:player.damage})}log('Wystrzelono 8 pocisków dookoła.')}
@@ -123,6 +123,22 @@ function useActiveItem(item){
   for(const [type,weight] of entries){roll-=weight;if(roll<0)return type}
   return entries[entries.length-1][0];
  }
+function damageEnemy(e,amount,impactX=e.x,impactY=e.y){
+ if(!e||e.hp<=0)return false;
+ e.hp-=amount;e.hit=5;
+ for(let i=0;i<5;i++)particles.push({x:impactX,y:impactY,vx:rand(-2,2),vy:rand(-2,2),life:15,r:2,color:'#e9d8ff'});
+ if(e.hp<=0){
+  e.hp=0;const oldKills=kills;kills++;const oldChain=killChain;killChain++;killChainTimer=180;
+  log('STATYSTYKA — zabójstwa: '+oldKills+' → '+kills+'. Seria: '+oldChain+' → '+killChain+'.');
+  if(killChain%5===0){const oldCoins=coins;coins++;log('NAGRODA ZA SERIĘ — '+killChain+' zabójstw! Monety: '+oldCoins+' → '+coins+' (+1 moneta).')}
+  const lootMultiplier=TRUDNOSC_POKOJU[roomTier].mnoznikLupu;
+  if(Math.random()<DANE_GRY.dropy.moneta.szansaBazowa*lootMultiplier)drops.push({x:e.x,y:e.y,r:7,type:DANE_GRY.dropy.moneta.id});
+  if(Math.random()<DANE_GRY.dropy.serce.szansa*lootMultiplier)drops.push({x:e.x,y:e.y,r:8,type:DANE_GRY.dropy.serce.id});
+  for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'});
+  updateHud();return true;
+ }
+ return false;
+}
 const MOVEMENT_TYPES={runner:{name:'Podstawowe bieganie',desc:'Średnia prędkość, natychmiastowe skręty.',speed:3.15,accel:1,friction:1,dash:0,cooldown:0},drifter:{name:'Szybki ślizg',desc:'Bardzo szybko, ale trudniej ostro skręcać.',speed:4.25,accel:.24,friction:.94,dash:0,cooldown:0},hopper:{name:'Skoczek',desc:'Wolniejszy krok i krótki sus na Shift z cooldownem.',speed:2.7,accel:1,friction:1,dash:112,cooldown:72},momentum:{name:'Rozpęd',desc:'Powoli startuje, ale przy dłuższym biegu przyspiesza.',speed:4.5,accel:.18,friction:.965,dash:0,cooldown:0},twitch:{name:'Zwinny',desc:'Szybkie skręty i precyzja, ale niższa prędkość.',speed:2.8,accel:1,friction:1,dash:0,cooldown:0},juggernaut:{name:'Ciężki krok',desc:'Wolniej zmienia kierunek i długo wytraca rozpęd.',speed:3.35,accel:.16,friction:.98,dash:0,cooldown:0}};
 function log(s){const box=$('log');if(!box.dataset.initialized){box.textContent='';box.dataset.initialized='true'}const entry=document.createElement('div');entry.className='logEntry';entry.textContent=String(s);box.appendChild(entry);while(box.children.length>5)box.firstElementChild.remove()}
 function applyMovement(type){if(!player||!MOVEMENT_TYPES[type])return;const previous=MOVEMENT_TYPES[player.movement||'runner'],next=MOVEMENT_TYPES[type];const oldSpeed=player.speed;player.movement=type;player.vx=0;player.vy=0;player.dashCooldown=0;player.dashFrames=0;player.speed=next.speed+(player.speedBonus||0);updateHud();let details='Prędkość bazowa: '+oldSpeed.toFixed(2)+' → '+next.speed.toFixed(2)+'. ';if(type==='hopper')details+='Sus: Shift, 8 klatek, cooldown 72 klatki. ';else if(type==='momentum')details+='Rozpęd narasta podczas ruchu. ';else if(type==='drifter')details+='Bezwładność utrudnia ostre skręty. ';else if(type==='twitch')details+='Niższa prędkość, szybka zmiana kierunku. ';else if(type==='juggernaut')details+='Wolniejsze przyspieszanie i hamowanie. ';else details+='Natychmiastowe skręcanie. ';log('ZMIANA RUCHU PRZEZ PRZEDMIOT: '+previous.name+' → '+next.name+'. '+details)}
@@ -172,7 +188,7 @@ function update(){
  player.x=Math.max(room.x+player.r,Math.min(room.x+room.w-player.r,player.x));player.y=Math.max(room.y+player.r,Math.min(room.y+room.h-player.r,player.y));if(player.x===room.x+player.r||player.x===room.x+room.w-player.r)player.vx=0;if(player.y===room.y+player.r||player.y===room.y+room.h-player.r)player.vy=0;
  let sx=(keys.has('arrowright')?1:0)-(keys.has('arrowleft')?1:0),sy=(keys.has('arrowdown')?1:0)-(keys.has('arrowup')?1:0);if(sx!==0||sy!==0){shoot(sx,sy)}else if(mouse.down)shoot();
  for(const s of shots){s.x+=s.vx;s.y+=s.vy;s.life--;if(s.x<room.x||s.x>room.x+room.w||s.y<room.y||s.y>room.y+room.h)s.life=0;
-  for(const e of enemies){if(e.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<s.r+e.r){e.hp-=s.damage;s.life=0;e.hit=5;for(let i=0;i<5;i++)particles.push({x:s.x,y:s.y,vx:rand(-2,2),vy:rand(-2,2),life:15,r:2,color:'#e9d8ff'});if(e.hp<=0){const oldKills=kills;kills++;const oldChain=killChain;killChain++;killChainTimer=180;log('STATYSTYKA — zabójstwa: '+oldKills+' → '+kills+'. Seria: '+oldChain+' → '+killChain+'.');if(killChain%5===0){const oldCoins=coins;coins++;log('NAGRODA ZA SERIĘ — '+killChain+' zabójstw! Monety: '+oldCoins+' → '+coins+' (+1 moneta).')}const lootMultiplier=TRUDNOSC_POKOJU[roomTier].mnoznikLupu;if(Math.random()<DANE_GRY.dropy.moneta.szansaBazowa*lootMultiplier)drops.push({x:e.x,y:e.y,r:7,type:DANE_GRY.dropy.moneta.id});if(Math.random()<DANE_GRY.dropy.serce.szansa*lootMultiplier)drops.push({x:e.x,y:e.y,r:8,type:DANE_GRY.dropy.serce.id});for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'})}break}}
+  for(const e of enemies){if(e.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<s.r+e.r){damageEnemy(e,s.damage,s.x,s.y);s.life=0;break}}
  }
  shots=shots.filter(s=>s.life>0);
  for(const e of enemies){if(e.hp<=0)continue;if(e.hit>0)e.hit--;const dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
