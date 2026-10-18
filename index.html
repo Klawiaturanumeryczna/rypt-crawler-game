@@ -47,7 +47,7 @@ const DANE_GRY = {
   glod:{id:'glod',nazwa:'Głód',opis:'Dodatkowe serce i leczenie.',zastosuj:p=>{p.maxHp+=2;p.hp=Math.min(p.maxHp,p.hp+2)}},
   talizman:{id:'talizman',nazwa:'Szczęśliwy talizman',opis:'Zwiększa szczęście.',zastosuj:p=>p.luck++}
  },
- dropy: {moneta:{id:'coin',szansaBazowa:.28,opis:'Waluta'},serce:{id:'heart',szansa:.01,opis:'Odnawia zdrowie'}}
+ dropy: {moneta:{id:'coin',szansaBazowa:.14,opis:'Waluta'},serce:{id:'heart',szansa:.005,opis:'Odnawia zdrowie'}}
 };
 const rand=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.length)];
 const LISTA_DRZWI=Object.values(DANE_GRY.drzwi);
@@ -56,7 +56,7 @@ function log(s){$('log').textContent=s}
 function startRun(){floor=1;roomNo=1;kills=0;itemCount=0;coins=0;player={x:W/2,y:H/2,r:13,speed:3.15,hp:6,maxHp:6,damage:1,fireRate:17,shotSpeed:7.3,shotSize:5,luck:1,jumpCooldown:0,jumpFrames:0,invuln:0,cooldown:0,steps:0,stepProgress:0};state='play';enterRoom();$('overlay').classList.add('hidden');updateHud();log('Rozpoczęto rozgrywkę. Ruszaj się i unikaj kontaktu z potworami.')}
 function enterRoom(){enemies=[];shots=[];enemyShots=[];drops=[];particles=[];doorOpen=false;spawnTimer=0;
  doors=[{side:'top',x:W/2,y:room.y,type:pick(LISTA_DRZWI)},{side:'bottom',x:W/2,y:room.y+room.h,type:pick(LISTA_DRZWI)},{side:'left',x:room.x,y:room.y+room.h/2,type:pick(LISTA_DRZWI)},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:pick(LISTA_DRZWI)}];
- const count=Math.min(2+floor+Math.floor(roomNo/2),7);
+ const count=1+Math.floor(Math.random()*20);
  for(let i=0;i<count;i++){let x,y,tries=0;do{x=rand(room.x+50,room.x+room.w-50);y=rand(room.y+50,room.y+room.h-50);tries++}while(Math.hypot(x-W/2,y-H/2)<150&&tries<40);
  const type=Math.random()<.24?'spitter':'chaser';
  enemies.push({x,y,r:type==='spitter'?14:16,hp:type==='spitter'?2:2+Math.floor(floor/3),maxHp:type==='spitter'?2:2+Math.floor(floor/3),speed:type==='spitter'?1.05:rand(1.0,1.55),type,phase:rand(0,6.28),cooldown:type==='spitter'?rand(40,100):rand(100,170),hit:0});}
@@ -78,7 +78,7 @@ function update(){
  player.x=Math.max(room.x+player.r,Math.min(room.x+room.w-player.r,player.x));player.y=Math.max(room.y+player.r,Math.min(room.y+room.h-player.r,player.y));
  let sx=(keys.has('arrowright')?1:0)-(keys.has('arrowleft')?1:0),sy=(keys.has('arrowdown')?1:0)-(keys.has('arrowup')?1:0);if(sx!==0||sy!==0){shoot(sx,sy)}else if(mouse.down)shoot();
  for(const s of shots){s.x+=s.vx;s.y+=s.vy;s.life--;if(s.x<room.x||s.x>room.x+room.w||s.y<room.y||s.y>room.y+room.h)s.life=0;
-  for(const e of enemies){if(e.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<s.r+e.r){e.hp-=s.damage;s.life=0;e.hit=5;for(let i=0;i<5;i++)particles.push({x:s.x,y:s.y,vx:rand(-2,2),vy:rand(-2,2),life:15,r:2,color:'#e9d8ff'});if(e.hp<=0){kills++;if(Math.random()<Math.min(.65,DANE_GRY.dropy.moneta.szansaBazowa+player.luck*.025))drops.push({x:e.x,y:e.y,r:7,type:DANE_GRY.dropy.moneta.id});if(Math.random()<DANE_GRY.dropy.serce.szansa)drops.push({x:e.x,y:e.y,r:8,type:DANE_GRY.dropy.serce.id});for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'})}break}}
+  for(const e of enemies){if(e.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<s.r+e.r){e.hp-=s.damage;s.life=0;e.hit=5;for(let i=0;i<5;i++)particles.push({x:s.x,y:s.y,vx:rand(-2,2),vy:rand(-2,2),life:15,r:2,color:'#e9d8ff'});if(e.hp<=0){kills++;if(Math.random()<Math.min(.325,DANE_GRY.dropy.moneta.szansaBazowa+player.luck*.0125))drops.push({x:e.x,y:e.y,r:7,type:DANE_GRY.dropy.moneta.id});if(Math.random()<DANE_GRY.dropy.serce.szansa)drops.push({x:e.x,y:e.y,r:8,type:DANE_GRY.dropy.serce.id});for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'})}break}}
  }
  shots=shots.filter(s=>s.life>0);
  for(const e of enemies){if(e.hp<=0)continue;if(e.hit>0)e.hit--;const dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
