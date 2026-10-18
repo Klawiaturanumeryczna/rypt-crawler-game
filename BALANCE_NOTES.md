@@ -42,7 +42,7 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 
 1. Czy gracz ma zwykle 2 monety na leczenie przed końcem piętra, ale nie kupuje serca po każdym pokoju.
 2. Czy boss pierwszego piętra jest wymagający, lecz możliwy do pokonania bez konkretnego przedmiotu.
-3. Czy 20 pokoi na pierwszym piętrze nie jest zbyt długie; jeśli tak, lepiej zmienić liczbę pokoi niż podbijać szybkość wrogów.
+3. Czy stałe 20 pokoi na piętro nie jest zbyt długie; jeśli tak, rozważyć zmianę wspólnego limitu dla wszystkich pięter.
 4. Czy trudne drzwi rzeczywiście czują się trudniejsze, a dodatkowy łup rekompensuje ryzyko.
 5. Czy tooltip przedmiotu jest czytelny na różnych rozdzielczościach i nie zasłania istotnych pocisków.
 6. Czy wcześniejsze pojawienie się przejścia nie sprawia, że boss jest zbyt często pomijany. Jeśli boss ma być obowiązkowy, przejście powinno pojawiać się dopiero po jego pokonaniu.
