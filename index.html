@@ -63,7 +63,6 @@ function applyPassiveItem(item){
  if(cat==='legs'){
   if(n===1||n===2||n===6||n===9){const old=p.step;p.step+=({1:.10,2:.20,6:.15,9:.25})[n];notes.push('krok '+old.toFixed(2)+' → '+p.step.toFixed(2)+' (mnożnik dystansu ruchu)');}
   if(n===4||n===10){const old=p.speed;p.speed+=n===4?.2:.15;notes.push('prędkość '+old.toFixed(2)+' → '+p.speed.toFixed(2));}
-  if(n===10){const old=p.step;p.step+=.05;notes.push('krok '+old.toFixed(2)+' → '+p.step.toFixed(2));}
   if(n===3||n===8){const oldMax=p.maxHp,oldHp=p.hp;p.maxHp+=2;p.hp=Math.min(p.maxHp,p.hp+2);notes.push('maksymalne HP '+oldMax+' → '+p.maxHp+'; zdrowie '+oldHp+' → '+p.hp);}
   if(n===4||n===9){const old=p.fireRate;p.fireRate+=n===4?1:2;notes.push('szybkostrzelność '+old+' → '+p.fireRate);}
   if(n===5||n===10){const old=p.invulnDuration;p.invulnDuration+=n===5?10:20;notes.push('nietykalność po trafieniu '+old+' → '+p.invulnDuration+' klatek');}
