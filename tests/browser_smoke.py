@@ -21,7 +21,7 @@ with sync_playwright() as p:
     page.on("console", lambda msg: errors.append("CONSOLE: " + msg.text) if msg.type == "error" else None)
     page.set_content(HTML, wait_until="load")
     page.wait_for_timeout(100)
-    assert page.title() == "Crypt Crawler — prototype"
+    assert page.title() == "Crypt Crawler — prototyp"
     assert page.locator("canvas#game").count() == 1
     assert page.locator("#overlay").is_visible()
     assert page.evaluate("typeof window.__smoke") == "function", f"Game script did not initialize: {errors}"
