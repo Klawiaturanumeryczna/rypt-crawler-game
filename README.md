@@ -1,65 +1,67 @@
 # Crypt Crawler — prototyp 0.4.0
 
-Przeglądarkowy prototyp roguelike'a z widokiem z góry. Gra działa z jednego pliku `index.html` i nie wymaga silnika, instalacji pakietów ani zewnętrznych grafik.
+Crypt Crawler to przeglądarkowy roguelike z widokiem z góry. Prototyp korzysta z Canvas i jednego pliku `index.html`; nie wymaga instalowania silnika ani zewnętrznych grafik.
 
 ## Uruchomienie
 
-Otwórz `index.html` w nowoczesnej przeglądarce i kliknij **ROZPOCZNIJ RUN**.
+Otwórz `index.html` w nowoczesnej przeglądarce, kliknij **ROZPOCZNIJ RUN**, a następnie wybierz styl ruchu.
 
 ## Sterowanie
 
-- **WASD** — poruszanie się.
-- **Strzałki** — strzelanie w 8 kierunkach; można łączyć klawisze.
+- **WASD** — ruch.
+- **Strzałki** — strzelanie w ośmiu kierunkach; można łączyć klawisze.
 - **Mysz + przytrzymany LPM** — strzelanie w stronę kursora.
-- **P** — pauza / powrót.
+- **P** — pauza / powrót do gry.
 - **R** — rozpoczęcie nowego runu.
 - **M** — ponowny wybór stylu ruchu.
-- **Shift** — sus stylu „Skoczek”.
-- **Spacja** — użycie wybranego przedmiotu aktywnego; w tym prototypie jego efekt nadal jest placeholderem.
+- **Shift** — krótki sus stylu „Skoczek”.
+- **E** — podniesienie przedmiotu po podejściu do niego.
+- **Spacja** — użycie aktywnego przedmiotu; przedmiot jest zużywany.
 
-## Aktualnie zaimplementowane systemy
+## Pętla rozgrywki
 
-### Walka i przeciwnicy
+Każde piętro ma **20 pokoi na piętrze 1**, a każde następne piętro dodaje 2 pokoje. Ostatni pokój piętra jest walką z bossem. Po jego pokonaniu wszystkie drzwi prowadzą na następne piętro. Wcześniejsze przejście może pojawić się przed bossem, więc nie każdy run musi kończyć się walką z nim.
 
-- Walka czasu rzeczywistego, pociski gracza i wrogów, obrażenia, krótkie okno niewrażliwości po trafieniu, cząsteczki i potrząsanie ekranem.
-- Pięć archetypów przeciwników: Chaser, Spitter, Brute, Dasher i Hexer.
-- Skład puli wrogów i ich statystyki skalują się z piętrem. Szczegóły są w [ENEMY_PROGRESSION.md](ENEMY_PROGRESSION.md).
-- Pokój zostaje oczyszczony, kiedy wszyscy wrogowie zostaną pokonani.
+Pokoje korzystają z tego samego szablonu areny, ale rozmieszczenie i zestaw wrogów są losowe. W grze są Chaser, Spitter, Brute, Dasher, Hexer i boss piętra.
 
-### Drzwi i trudność
+## Style ruchu
 
-Każdy pokój ma cztery drzwi standardowe: **szare — łatwe**, **złote — średnie**, **czerwone — trudne**. Każde losowanie zaczyna się od równej szansy na trzy poziomy. Jeśli wszystkie cztery drzwi wylosują ten sam poziom, jedno z nich jest losowane ponownie, więc maksymalnie trzy drzwi mogą mieć ten sam kolor.
+Na początku runu i każdego nowego piętra wybierasz jeden z sześciu stylów: Podstawowe bieganie, Szybki ślizg, Skoczek, Rozpęd, Zwinny lub Ciężki krok. **M** pozwala ponownie otworzyć wybór. Przedmioty pasywne mogą zmieniać statystyki; bonus prędkości z przedmiotów wpływa na faktyczny ruch, nie tylko na odczyt HUD.
 
-Po wejściu przez drzwi wybrany poziom wpływa na następny pokój:
+## Drzwi i ryzyko/nagroda
 
-| Poziom | Liczba wrogów | Szybkość wrogów | Mnożnik szansy na łup |
-|---|---:|---:|---:|
-| Szary — łatwy | ×0,75 | ×0,92 | ×0,75 |
-| Złoty — średni | ×1,00 | ×1,00 | ×1,00 |
-| Czerwony — trudny | ×1,25, z limitem piętra | ×1,08 | ×1,50 |
+Zwykłe drzwi mają trzy poziomy:
+- **Szare — łatwe:** liczba wrogów ×0,75; szybkość wrogów ×0,92; bazowa szansa na łup ×0,75.
+- **Złote — średnie:** mnożniki ×1,00.
+- **Czerwone — trudne:** liczba wrogów ×1,25 (z limitem pokoju); szybkość wrogów ×1,08; bazowa szansa na łup ×1,50.
 
-To mnożniki prototypowe, nie ostateczny balans. Moneta i serce mają obecnie bazową szansę 0,5% na zabitego wroga przed zastosowaniem mnożnika trudności. Wyższe zagrożenie zwiększa szansę na łup, ale nie gwarantuje konkretnej nagrody.
+Cztery poziomy są losowane oddzielnie. Jeśli wszystkie cztery drzwi wylosują ten sam poziom, jedno losowe drzwi jest losowane ponownie, więc nigdy nie zostają cztery jednakowe. Po wejściu kolor wybranych drzwi określa trudność następnego pokoju. Specjalne obramowanie sklepu i oznaczenie przejścia na piętro są niezależne od bazowego koloru trudności.
 
-Po oczyszczeniu pokoju pojawia się możliwość przejścia na kolejne piętro z szansą zależną od numeru pokoju (numer pokoju ÷ 10). Oznaczone przejście ma napis **PIĘTRO +1**. Przejście na piętro leczy maksymalnie 2 punkty zdrowia i otwiera wybór stylu ruchu.
+Przejście na kolejne piętro może wylosować się w oczyszczonym pokoju według wzoru `(numer pokoju / limit pokoi)^30`. W ostatnim pokoju, po pokonaniu bossa, przejście jest gwarantowane. Szczegóły balansu opisuje [BALANCE_NOTES.md](BALANCE_NOTES.md).
 
-### Style ruchu
+## Przedmioty, monety i sklep
 
-Na początku runu i każdego piętra można wybrać jeden z sześciu stylów: Podstawowe bieganie, Szybki ślizg, Skoczek, Rozpęd, Zwinny i Ciężki krok. Klawisz **M** pozwala zmienić styl podczas gry. Komunikat podaje poprzedni i nowy styl oraz zmianę prędkości bazowej.
+W pierwszym pokoju każdego piętra pojawiają się **trzy losowe oferty**: jeden aktywny przedmiot, jeden przedmiot nóg i jeden przedmiot strzelecki. Nazwa, opis działania i instrukcja podniesienia pojawiają się po zbliżeniu na odległość 100 jednostek; użyj **E**, aby go zebrać. Przedmioty pasywne zmieniają statystyki i raportują wartości przed/po. Aktywne przedmioty działają po naciśnięciu Spacji i są zużywane. Nazwy są na razie technicznymi etykietami „Item N”, ale efekty i opisy działania są zaimplementowane.
 
-### Seria zabójstw i komunikaty
+- **Moneta:** 8% bazowej szansy na pokonanego wroga.
+- **Serce:** 2,5% bazowej szansy; przywraca 2 HP.
+- Mnożnik szansy na łup zależy od trudności wybranych drzwi. Trudne drzwi dają 12% bazowej szansy na monetę i 3,75% na serce.
+- **Seria zabójstw:** kolejne zabójstwo w ciągu 3 sekund podtrzymuje serię; każde 5 zabójstw w serii daje dodatkową monetę.
+- **Sklep:** ma 8% szansy pojawienia się w kwalifikującym się pokoju i może zostać odwiedzony raz na piętro. Serce kosztuje 2 monety i przywraca 2 HP; przy pełnym zdrowiu albo zbyt małej liczbie monet zakup jest wyłączony.
+- Serce na podłodze nie znika, gdy zdrowie jest pełne.
 
-- Zabójstwo zwiększa licznik serii. Kolejne zabójstwo musi nastąpić w ciągu 3 sekund, aby seria była kontynuowana.
-- Każde 5 kolejnych zabójstw w serii daje **+1 monetę**.
-- HUD pokazuje liczbę punktów zdrowia, w tym połówki serc, a także poziom zagrożenia i serię zabójstw.
-- Dziennik rozgrywki przechowuje pięć ostatnich komunikatów. Zmiany zdrowia, monet, zabójstw, serii i ruchu podają wartości przed i po zmianie, gdy dana wartość ulega zmianie.
+## Ograniczenia i decyzje projektowe
 
-## Ograniczenia, o których trzeba pamiętać
+- Efekty aktywnych przedmiotów 3, 7 i 10 celowo zadają obrażenia nieśmiertelne, by nie omijać standardowego liczenia zabójstw i dropów.
+- Sklep oferuje na razie tylko leczenie.
+- Boss jest powtarzanym strażnikiem piętra, a nie odrębnym finałowym bossem kampanii.
+- Brakuje zapisu postępu między runami, trwałych odblokowań, rozbudowanego grafu pomieszczeń, kilku typów pokoi i pełnego systemu synergii. Wartości liczbowe są prototypowe, nie są jeszcze potwierdzonym balansem po testach graczy.
 
-- **30 przedmiotów na ziemi to obecnie placeholdery.** Podniesienie zwiększa licznik posiadanych przedmiotów, ale ich efekty nie są jeszcze zaprogramowane. Spacja również nie aktywuje jeszcze realnej mocy przedmiotu.
-- Kolory fioletowy i tęczowy są zarezerwowane pod przyszłe mechaniki specjalne; nie stanowią dodatkowych zwykłych poziomów trudności.
-- Nie ma jeszcze bossa końcowego, trwałego odblokowywania zawartości, zapisu postępu między runami, proceduralnego grafu pomieszczeń ani pełnego systemu synergii przedmiotów.
-- Parametry trudności i szans dropów wymagają testów rozgrywki i dalszego balansu.
+## Dokumentacja i testy
 
-## Weryfikacja
+- [BALANCE_NOTES.md](BALANCE_NOTES.md) — aktualne liczby, założenia i ryzyka balansu.
+- [ENEMY_PROGRESSION.md](ENEMY_PROGRESSION.md) — progresja wrogów i bossów.
+- `python verify.py` — statyczne sprawdzenie źródła.
+- `python tests/browser_smoke.py` — test dymny Playwright wymagający zainstalowanego pakietu Playwright i przeglądarki Chromium. Można wskazać przeglądarkę przez zmienną `PLAYWRIGHT_CHROMIUM_EXECUTABLE`.
 
-Po ostatnich zmianach sprawdzono składnię JavaScript oraz identyczność plików `index.html` w obu repozytoriach. Losowanie składu czterech drzwi przetestowano w 100 000 symulowanych próbach, a granice skalowania liczby przeciwników zweryfikowano statycznie. **Nie wykonano jeszcze interaktywnego testu w przeglądarce**, więc powyższe kontrole nie zastępują testów podczas gry.
+Testy statyczne nie zastępują pełnego testowania podczas rozgrywki ani strojenia balansu na podstawie wielu runów.
