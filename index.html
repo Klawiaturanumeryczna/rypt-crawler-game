@@ -30,7 +30,7 @@ const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
 const $=id=>document.getElementById(id);
 const W=canvas.width,H=canvas.height, room={x:72,y:58,w:816,h:484};
 const keys=new Set(); let mouse={x:W/2+100,y:H/2,down:false};
-let state='title',player, enemies=[],shots=[],enemyShots=[],drops=[],particles=[],floor=1,roomNo=1,roomTier=2,kills=0,killChain=0,killChainTimer=0,coins=0,frame=0,shake=0,doorOpen=false,doors=[],roomSeed=1,spawnTimer=0,floorExitSpawned=false;
+let state='title',player, enemies=[],shots=[],enemyShots=[],drops=[],particles=[],floor=1,roomNo=1,roomTier=2,kills=0,killChain=0,killChainTimer=0,coins=0,frame=0,shake=0,doorOpen=false,doors=[],roomSeed=1,spawnTimer=0,floorExitSpawned=false,shopUsedFloor=false;
 // Dane gry trzymamy w jednym miejscu. Dodawanie nowych typów nie wymaga przebudowy całej logiki.
 const DANE_GRY = {
  drzwi: {
@@ -51,6 +51,39 @@ const TRUDNOSC_POKOJU={1:{nazwa:'ŁATWE',mnoznikWrogow:0.75,mnoznikSzybkosci:0.9
 const rand=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.length)];
 const LISTA_DRZWI=Object.values(DANE_GRY.drzwi);
 const WSZYSTKIE_PRZEDMIOTY=[...DANE_GRY.przedmioty.aktywne,...DANE_GRY.przedmioty.nogi,...DANE_GRY.przedmioty.strzelanie];
+const OPISY_PRZEDMIOTOW={
+ active:['Leczy 1 serce (+2 HP).','Daje +2 monety.','Zadaje wszystkim wrogom 4 obrażenia.','Usuwa wszystkie pociski wrogów.','Daje 2 sekundy nietykalności.','Wystrzeliwuje 8 pocisków we wszystkich kierunkach.','Zadaje najbliższemu wrogowi 10 obrażeń.','Leczy 2 serca (+4 HP).','Daje +3 monety.','Zadaje wszystkim wrogom 2 obrażenia i usuwa wrogie pociski.'],
+ legs:['Prędkość ruchu +0,25.','Prędkość ruchu +0,40.','Maksymalne zdrowie +1 serce i leczy 1 serce.','Prędkość +0,20, ale szybkostrzelność gorsza o 1 klatkę.','Czas nietykalności po trafieniu +10 klatek.','Prędkość ruchu +0,30.','Obrażenia pocisków +0,25.','Maksymalne zdrowie +1 serce i leczy 1 serce.','Prędkość +0,50, ale szybkostrzelność gorsza o 2 klatki.','Czas nietykalności +20 klatek i prędkość +0,15.'],
+ shot:['Obrażenia pocisków +0,25.','Obrażenia pocisków +0,50.','Szybkostrzelność lepsza o 2 klatki.','Prędkość pocisków +1.','Rozmiar pocisku +1.','Szybkostrzelność lepsza o 3 klatki.','Obrażenia +0,25, ale szybkostrzelność gorsza o 1 klatkę.','Rozmiar pocisku +2, ale prędkość pocisku −0,5.','Prędkość pocisku +1,5.','Obrażenia +1, ale szybkostrzelność gorsza o 2 klatki.']
+};
+function itemDescription(item){return OPISY_PRZEDMIOTOW[item.kategoria]?.[item.numer-1]||'Brak opisu.'}
+function maxRoomsForFloor(f){return 20+Math.max(0,f-1)*2}
+function applyPassiveItem(item){
+ const p=player,n=item.numer,cat=item.kategoria,notes=[];
+ if(cat==='legs'){
+  if(n===1||n===6||n===2||n===9||n===4||n===10){const old=p.speed;p.speed+=({1:.25,2:.4,4:.2,6:.3,9:.5,10:.15})[n];notes.push('prędkość '+old.toFixed(2)+' → '+p.speed.toFixed(2));}
+  if(n===3||n===8){const oldMax=p.maxHp,oldHp=p.hp;p.maxHp+=2;p.hp=Math.min(p.maxHp,p.hp+2);notes.push('maksymalne HP '+oldMax+' → '+p.maxHp+'; zdrowie '+oldHp+' → '+p.hp);}
+  if(n===4||n===9){const old=p.fireRate;p.fireRate+=n===4?1:2;notes.push('szybkostrzelność '+old+' → '+p.fireRate);}
+  if(n===5||n===10){const old=p.invulnDuration;p.invulnDuration+=n===5?10:20;notes.push('nietykalność po trafieniu '+old+' → '+p.invulnDuration+' klatek');}
+  if(n===7){const old=p.damage;p.damage+=.25;notes.push('obrażenia '+old+' → '+p.damage);}
+ }else if(cat==='shot'){
+  if(n===1||n===2||n===7||n===10){const old=p.damage;p.damage+=({1:.25,2:.5,7:.25,10:1})[n];notes.push('obrażenia '+old+' → '+p.damage);}
+  if(n===3||n===6||n===7||n===10){const old=p.fireRate;p.fireRate=Math.max(6,p.fireRate+({3:-2,6:-3,7:1,10:2})[n]);notes.push('klatki między strzałami '+old+' → '+p.fireRate);}
+  if(n===4||n===9){const old=p.shotSpeed;p.shotSpeed+=n===4?1:1.5;notes.push('prędkość pocisku '+old.toFixed(1)+' → '+p.shotSpeed.toFixed(1));}
+  if(n===5||n===8){const old=p.shotSize;p.shotSize+=n===5?1:2;notes.push('rozmiar pocisku '+old+' → '+p.shotSize);if(n===8){const v=p.shotSpeed;p.shotSpeed=Math.max(3,p.shotSpeed-.5);notes.push('prędkość pocisku '+v.toFixed(1)+' → '+p.shotSpeed.toFixed(1));}}
+ }
+ log('PRZEDMIOT: '+item.nazwa+' — '+itemDescription(item));notes.forEach(x=>log('STATYSTYKA — '+x+'.'));
+}
+function useActiveItem(item){
+ const n=item.numer,oldHp=player.hp,oldCoins=coins;
+ if(n===1||n===8){player.hp=Math.min(player.maxHp,player.hp+(n===1?2:4));log('ZDROWIE: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+'.')}
+ else if(n===2||n===9){coins+=n===2?2:3;log('MONETY: '+oldCoins+' → '+coins+'.')}
+ else if(n===3||n===7||n===10){const targets=n===7?enemies.filter(e=>e.hp>0).sort((a,b)=>Math.hypot(a.x-player.x,a.y-player.y)-Math.hypot(b.x-player.x,b.y-player.y)).slice(0,1):enemies.filter(e=>e.hp>0);const dmg=n===3?4:n===7?10:2;targets.forEach(e=>e.hp=Math.max(1,e.hp-dmg));log('EFEKT — '+targets.length+' wrogów otrzymuje do '+dmg+' obrażeń (ten efekt ich nie dobija).')}
+ if(n===4||n===10){const old=enemyShots.length;enemyShots=[];log('Wrogie pociski: '+old+' → 0.')}
+ if(n===5)player.invuln=Math.max(player.invuln,120);
+ if(n===6){for(let i=0;i<8;i++){const a=i*Math.PI/4;shots.push({x:player.x,y:player.y,vx:Math.cos(a)*player.shotSpeed,vy:Math.sin(a)*player.shotSpeed,r:player.shotSize,life:90,damage:player.damage})}log('Wystrzelono 8 pocisków dookoła.')}
+ const oldCount=player.items.length;player.items=player.items.filter(x=>x!==item);player.activeItemIndex=0;log('STATYSTYKA — przedmioty: '+oldCount+' → '+player.items.length+'. Zużyto '+item.nazwa+'.');updateHud();
+}
  // Progresja wrogów: wartości balansu są tymczasowe i zebrane w jednym miejscu do późniejszego strojenia.
  const PROGRESJA_WROGOW = {
   mnoznikHPNaPietro:0.14,
@@ -60,7 +93,8 @@ const WSZYSTKIE_PRZEDMIOTY=[...DANE_GRY.przedmioty.aktywne,...DANE_GRY.przedmiot
    spitter:{tier:1,hp:2,speedMin:1.05,speedMax:1.05,r:14,color:'#b88a50',rola:'ranged'},
    brute:{tier:2,hp:5,speedMin:0.78,speedMax:0.92,r:20,color:'#a64e58',rola:'chase'},
    dasher:{tier:3,hp:3,speedMin:1.15,speedMax:1.35,r:15,color:'#6a8fba',rola:'dash'},
-   hexer:{tier:4,hp:4,speedMin:0.85,speedMax:1.0,r:17,color:'#9b72c7',rola:'ranged'}
+   hexer:{tier:4,hp:4,speedMin:0.85,speedMax:1.0,r:17,color:'#9b72c7',rola:'ranged'},
+   boss:{tier:5,hp:1,speedMin:0.78,speedMax:0.92,r:29,color:'#e44758',rola:'ranged'}
   },
   pule:[
    {floor:1,weights:{chaser:76,spitter:24}},
@@ -75,8 +109,8 @@ const WSZYSTKIE_PRZEDMIOTY=[...DANE_GRY.przedmioty.aktywne,...DANE_GRY.przedmiot
  }
  function createEnemy(type,x,y){
   const cfg=PROGRESJA_WROGOW.typy[type],floorScale=Math.max(0,floor-1);
-  const hp=Math.max(1,Math.round(cfg.hp*(1+PROGRESJA_WROGOW.mnoznikHPNaPietro*floorScale)));
-  return {x,y,r:cfg.r,hp,maxHp:hp,speed:rand(cfg.speedMin,cfg.speedMax)*(1+Math.min(.3,PROGRESJA_WROGOW.mnoznikSzybkosciNaPietro*floorScale))*TRUDNOSC_POKOJU[roomTier].mnoznikSzybkosci,type,tier:cfg.tier,rola:cfg.rola,phase:rand(0,6.28),dashTimer:rand(70,125),dashFrames:0,cooldown:type==='spitter'?rand(65,100):type==='hexer'?rand(50,85):rand(100,170),hit:0};
+  const hp=type==='boss'?Math.round(45+floor*12):Math.max(1,Math.round(cfg.hp*(1+PROGRESJA_WROGOW.mnoznikHPNaPietro*floorScale)));
+  return {x,y,r:cfg.r,hp,maxHp:hp,speed:rand(cfg.speedMin,cfg.speedMax)*(1+Math.min(.3,PROGRESJA_WROGOW.mnoznikSzybkosciNaPietro*floorScale))*TRUDNOSC_POKOJU[roomTier].mnoznikSzybkosci,type,tier:cfg.tier,rola:cfg.rola,phase:rand(0,6.28),dashTimer:rand(70,125),dashFrames:0,cooldown:type==='boss'?rand(55,75):type==='spitter'?rand(65,100):type==='hexer'?rand(50,85):rand(100,170),hit:0};
  }
  function pickEnemyType(){
   const weights=enemyWeightsForFloor(floor),entries=Object.entries(weights),total=entries.reduce((s,e)=>s+e[1],0);
@@ -88,32 +122,27 @@ const MOVEMENT_TYPES={runner:{name:'Podstawowe bieganie',desc:'Średnia prędko�
 function log(s){const box=$('log');if(!box.dataset.initialized){box.textContent='';box.dataset.initialized='true'}const entry=document.createElement('div');entry.className='logEntry';entry.textContent=String(s);box.appendChild(entry);while(box.children.length>5)box.firstElementChild.remove()}
 function applyMovement(type){if(!player||!MOVEMENT_TYPES[type])return;const previous=MOVEMENT_TYPES[player.movement||'runner'],next=MOVEMENT_TYPES[type];const oldSpeed=player.speed;player.movement=type;player.vx=0;player.vy=0;player.dashCooldown=0;player.dashFrames=0;player.speed=next.speed;state='play';$('overlay').classList.add('hidden');updateHud();let details='Prędkość bazowa: '+oldSpeed.toFixed(2)+' → '+next.speed.toFixed(2)+'. ';if(type==='hopper')details+='Sus: Shift, 8 klatek, cooldown 72 klatki. ';else if(type==='momentum')details+='Rozpęd narasta podczas ruchu. ';else if(type==='drifter')details+='Bezwładność utrudnia ostre skręty. ';else if(type==='twitch')details+='Niższa prędkość, szybka zmiana kierunku. ';else if(type==='juggernaut')details+='Wolniejsze przyspieszanie i hamowanie. ';else details+='Natychmiastowe skręcanie. ';log('ZMIANA RUCHU: '+previous.name+' → '+next.name+'. '+details+'Naciśnij M, aby zmienić ponownie.')}
 function showMovementChoice(floorStart=false){if(!player)return;clearInput();state='movementChoice';$('overlayTitle').textContent=floorStart?'WYBIERZ STYL RUCHU':'ZMIEN STYL RUCHU';$('overlayText').textContent=floorStart?'Wybierz jeden styl na to piętro. Nowy wybór zastępuje poprzedni.':'Wybierz jeden styl. Podstawowe bieganie zawsze pozostaje dostępne.';$('startBtn').classList.add('hidden');let choices=$('moveChoices');if(!choices){choices=document.createElement('div');choices.id='moveChoices';choices.className='moveChoices';$('overlayText').after(choices)}choices.innerHTML='';for(const type of ['runner','drifter','hopper','momentum','twitch','juggernaut']){const m=MOVEMENT_TYPES[type],btn=document.createElement('button');btn.className='moveChoice';btn.innerHTML='<strong>'+m.name+(player.movement===type?' ✓':'')+'</strong><small>'+m.desc+'</small>';btn.onclick=()=>{choices.innerHTML='';$('startBtn').classList.remove('hidden');applyMovement(type)};choices.appendChild(btn)}const hint=document.createElement('div');hint.className='moveHint';hint.textContent='M — otwórz wybór ponownie podczas gry.';choices.appendChild(hint);$('overlay').classList.remove('hidden')}
-function startRun(){clearInput();shake=0;frame=0;floor=1;roomNo=1;kills=0;killChain=0;killChainTimer=0;coins=0;player={x:W/2,y:H/2,r:13,speed:3.15,hp:6,maxHp:6,damage:1,fireRate:17,shotSpeed:7.3,shotSize:5,luck:1,invuln:0,cooldown:0,steps:0,stepProgress:0,items:[],activeItemIndex:0,movement:'runner',vx:0,vy:0,dashCooldown:0,dashFrames:0,dashDirX:0,dashDirY:0};state='play';enterRoom(2);updateHud();showMovementChoice(true);log('Wybierz styl ruchu przed rozpoczęciem piętra.')}
-function enterRoom(difficultyTier=2,entryNotice=''){roomTier=[1,2,3].includes(difficultyTier)?difficultyTier:2;const difficulty=TRUDNOSC_POKOJU[roomTier];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];doorOpen=false;floorExitSpawned=false;spawnTimer=0;
+function startRun(){clearInput();shake=0;frame=0;floor=1;roomNo=1;kills=0;killChain=0;killChainTimer=0;coins=0;shopUsedFloor=false;player={x:W/2,y:H/2,r:13,speed:3.15,hp:6,maxHp:6,damage:1,fireRate:17,shotSpeed:7.3,shotSize:5,luck:1,invuln:0,invulnDuration:65,cooldown:0,steps:0,stepProgress:0,items:[],activeItemIndex:0,movement:'runner',vx:0,vy:0,dashCooldown:0,dashFrames:0,dashDirX:0,dashDirY:0};state='play';enterRoom(2);updateHud();showMovementChoice(true);log('Wybierz styl ruchu przed rozpoczęciem piętra.')}
+function enterRoom(difficultyTier=2,entryNotice='',shopRoom=false){roomTier=[1,2,3].includes(difficultyTier)?difficultyTier:2;const difficulty=TRUDNOSC_POKOJU[roomTier];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];doorOpen=false;floorExitSpawned=false;spawnTimer=0;if(shopRoom)shopUsedFloor=true;
  const doorTypes=[DANE_GRY.drzwi.szare,DANE_GRY.drzwi.zlote,DANE_GRY.drzwi.czerwone];
  doors=[{side:'top',x:W/2,y:room.y},{side:'bottom',x:W/2,y:room.y+room.h},{side:'left',x:room.x,y:room.y+room.h/2},{side:'right',x:room.x+room.w,y:room.y+room.h/2}].map(door=>({...door,type:pick(doorTypes)}));
+ if(!shopRoom&&!shopUsedFloor&&roomNo>1&&roomNo<maxRoomsForFloor(floor)&&Math.random()<.08){pick(doors).shop=true;log('W tym pokoju jest specjalne wejście do sklepu (fioletowa obwódka).')}
  if(doors.every(door=>door.type.id===doors[0].type.id)){
   const rerollIndex=Math.floor(Math.random()*doors.length);
   doors[rerollIndex].type=pick(doorTypes.filter(type=>type.id!==doors[rerollIndex].type.id));
  }
- if(roomNo===1){
-  const rows=[DANE_GRY.przedmioty.aktywne,DANE_GRY.przedmioty.nogi,DANE_GRY.przedmioty.strzelanie];
-  rows.forEach((row,rowIndex)=>row.forEach((item,i)=>{
-   const x=room.x+42+i*((room.w-84)/9),y=room.y+145+rowIndex*100;
-   drops.push({x,y,r:17,type:'item',itemId:item.id,item});
-  }));
- }
- const maxEnemies=Math.max(6,20-(floor-1)*4);
+ if(roomNo===1&&!shopRoom){const choices=[pick(DANE_GRY.przedmioty.aktywne),pick(DANE_GRY.przedmioty.nogi),pick(DANE_GRY.przedmioty.strzelanie)];choices.forEach((item,i)=>drops.push({x:room.x+room.w*(i+1)/4,y:room.y+112,r:17,type:'item',itemId:item.id,item}));}
+ const bossRoom=roomNo>=maxRoomsForFloor(floor);
+ const maxEnemies=Math.min(8,2+floor+Math.floor(roomNo/5));
  const baseCount=1+Math.floor(Math.random()*maxEnemies);
- const count=Math.max(1,Math.min(maxEnemies,Math.round(baseCount*difficulty.mnoznikWrogow)));
- for(let i=0;i<count;i++){let x,y,tries=0;do{x=rand(room.x+50,room.x+room.w-50);y=rand(room.y+50,room.y+room.h-50);tries++}while(Math.hypot(x-W/2,y-H/2)<150&&tries<40);
-  enemies.push(createEnemy(pickEnemyType(),x,y));
- }
+ const count=shopRoom||bossRoom?0:Math.max(1,Math.min(maxEnemies,Math.round(baseCount*difficulty.mnoznikWrogow)));
+ if(bossRoom){enemies.push(createEnemy('boss',W/2,room.y+130));log('BOSS PIĘTRA — pokonaj strażnika, aby otworzyć przejście dalej.')}else if(!shopRoom){for(let i=0;i<count;i++){let x,y,tries=0;do{x=rand(room.x+50,room.x+room.w-50);y=rand(room.y+50,room.y+room.h-50);tries++}while(Math.hypot(x-W/2,y-H/2)<150&&tries<40);enemies.push(createEnemy(pickEnemyType(),x,y));}}
+ if(shopRoom){doorOpen=true;openShop()}
  if(entryNotice)log(entryNotice);
- log(`Pokój ${roomNo}: ${count} potworów. Zagrożenie: ${difficulty.nazwa}. Szansa na łup: ×${difficulty.mnoznikLupu}. Po walce odblokują się drzwi${roomNo===10?' do przejścia na następne piętro':''}.`);updateHud()}
+ log(`Pokój ${roomNo}/${maxRoomsForFloor(floor)}: ${bossRoom?'BOSS':shopRoom?'SKLEP':count+' potworów'}. Zagrożenie: ${difficulty.nazwa}. Szansa na łup: ×${difficulty.mnoznikLupu}.`);updateHud()}
 function updateHud(){$('hp').textContent=Array.from({length:player?player.maxHp/2:3},(_,i)=>{const hp=player?player.hp:6;return hp>=i*2+2?'♥':hp===i*2+1?'◐':'♡'}).join(' ')+' ('+(player?player.hp:6)+'/'+(player?player.maxHp:6)+')';$('floor').textContent=floor;$('room').textContent=roomNo;$('threat').textContent=TRUDNOSC_POKOJU[roomTier].nazwa;$('kills').textContent=kills;$('killChain').textContent=killChain;$('items').textContent=player?player.items.length:0;const activeItems=player?player.items.filter(item=>item.kategoria==='active'):[],legItems=player?player.items.filter(item=>item.kategoria==='legs'):[],shotItems=player?player.items.filter(item=>item.kategoria==='shot'):[];$('activeItem').textContent=activeItems.length?activeItems.map(item=>item.numer).join(','):'—';$('legItem').textContent=legItems.length?legItems.map(item=>item.numer).join(','):'—';$('shotItem').textContent=shotItems.length?shotItems.map(item=>item.numer).join(','):'—';$('speedStat').textContent=player?player.speed.toFixed(2):'3.15';$('fireStat').textContent=player?player.fireRate:'17';$('coins').textContent=coins;$('luck').textContent=player?player.luck:'1';$('shotStat').textContent=player?player.shotSize.toFixed(1):'5.0';$('stepsStat').textContent=player?player.steps:0}
 function pos(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}}
-window.addEventListener('keydown',e=>{if(e.repeat&&(e.key.toLowerCase()==='p'||e.key.toLowerCase()==='m'||e.key.toLowerCase()==='r'||e.code==='Space'))return;keys.add(e.key.toLowerCase());if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase()))e.preventDefault();if(e.code==='Space'&&state==='play'&&player){const activeItems=player.items.filter(item=>item.kategoria==='active');if(activeItems.length){const active=activeItems[player.activeItemIndex%activeItems.length];log(active.nazwa+' — placeholder, efekt nie został jeszcze zaprogramowany.')}}if(e.key.toLowerCase()==='m'&&state==='play'){showMovementChoice(false)}else if(e.key.toLowerCase()==='p'&&state==='play'){state='paused';showOverlay('PAUZA','Naciśnij P, aby wrócić do lochu.','WRÓĆ DO GRY',()=>{state='play';$('overlay').classList.add('hidden')})}else if(e.key.toLowerCase()==='p'&&state==='paused'){state='play';$('overlay').classList.add('hidden')}if(e.key.toLowerCase()==='r')startRun()});
+window.addEventListener('keydown',e=>{if(e.repeat&&(e.key.toLowerCase()==='p'||e.key.toLowerCase()==='m'||e.key.toLowerCase()==='r'||e.code==='Space'))return;keys.add(e.key.toLowerCase());if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase()))e.preventDefault();if(e.code==='Space'&&state==='play'&&player){const activeItems=player.items.filter(item=>item.kategoria==='active');if(activeItems.length){const active=activeItems[player.activeItemIndex%activeItems.length];log(active.nazwa+' — placeholder, efekt nie został jeszcze zaprogramowany.')}}if(e.key.toLowerCase()==='m'&&state==='play'){showMovementChoice(false)}else if(e.code==='Space'&&state==='play'&&player){const activeItems=player.items.filter(item=>item.kategoria==='active');if(activeItems.length){const active=activeItems[player.activeItemIndex%activeItems.length];useActiveItem(active)}}if(e.key.toLowerCase()==='p'&&state==='play'){state='paused';showOverlay('PAUZA','Naciśnij P, aby wrócić do lochu.','WRÓĆ DO GRY',()=>{state='play';$('overlay').classList.add('hidden')})}else if(e.key.toLowerCase()==='p'&&state==='paused'){state='play';$('overlay').classList.add('hidden')}if(e.key.toLowerCase()==='r')startRun()});
 window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 // Bezpiecznie zwalnia wejście, gdy karta traci fokus — zapobiega zablokowanemu ruchowi/strzałowi po powrocie.
 function clearInput(){keys.clear();mouse.down=false}
@@ -122,11 +151,12 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInput(
 canvas.addEventListener('mousemove',e=>mouse=Object.assign(mouse,pos(e)));canvas.addEventListener('mousedown',e=>{mouse=Object.assign(mouse,pos(e));mouse.down=true});window.addEventListener('mouseup',()=>mouse.down=false);
 
 function showOverlay(title,txt,button,action){$('startBtn').classList.remove('hidden');const oldChoices=$('moveChoices');if(oldChoices)oldChoices.innerHTML='';$('overlayTitle').textContent=title;$('overlayText').textContent=txt;$('startBtn').textContent=button;$('startBtn').onclick=action;$('overlay').classList.remove('hidden')}
+function openShop(){state='shop';showOverlay('SKLEP','Serce kosztuje 2 monety i przywraca 1 serce (+2 HP).','OPUŚĆ SKLEP',()=>{state='play';$('overlay').classList.add('hidden');log('Opuszczono sklep.')});let buy=$('buyHeart');if(!buy){buy=document.createElement('button');buy.id='buyHeart';buy.className='btn';$('startBtn').before(buy)}buy.textContent=player.hp>=player.maxHp?'SERCE — 2 MONETY (PEŁNE HP)':'KUP SERCE — 2 MONETY (+2 HP)';buy.disabled=coins<2||player.hp>=player.maxHp;buy.style.opacity=buy.disabled?'.5':'1';buy.onclick=()=>{if(coins<2||player.hp>=player.maxHp)return;const oldCoins=coins,oldHp=player.hp;coins-=2;player.hp=Math.min(player.maxHp,player.hp+2);log('ZAKUP — monety: '+oldCoins+' → '+coins+'. Zdrowie: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+'.');updateHud();openShop()}}
 function shoot(dirX=null,dirY=null){if(player.cooldown>0)return;let dx,dy;if(dirX===null||dirY===null){dx=mouse.x-player.x;dy=mouse.y-player.y}else{dx=dirX;dy=dirY}const d=Math.hypot(dx,dy)||1;dx/=d;dy/=d;shots.push({x:player.x+dx*16,y:player.y+dy*16,vx:dx*player.shotSpeed,vy:dy*player.shotSpeed,r:player.shotSize,life:90,damage:player.damage});player.cooldown=player.fireRate;for(let i=0;i<3;i++)particles.push({x:player.x+dx*17,y:player.y+dy*17,vx:rand(-1,1),vy:rand(-1,1),life:12,r:2,color:'#f1c66d'})}
-function hitPlayer(dmg=1){if(player.invuln>0)return;const oldHp=player.hp;player.hp-=dmg;log('STATYSTYKA — zdrowie: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+' (otrzymujesz obrażenia).');player.invuln=65;shake=9;for(let i=0;i<12;i++)particles.push({x:player.x,y:player.y,vx:rand(-3,3),vy:rand(-3,3),life:25,r:rand(2,5),color:'#e75c6d'});updateHud();if(player.hp<=0){state='dead';showOverlay('KONIEC ROZGRYWKI',`Dotarłeś do piętra ${floor}, pokój ${roomNo}. Pokonane potwory: ${kills}. Każda próba uczy czegoś nowego.`,'ZAGRAJ PONOWNIE',startRun)}}
-function nextRoom(difficultyTier=2){player.x=W/2;player.y=H/2;roomNo=Math.min(10,roomNo+1);enterRoom(difficultyTier)}
-function nextFloor(difficultyTier=2){floor++;roomNo=1;player.x=W/2;player.y=H/2;const oldHp=player.hp;player.hp=Math.min(player.maxHp,player.hp+2);const transitionNotice=player.hp>oldHp?`Przejście na piętro ${floor}. Zdrowie: ${oldHp}/${player.maxHp} → ${player.hp}/${player.maxHp} (+1 serce).`:`Przejście na piętro ${floor}. Zdrowie bez zmian: ${player.hp}/${player.maxHp} (pełne).`;enterRoom(difficultyTier,transitionNotice);showMovementChoice(true)}
-function rollFloorExit(){if(floorExitSpawned)return;const chance=roomNo/10;if(Math.random()<chance){floorExitSpawned=true;const exitDoor=pick(doors);exitDoor.floorExit=true;log(`Pojawiło się przejście na piętro ${floor+1}! Szansa: ${Math.round(chance*100)}%.`)}else{log(`Pokój oczyszczony. Przejście nie pojawiło się (${Math.round(chance*100)}% szansy). W kolejnym pokoju szansa wzrośnie.`)}}
+function hitPlayer(dmg=1){if(player.invuln>0)return;const oldHp=player.hp;player.hp-=dmg;log('STATYSTYKA — zdrowie: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+' (otrzymujesz obrażenia).');player.invuln=player.invulnDuration||65;shake=9;for(let i=0;i<12;i++)particles.push({x:player.x,y:player.y,vx:rand(-3,3),vy:rand(-3,3),life:25,r:rand(2,5),color:'#e75c6d'});updateHud();if(player.hp<=0){state='dead';showOverlay('KONIEC ROZGRYWKI',`Dotarłeś do piętra ${floor}, pokój ${roomNo}. Pokonane potwory: ${kills}. Każda próba uczy czegoś nowego.`,'ZAGRAJ PONOWNIE',startRun)}}
+function nextRoom(difficultyTier=2,shopRoom=false){player.x=W/2;player.y=H/2;roomNo=Math.min(maxRoomsForFloor(floor),roomNo+1);enterRoom(difficultyTier,'',shopRoom)}
+function nextFloor(difficultyTier=2){floor++;roomNo=1;shopUsedFloor=false;player.x=W/2;player.y=H/2;const oldHp=player.hp;player.hp=Math.min(player.maxHp,player.hp+2);const transitionNotice=player.hp>oldHp?`Przejście na piętro ${floor}. Zdrowie: ${oldHp}/${player.maxHp} → ${player.hp}/${player.maxHp} (+1 serce).`:`Przejście na piętro ${floor}. Zdrowie bez zmian: ${player.hp}/${player.maxHp} (pełne).`;enterRoom(difficultyTier,transitionNotice);showMovementChoice(true)}
+function rollFloorExit(){if(floorExitSpawned)return;const maxRooms=maxRoomsForFloor(floor),chance=Math.min(1,roomNo/maxRooms);if(roomNo>=maxRooms){floorExitSpawned=true;doors.forEach(d=>d.floorExit=true);log('BOSS POKONANY — przejście na następne piętro jest pewne (100%).');return}if(Math.random()<chance){floorExitSpawned=true;pick(doors).floorExit=true;log(`Pojawiło się przejście na piętro ${floor+1}! Szansa w pokoju ${roomNo}/${maxRooms}: ${Math.round(chance*100)}%.`)}else{log(`Pokój oczyszczony. Przejście nie pojawiło się (${Math.round(chance*100)}% szansy). W kolejnym pokoju szansa wzrośnie.`)}}
 function update(){
  if(state!=='play')return;frame++;if(killChainTimer>0){killChainTimer--;if(killChainTimer===0&&killChain>0){const oldChain=killChain;killChain=0;log('STATYSTYKA — seria zabójstw: '+oldChain+' → 0 (3 sekundy bez kolejnego zabójstwa).');updateHud()}}if(player.invuln>0)player.invuln--;if(player.cooldown>0)player.cooldown--;if(player.dashCooldown>0)player.dashCooldown--;
  let mx=(keys.has('d')?1:0)-(keys.has('a')?1:0),my=(keys.has('s')?1:0)-(keys.has('w')?1:0),mm=Math.hypot(mx,my);if(mm){mx/=mm;my/=mm}const move=MOVEMENT_TYPES[player.movement||'runner'];
@@ -137,27 +167,27 @@ function update(){
  player.x=Math.max(room.x+player.r,Math.min(room.x+room.w-player.r,player.x));player.y=Math.max(room.y+player.r,Math.min(room.y+room.h-player.r,player.y));if(player.x===room.x+player.r||player.x===room.x+room.w-player.r)player.vx=0;if(player.y===room.y+player.r||player.y===room.y+room.h-player.r)player.vy=0;
  let sx=(keys.has('arrowright')?1:0)-(keys.has('arrowleft')?1:0),sy=(keys.has('arrowdown')?1:0)-(keys.has('arrowup')?1:0);if(sx!==0||sy!==0){shoot(sx,sy)}else if(mouse.down)shoot();
  for(const s of shots){s.x+=s.vx;s.y+=s.vy;s.life--;if(s.x<room.x||s.x>room.x+room.w||s.y<room.y||s.y>room.y+room.h)s.life=0;
-  for(const e of enemies){if(e.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<s.r+e.r){e.hp-=s.damage;s.life=0;e.hit=5;for(let i=0;i<5;i++)particles.push({x:s.x,y:s.y,vx:rand(-2,2),vy:rand(-2,2),life:15,r:2,color:'#e9d8ff'});if(e.hp<=0){const oldKills=kills;kills++;const oldChain=killChain;killChain++;killChainTimer=180;log('STATYSTYKA — zabójstwa: '+oldKills+' → '+kills+'. Seria: '+oldChain+' → '+killChain+'.');if(killChain%5===0){const oldCoins=coins;coins++;log('NAGRODA ZA SERIĘ — '+killChain+' zabójstw! Monety: '+oldCoins+' → '+coins+' (+1 moneta).')}const lootMultiplier=TRUDNOSC_POKOJU[roomTier].mnoznikLupu;if(Math.random()<DANE_GRY.dropy.moneta.szansaBazowa*lootMultiplier)drops.push({x:e.x,y:e.y,r:7,type:DANE_GRY.dropy.moneta.id});if(Math.random()<DANE_GRY.dropy.serce.szansa*lootMultiplier)drops.push({x:e.x,y:e.y,r:8,type:DANE_GRY.dropy.serce.id});for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'})}break}}
+  for(const e of enemies){if(e.hp>0&&Math.hypot(s.x-e.x,s.y-e.y)<s.r+e.r){e.hp-=s.damage;s.life=0;e.hit=5;for(let i=0;i<5;i++)particles.push({x:s.x,y:s.y,vx:rand(-2,2),vy:rand(-2,2),life:15,r:2,color:'#e9d8ff'});if(e.hp<=0){const oldKills=kills;kills++;const oldChain=killChain;killChain++;killChainTimer=180;log('STATYSTYKA — zabójstwa: '+oldKills+' → '+kills+'. Seria: '+oldChain+' → '+killChain+'.');if(killChain%5===0){const oldCoins=coins;coins++;log('NAGRODA ZA SERIĘ — '+killChain+' zabójstw! Monety: '+oldCoins+' → '+coins+' (+1 moneta).')}const lootMultiplier=TRUDNOSC_POKOJU[roomTier].mnoznikLupu;if(Math.random()<.08*lootMultiplier)drops.push({x:e.x,y:e.y,r:7,type:DANE_GRY.dropy.moneta.id});if(Math.random()<.025*lootMultiplier)drops.push({x:e.x,y:e.y,r:8,type:DANE_GRY.dropy.serce.id});for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'})}break}}
  }
  shots=shots.filter(s=>s.life>0);
  for(const e of enemies){if(e.hp<=0)continue;if(e.hit>0)e.hit--;const dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
  if(e.rola==='chase'){e.x+=dx/d*e.speed;e.y+=dy/d*e.speed}
  else if(e.rola==='dash'){e.dashTimer--;if(e.dashTimer<=0&&e.dashFrames<=0){e.dashFrames=16;e.dashTimer=rand(90,140)}if(e.dashFrames>0){e.x+=dx/d*e.speed*2.7;e.y+=dy/d*e.speed*2.7;e.dashFrames--}else{e.x+=dx/d*e.speed*.55;e.y+=dy/d*e.speed*.55}}
  else{if(d>220){e.x+=dx/d*e.speed*.75;e.y+=dy/d*e.speed*.75}else if(d<150){e.x-=dx/d*e.speed*.7;e.y-=dy/d*e.speed*.7}e.phase+=.035;e.x+=Math.cos(e.phase)*.45;e.y+=Math.sin(e.phase)*.45}
- if(e.rola==='ranged'){e.cooldown--;if(e.cooldown<=0&&d<430){const bulletSpeed=e.type==='spitter'?3.0:3.35;enemyShots.push({x:e.x,y:e.y,vx:dx/d*bulletSpeed,vy:dy/d*bulletSpeed,r:e.type==='spitter'?6:7,life:130});e.cooldown=e.type==='spitter'?rand(85,130):rand(65,95)}} 
+ if(e.rola==='ranged'){e.cooldown--;if(e.cooldown<=0&&d<500){if(e.type==='boss'){const a=Math.atan2(dy,dx);for(const spread of [-.24,0,.24])enemyShots.push({x:e.x,y:e.y,vx:Math.cos(a+spread)*3.5,vy:Math.sin(a+spread)*3.5,r:8,life:145});e.cooldown=rand(55,75)}else{const bulletSpeed=e.type==='spitter'?3.0:3.35;enemyShots.push({x:e.x,y:e.y,vx:dx/d*bulletSpeed,vy:dy/d*bulletSpeed,r:e.type==='spitter'?6:7,life:130});e.cooldown=e.type==='spitter'?rand(85,130):rand(65,95)}}} 
  e.x=Math.max(room.x+e.r,Math.min(room.x+room.w-e.r,e.x));e.y=Math.max(room.y+e.r,Math.min(room.y+room.h-e.r,e.y));
  if(d<e.r+player.r)hitPlayer(1)}
  for(const s of enemyShots){s.x+=s.vx;s.y+=s.vy;s.life--;if(Math.hypot(s.x-player.x,s.y-player.y)<s.r+player.r){s.life=0;hitPlayer(1)}}
  enemyShots=enemyShots.filter(s=>s.life>0&&s.x>room.x&&s.x<room.x+room.w&&s.y>room.y&&s.y<room.y+room.h);
- for(const d of drops){if(!d.gone&&!(d.type==='heart'&&player.hp>=player.maxHp)&&Math.hypot(player.x-d.x,player.y-d.y)<player.r+d.r+3){
-  if(d.type==='heart'){if(player.hp>=player.maxHp){if(!d.fullHealthNotified){log('SERCE POZOSTAJE — zdrowie jest pełne ('+player.hp+'/'+player.maxHp+').');d.fullHealthNotified=true}}else{d.gone=true;const oldHp=player.hp;player.hp=Math.min(player.maxHp,player.hp+2);log('STATYSTYKA — zdrowie: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+' (+1 serce).')}}
+ for(const d of drops){if(d.gone||Math.hypot(player.x-d.x,player.y-d.y)>=player.r+d.r+3)continue;
+  if(d.type==='heart'&&player.hp<player.maxHp){d.gone=true;const oldHp=player.hp;player.hp=Math.min(player.maxHp,player.hp+2);log('STATYSTYKA — zdrowie: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+' (+1 serce).')}
   else if(d.type==='coin'){d.gone=true;const oldCoins=coins;coins++;log('STATYSTYKA — monety: '+oldCoins+' → '+coins+'.')}
-  else if(d.type==='item'&&d.item){const oldItems=player.items.length;player.items.push(d.item);d.gone=true;log('STATYSTYKA — przedmioty: '+oldItems+' → '+player.items.length+'. Zebrano '+d.item.nazwa+'; efekt tego przedmiotu nie jest jeszcze zaprogramowany.');}
+  else if(d.type==='item'&&d.item&&keys.has('e')){d.gone=true;const oldItems=player.items.length;player.items.push(d.item);if(d.item.kategoria==='active')log('PRZEDMIOT ZEBRANY — '+d.item.nazwa+': '+itemDescription(d.item)+' Użyj SPACJI, aby aktywować (zużywa przedmiot).');else applyPassiveItem(d.item);log('STATYSTYKA — przedmioty: '+oldItems+' → '+player.items.length+'.')}
   updateHud()
-}}
+}
  drops=drops.filter(d=>!d.gone);
  for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vx*=.96;p.vy*=.96;p.life--}particles=particles.filter(p=>p.life>0);
- if(enemies.every(e=>e.hp<=0)){if(!doorOpen){doorOpen=true;rollFloorExit();}for(const door of doors){if(Math.hypot(player.x-door.x,player.y-door.y)<44){if(door.floorExit){nextFloor(door.type.tier)}else{nextRoom(door.type.tier)}break}}}
+ if(enemies.every(e=>e.hp<=0)){if(!doorOpen){doorOpen=true;rollFloorExit();}for(const door of doors){if(Math.hypot(player.x-door.x,player.y-door.y)<44){if(door.floorExit){nextFloor(door.type.tier)}else{nextRoom(door.type.tier,!!door.shop)}break}}}
  if(shake>0)shake*=.82;
  updateHud()
 }
@@ -169,17 +199,17 @@ function draw(){
  // Four doors: gray = easy, gold = medium, red = hard. Four identical doors are rerolled.
  for(const door of doors){const horizontal=door.side==='top'||door.side==='bottom';const dw=horizontal?84:20,dh=horizontal?20:84;const x=door.x-dw/2,y=door.y-dh/2;let col=door.type.kolor;
    if(col==='rainbow'){const grad=ctx.createLinearGradient(x,y,x+dw,y+dh);grad.addColorStop(0,'#ef4444');grad.addColorStop(.2,'#f59e0b');grad.addColorStop(.4,'#facc15');grad.addColorStop(.6,'#22c55e');grad.addColorStop(.8,'#3b82f6');grad.addColorStop(1,'#c084fc');col=grad;}
-   ctx.fillStyle=col;ctx.fillRect(x,y,dw,dh);ctx.strokeStyle=door.floorExit?'#ffffff':door.type.poswiata;ctx.lineWidth=door.floorExit?5:3;ctx.strokeRect(x,y,dw,dh);
+   ctx.fillStyle=col;ctx.fillRect(x,y,dw,dh);ctx.strokeStyle=door.shop?'#a76bdb':door.floorExit?'#ffffff':door.type.poswiata;ctx.lineWidth=(door.floorExit||door.shop)?5:3;ctx.strokeRect(x,y,dw,dh);
    ctx.fillStyle=door.floorExit?'#fff8dc':(doorOpen?'#fff8dc':'#28212e');ctx.fillRect(x+(horizontal?11:5),y+(horizontal?5:11),dw-(horizontal?22:10),dh-(horizontal?10:22));
    ctx.strokeStyle=door.type.poswiata;ctx.lineWidth=2;ctx.strokeRect(x+(horizontal?11:5),y+(horizontal?5:11),dw-(horizontal?22:10),dh-(horizontal?10:22));
-   ctx.fillStyle=door.type.poswiata;ctx.font='10px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(door.floorExit?'PIĘTRO +1':door.type.nazwa,door.x,door.y);ctx.textBaseline='alphabetic';
+   ctx.fillStyle=door.type.poswiata;ctx.font='10px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(door.floorExit?'PIĘTRO +1':door.shop?'SKLEP • '+door.type.nazwa:door.type.nazwa,door.x,door.y);ctx.textBaseline='alphabetic';
  }ctx.textAlign='left'
  // enemies
  for(const e of enemies){if(e.hp<=0)continue;ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=e.hit>0?'#fff0f0':(PROGRESJA_WROGOW.typy[e.type]?.color||'#8c526d');ctx.beginPath();ctx.arc(0,0,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#17121c';ctx.beginPath();ctx.arc(-5,-2,2.7,0,6.28);ctx.arc(5,-2,2.7,0,6.28);ctx.fill();ctx.strokeStyle='#241722';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,7);ctx.lineTo(5,7);ctx.stroke();ctx.fillStyle='#3c2435';ctx.fillRect(-e.r,-e.r-8,e.r*2,4);ctx.fillStyle='#e75c6d';ctx.fillRect(-e.r,-e.r-8,e.r*2*Math.max(0,e.hp/e.maxHp),4);ctx.restore()}
  for(const s of shots){ctx.fillStyle='#f3d5ff';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(s.x-1,s.y-1,2,2)}
  for(const s of enemyShots){ctx.fillStyle='#e75c6d';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill()}
  for(const d of drops){
-  if(d.type==='item'&&d.item){const color=d.item.typ===1?'#f1c66d':d.item.typ===2?'#8cd6a5':'#a9b9ff';ctx.fillStyle='#201b2c';ctx.beginPath();ctx.arc(d.x,d.y,d.r+4,0,6.28);ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#fff';ctx.fillText(d.item.ikona,d.x,d.y-1);ctx.font='bold 10px monospace';ctx.fillStyle=color;ctx.fillText(String(d.item.numer),d.x+d.r-1,d.y+d.r-1);ctx.textBaseline='alphabetic';ctx.textAlign='left';
+  if(d.type==='item'&&d.item){const color=d.item.typ===1?'#f1c66d':d.item.typ===2?'#8cd6a5':'#a9b9ff';ctx.fillStyle='#201b2c';ctx.beginPath();ctx.arc(d.x,d.y,d.r+4,0,6.28);ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();ctx.font='18px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#fff';ctx.fillText(d.item.ikona,d.x,d.y-1);ctx.font='bold 10px monospace';ctx.fillStyle=color;ctx.fillText(String(d.item.numer),d.x+d.r-1,d.y+d.r-1);ctx.textBaseline='alphabetic';ctx.textAlign='left';if(Math.hypot(player.x-d.x,player.y-d.y)<100){const bx=Math.max(8,Math.min(W-292,d.x-140)),by=Math.max(8,d.y-92);ctx.fillStyle='#090910ed';ctx.fillRect(bx,by,284,76);ctx.strokeStyle=color;ctx.lineWidth=2;ctx.strokeRect(bx,by,284,76);ctx.textAlign='left';ctx.textBaseline='top';ctx.font='bold 12px monospace';ctx.fillStyle=color;ctx.fillText(d.item.nazwa,bx+8,by+7);ctx.font='10px monospace';ctx.fillStyle='#efedf6';ctx.fillText(itemDescription(d.item),bx+8,by+27,268);ctx.fillStyle='#f1c66d';ctx.fillText('E — PODNIEŚ',bx+8,by+55);ctx.textBaseline='alphabetic';}
   }else{ctx.fillStyle=d.type==='heart'?'#e75c6d':'#f1c66d';ctx.beginPath();if(d.type==='heart'){ctx.arc(d.x-3,d.y-1,5,0,6.28);ctx.arc(d.x+3,d.y-1,5,0,6.28);ctx.moveTo(d.x-8,d.y);ctx.lineTo(d.x,d.y+9);ctx.lineTo(d.x+8,d.y);ctx.fill()}else{ctx.moveTo(d.x,d.y-d.r);ctx.lineTo(d.x+d.r,d.y);ctx.lineTo(d.x,d.y+d.r);ctx.lineTo(d.x-d.r,d.y);ctx.closePath();ctx.fill();ctx.strokeStyle='#fff0a8';ctx.stroke()}}
  }
  for(const p of particles){ctx.globalAlpha=Math.max(0,p.life/25);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fill()}ctx.globalAlpha=1;
