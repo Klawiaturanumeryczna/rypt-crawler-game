@@ -6,7 +6,7 @@ HTML = (ROOT / "index.html").read_text(encoding="utf-8")
 needle = "function loop(){"
 assert needle in HTML, "Could not locate game loop for test instrumentation"
 instrumentation = """function loop(){
-window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop),keys:Array.from(keys)});
+window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop),keys:Array.from(keys),mouseDown:mouse.down,frame});
 window.__testExit=(r,t)=>{const old={roomNo,floorExitRoll,floorExitSpawned,doors};roomNo=r;floorExitRoll=t;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];rollFloorExit();const result=doors.map(d=>!!d.floorExit);roomNo=old.roomNo;floorExitRoll=old.floorExitRoll;floorExitSpawned=old.floorExitSpawned;doors=old.doors;return result};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
 window.__testRestart=()=>startRun();
@@ -58,11 +58,12 @@ with sync_playwright() as p:
     assert moved["x"] > start["x"] + 20, f"Movement failed: {start} -> {moved}"
 
     canvas = page.locator("#game").bounding_box()
-    page.mouse.move(canvas["x"] + canvas["width"] * .8, canvas["y"] + canvas["height"] * .5)
+    page.mouse.move(canvas["x"] + canvas["width"] * .8, canvas["y"] + canvas["height"] * .2)
     page.mouse.down()
-    page.wait_for_timeout(300)
-    page.mouse.up()
+    page.wait_for_timeout(60)
     shooting = page.evaluate("window.__smoke()")
+    page.mouse.up()
+    assert shooting["mouseDown"] is True, f"Mouse button was not registered: {shooting}"
     assert shooting["shots"] > 0, f"Shooting failed: {shooting}"
 
     page.keyboard.press("p")
