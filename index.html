@@ -150,7 +150,7 @@ function update(){
  for(const s of enemyShots){s.x+=s.vx;s.y+=s.vy;s.life--;if(Math.hypot(s.x-player.x,s.y-player.y)<s.r+player.r){s.life=0;hitPlayer(1)}}
  enemyShots=enemyShots.filter(s=>s.life>0&&s.x>room.x&&s.x<room.x+room.w&&s.y>room.y&&s.y<room.y+room.h);
  for(const d of drops){if(!d.gone&&!(d.type==='heart'&&player.hp>=player.maxHp)&&Math.hypot(player.x-d.x,player.y-d.y)<player.r+d.r+3){
-  if(d.type==='heart'){d.gone=true;const oldHp=player.hp;player.hp=Math.min(player.maxHp,player.hp+2);log('STATYSTYKA — zdrowie: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+' (+1 serce).')}
+  if(d.type==='heart'){if(player.hp>=player.maxHp){if(!d.fullHealthNotified){log('SERCE POZOSTAJE — zdrowie jest pełne ('+player.hp+'/'+player.maxHp+').');d.fullHealthNotified=true}}else{d.gone=true;const oldHp=player.hp;player.hp=Math.min(player.maxHp,player.hp+2);log('STATYSTYKA — zdrowie: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+' (+1 serce).')}}
   else if(d.type==='coin'){d.gone=true;const oldCoins=coins;coins++;log('STATYSTYKA — monety: '+oldCoins+' → '+coins+'.')}
   else if(d.type==='item'&&d.item){const oldItems=player.items.length;player.items.push(d.item);d.gone=true;log('STATYSTYKA — przedmioty: '+oldItems+' → '+player.items.length+'. Zebrano '+d.item.nazwa+'; efekt tego przedmiotu nie jest jeszcze zaprogramowany.');}
   updateHud()
