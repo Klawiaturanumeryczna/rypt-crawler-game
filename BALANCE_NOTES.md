@@ -4,13 +4,12 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 
 ## Długość piętra i boss
 
-- Limit piętra 1: 20 pokoi. Każde kolejne piętro dodaje 2 pokoje: 22, 24, 26…
+- Każde piętro ma dokładnie 20 pokoi. Długość nie rośnie wraz z numerem piętra.
 - Boss pojawia się w ostatnim pokoju aktualnego piętra.
 - HP bossa: `45 + 12 × numer piętra` (57 HP na piętrze 1, 69 na piętrze 2, 81 na piętrze 3).
 - Boss strzela wachlarzem trzech pocisków; odstęp ataków wynosi 55–75 klatek.
-- Szansa pojawienia się przejścia w zwykłym pokoju wynosi `(numer pokoju / limit pokoi)^30`. Krzywa jest celowo nieliniowa: liniowe 5%, 10%, 15%… powodowało, że niezależne losowania niemal zawsze kończyły piętro przed bossem.
-- Na piętrze 1 szansa wynosi ok. 0,02% w pokoju 15, 0,8% w pokoju 17, 4,2% w pokoju 18, 21,5% w pokoju 19 i 100% w pokoju 20. Szansa rośnie wyraźniej pod koniec, żeby boss nie był pomijany w większości runów.
-- Przy tej krzywej szacunkowo ok. 74,5% runów piętra 1 dociera do bossa bez wcześniejszego przejścia. To nadal oznacza, że wcześniejsze wyjście może ominąć bossa; jeśli boss ma być obowiązkowy, trzeba usunąć wcześniejsze wyjścia albo zmienić ich znaczenie.
+- Po oczyszczeniu pokoju szansa przejścia wynosi `min(100%, numer pokoju × 5 punktów procentowych)`: pokój 1 — 5%, pokój 2 — 10%, …, pokój 19 — 95%. Losowanie jest niezależne w każdym pokoju, więc przejście może pojawić się przed bossem.
+- W pokoju 20 przejście jest gwarantowane; po pokonaniu bossa wszystkie drzwi prowadzą dalej.
 - Po pokonaniu bossa wszystkie drzwi prowadzą dalej, więc na ostatnim pokoju nie ma pechowego losowania.
 
 ## Liczba i siła zwykłych wrogów
@@ -27,13 +26,14 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Mnożnik łupu z drzwi: łatwe ×0,75, średnie ×1,00, trudne ×1,50. Na trudnych drzwiach daje to 12% na monetę i 3,75% na serce.
 - Serce przywraca 2 HP. Serce leżące na ziemi nie znika, gdy gracz ma pełne zdrowie.
 - Za serię pięciu zabójstw w oknie trzech sekund przyznawana jest dodatkowa moneta.
-- Sklep ma 8% szansy pojawienia się jako specjalne wejście w kwalifikującym się pokoju; po wejściu do sklepu nie pojawia się ponownie na tym samym piętrze.
+- Sklep jest gwarantowany w pokoju 2 jako fioletowe drzwi; po wejściu do sklepu nie pojawia się ponownie na tym samym piętrze.
+- W pokoju 1 pojawiają się 3 serca do zebrania i 2 monety. Serca nie znikają przy pełnym zdrowiu; można je zebrać po otrzymaniu obrażeń.
 - W sklepie zawsze jest serce za 2 monety. Zakup leczy 2 HP; przy pełnym zdrowiu lub braku monet przycisk zakupu jest nieaktywny.
 - Ocena wstępna: 0,5% na monetę było zbyt niskie, by sensownie finansować zakupy. 8% powinno dać walutę na przestrzeni dłuższego piętra, a premia za serię nagradza agresywną grę. Trzeba obserwować, czy łączna liczba monet nie robi leczenia zbyt łatwym.
 
 ## Przedmioty
 
-- Na pierwszym pokoju każdego piętra pojawiają się trzy losowe oferty: jeden aktywny przedmiot, jeden przedmiot nóg i jeden strzelecki, zamiast wszystkich 30 naraz.
+- W pierwszym pokoju każdego piętra pojawia się 6 przedmiotów ruchu oraz po 2 losowe przedmioty aktywne, na nogi i do strzelania (łącznie 12 ofert). W obrębie każdej kategorii wybrane są dwa różne przedmioty. Nie ma systemu synergii.
 - Podejście na odległość 100 jednostek pokazuje nazwę, efekt i instrukcję `E — PODNIEŚ`. Przedmiot nie podnosi się automatycznie.
 - Przedmioty nóg i strzeleckie modyfikują statystyki przy podniesieniu i wypisują zmianę. Aktywne przedmioty są zużywane po użyciu Spacji.
 - Część efektów aktywnych zadaje obrażenia, ale celowo nie dobija wrogów, aby nie omijać istniejącej ścieżki liczenia zabójstw i dropów.
