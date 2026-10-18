@@ -9,6 +9,7 @@ instrumentation = """function loop(){
 window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop)});
 window.__testExit=(r,t)=>{roomNo=r;floorExitRoll=t;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];rollFloorExit();return doors.map(d=>!!d.floorExit)};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
+window.__testRestart=()=>startRun();
 window.__testFullHealthHeart=()=>{const d=drops.find(d=>d.type==='heart'&&!d.gone);if(!d)return false;player.hp=player.maxHp;player.x=d.x;player.y=d.y;player.invuln=999;update();return drops.some(x=>x===d&&!x.gone)};
 """
 HTML = HTML.replace(needle, instrumentation, 1)
@@ -42,7 +43,7 @@ with sync_playwright() as p:
     assert page.evaluate("window.__testExit(19, 0.96)").count(True) == 0, "95% threshold should reject roll 96%"
     assert all(page.evaluate(f"window.__testExit(20, {roll})") for roll in (0.01, 0.5, 0.99)), "Room 20 must guarantee the exit"
 
-    page.evaluate("startRun()")
+    page.evaluate("window.__testRestart()")
     page.wait_for_timeout(100)
     start = page.evaluate("window.__smoke()")
     page.keyboard.down("d")
