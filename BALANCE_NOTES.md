@@ -35,7 +35,7 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - W pierwszym pokoju każdego piętra pojawia się 6 przedmiotów ruchu oraz po 2 losowe przedmioty aktywne, na nogi i do strzelania (łącznie 12 ofert). W obrębie każdej kategorii wybrane są dwa różne przedmioty. Nie ma systemu synergii.
 - Podejście na odległość 100 jednostek pokazuje nazwę, efekt i instrukcję `E — PODNIEŚ`. Przedmiot nie podnosi się automatycznie.
 - Przedmioty nóg i strzeleckie modyfikują statystyki przy podniesieniu i wypisują zmianę. Aktywne przedmioty są zużywane po użyciu Spacji.
-- Część efektów aktywnych zadaje obrażenia, ale celowo nie dobija wrogów, aby nie omijać istniejącej ścieżki liczenia zabójstw i dropów.
+- Obrażenia aktywnych przedmiotów korzystają ze wspólnej funkcji obrażeń wroga; zabójstwa, serie i dropy naliczane są tak samo jak przy pociskach.
 - To nadal prototyp: przedmioty aktywne 3, 7 i 10 nie zabijają przeciwników bezpośrednio. W dalszej iteracji należy podłączyć ich obrażenia do wspólnej funkcji śmierci wroga, jeśli mają móc dobijać.
 
 ## Co testować w pierwszej kolejności
