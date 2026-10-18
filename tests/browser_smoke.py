@@ -7,7 +7,7 @@ needle = "function loop(){"
 assert needle in HTML, "Could not locate game loop for test instrumentation"
 instrumentation = """function loop(){
 window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop),keys:Array.from(keys)});
-window.__testExit=(r,t)=>{roomNo=r;floorExitRoll=t;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];rollFloorExit();return doors.map(d=>!!d.floorExit)};
+window.__testExit=(r,t)=>{const old={roomNo,floorExitRoll,floorExitSpawned,doors};roomNo=r;floorExitRoll=t;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];rollFloorExit();const result=doors.map(d=>!!d.floorExit);roomNo=old.roomNo;floorExitRoll=old.floorExitRoll;floorExitSpawned=old.floorExitSpawned;doors=old.doors;return result};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
 window.__testRestart=()=>startRun();
 window.__testFullHealthHeart=()=>{const d=drops.find(d=>d.type==='heart'&&!d.gone);if(!d)return false;player.hp=player.maxHp;player.x=d.x;player.y=d.y;player.invuln=999;update();return drops.some(x=>x===d&&!x.gone)};
