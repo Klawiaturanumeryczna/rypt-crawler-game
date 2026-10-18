@@ -34,11 +34,11 @@ let state='title',player, enemies=[],shots=[],enemyShots=[],drops=[],particles=[
 // Dane gry trzymamy w jednym miejscu. Dodawanie nowych typów nie wymaga przebudowy całej logiki.
 const DANE_GRY = {
  drzwi: {
-  zlote:{id:'zlote',nazwa:'Złote',kolor:'#f1c66d',poswiata:'#fff0a8',waga:1,opis:'Przyszły wariant nagród.'},
-  czerwone:{id:'czerwone',nazwa:'Czerwone',kolor:'#e44758',poswiata:'#ff9aa5',waga:1,opis:'Przyszły wariant walki.'},
-  wielokolorowe:{id:'wielokolorowe',nazwa:'Wielokolorowe',kolor:'rainbow',poswiata:'#ffffff',waga:1,opis:'Przyszły wariant specjalny.'},
-  szare:{id:'szare',nazwa:'Szare',kolor:'#9295a3',poswiata:'#e2e4ed',waga:1,opis:'Przyszły wariant standardowy.'},
-  fioletowe:{id:'fioletowe',nazwa:'Fioletowe',kolor:'#a76bdb',poswiata:'#e5baff',waga:1,opis:'Przyszły wariant ryzyka.'}
+  szare:{id:'szare',nazwa:'ŁATWE',tier:1,kolor:'#9295a3',poswiata:'#e2e4ed',opis:'Niższy poziom trudności.'},
+  zlote:{id:'zlote',nazwa:'ŚREDNIE',tier:2,kolor:'#f1c66d',poswiata:'#fff0a8',opis:'Średni poziom trudności.'},
+  czerwone:{id:'czerwone',nazwa:'TRUDNE',tier:3,kolor:'#e44758',poswiata:'#ff9aa5',opis:'Wyższy poziom trudności.'},
+  fioletowe:{id:'fioletowe',nazwa:'SPECJALNE',specjalne:true,kolor:'#a76bdb',poswiata:'#e5baff',opis:'Kolor zarezerwowany dla przyszłych mechanik specjalnych.'},
+  wielokolorowe:{id:'wielokolorowe',nazwa:'SPECJALNE',specjalne:true,kolor:'rainbow',poswiata:'#ffffff',opis:'Kolor zarezerwowany dla przyszłych mechanik specjalnych.'}
  },
  przedmioty: {
   aktywne:Array.from({length:10},(_,i)=>({id:'active'+(i+1),nazwa:'Item '+(i+1),typ:1,kategoria:'active',numer:i+1,ikona:'❗',opis:'Placeholder — przedmiot aktywny.'})),
@@ -89,7 +89,11 @@ function applyMovement(type){if(!player||!MOVEMENT_TYPES[type])return;const prev
 function showMovementChoice(floorStart=false){if(!player)return;clearInput();state='movementChoice';$('overlayTitle').textContent=floorStart?'WYBIERZ STYL RUCHU':'ZMIEN STYL RUCHU';$('overlayText').textContent=floorStart?'Wybierz jeden styl na to piętro. Nowy wybór zastępuje poprzedni.':'Wybierz jeden styl. Podstawowe bieganie zawsze pozostaje dostępne.';$('startBtn').classList.add('hidden');let choices=$('moveChoices');if(!choices){choices=document.createElement('div');choices.id='moveChoices';choices.className='moveChoices';$('overlayText').after(choices)}choices.innerHTML='';for(const type of ['runner','drifter','hopper','momentum','twitch','juggernaut']){const m=MOVEMENT_TYPES[type],btn=document.createElement('button');btn.className='moveChoice';btn.innerHTML='<strong>'+m.name+(player.movement===type?' ✓':'')+'</strong><small>'+m.desc+'</small>';btn.onclick=()=>{choices.innerHTML='';$('startBtn').classList.remove('hidden');applyMovement(type)};choices.appendChild(btn)}const hint=document.createElement('div');hint.className='moveHint';hint.textContent='M — otwórz wybór ponownie podczas gry.';choices.appendChild(hint);$('overlay').classList.remove('hidden')}
 function startRun(){clearInput();shake=0;frame=0;floor=1;roomNo=1;kills=0;coins=0;player={x:W/2,y:H/2,r:13,speed:3.15,hp:6,maxHp:6,damage:1,fireRate:17,shotSpeed:7.3,shotSize:5,luck:1,invuln:0,cooldown:0,steps:0,stepProgress:0,items:[],activeItemIndex:0,movement:'runner',vx:0,vy:0,dashCooldown:0,dashFrames:0,dashDirX:0,dashDirY:0};state='play';enterRoom();updateHud();showMovementChoice(true);log('Wybierz styl ruchu przed rozpoczęciem piętra.')}
 function enterRoom(){enemies=[];shots=[];enemyShots=[];drops=[];particles=[];doorOpen=false;floorExitSpawned=false;spawnTimer=0;
- doors=[{side:'top',x:W/2,y:room.y,type:pick(LISTA_DRZWI)},{side:'bottom',x:W/2,y:room.y+room.h,type:pick(LISTA_DRZWI)},{side:'left',x:room.x,y:room.y+room.h/2,type:pick(LISTA_DRZWI)},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:pick(LISTA_DRZWI)}];
+ const doorTypes=[DANE_GRY.drzwi.szare,DANE_GRY.drzwi.zlote,DANE_GRY.drzwi.czerwone];
+ doors=[{side:'top',x:W/2,y:room.y},{side:'bottom',x:W/2,y:room.y+room.h},{side:'left',x:room.x,y:room.y+room.h/2},{side:'right',x:room.x+room.w,y:room.y+room.h/2}].map(door=>({...door,type:pick(doorTypes)}));
+ if(doors.every(door=>door.type.id===doors[0].type.id)){
+  doors[3].type=pick(doorTypes.filter(type=>type.id!==doors[3].type.id));
+ }
  if(roomNo===1){
   const rows=[DANE_GRY.przedmioty.aktywne,DANE_GRY.przedmioty.nogi,DANE_GRY.przedmioty.strzelanie];
   rows.forEach((row,rowIndex)=>row.forEach((item,i)=>{
@@ -158,13 +162,13 @@ function draw(){
  // subtle floor tiles
  for(let y=room.y;y<room.y+room.h;y+=32)for(let x=room.x;x<room.x+room.w;x+=32){ctx.fillStyle=((x+y)/32)%2?'#171521':'#191724';ctx.fillRect(x,y,31,31)}
  ctx.strokeStyle='#51465f';ctx.lineWidth=8;ctx.strokeRect(room.x,room.y,room.w,room.h);
- // Four doors, one on every wall. Each gets a random color in every room.
+ // Four doors: gray = easy, gold = medium, red = hard. Four identical doors are rerolled.
  for(const door of doors){const horizontal=door.side==='top'||door.side==='bottom';const dw=horizontal?84:20,dh=horizontal?20:84;const x=door.x-dw/2,y=door.y-dh/2;let col=door.type.kolor;
    if(col==='rainbow'){const grad=ctx.createLinearGradient(x,y,x+dw,y+dh);grad.addColorStop(0,'#ef4444');grad.addColorStop(.2,'#f59e0b');grad.addColorStop(.4,'#facc15');grad.addColorStop(.6,'#22c55e');grad.addColorStop(.8,'#3b82f6');grad.addColorStop(1,'#c084fc');col=grad;}
    ctx.fillStyle=col;ctx.fillRect(x,y,dw,dh);ctx.strokeStyle=door.floorExit?'#ffffff':door.type.poswiata;ctx.lineWidth=door.floorExit?5:3;ctx.strokeRect(x,y,dw,dh);
    ctx.fillStyle=door.floorExit?'#fff8dc':(doorOpen?'#fff8dc':'#28212e');ctx.fillRect(x+(horizontal?11:5),y+(horizontal?5:11),dw-(horizontal?22:10),dh-(horizontal?10:22));
    ctx.strokeStyle=door.type.poswiata;ctx.lineWidth=2;ctx.strokeRect(x+(horizontal?11:5),y+(horizontal?5:11),dw-(horizontal?22:10),dh-(horizontal?10:22));
-   ctx.fillStyle=door.type.poswiata;ctx.font='10px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(door.floorExit?'PIĘTRO +1':(doorOpen?'OTWARTE':'ZAMKNIĘTE'),door.x,door.y);ctx.textBaseline='alphabetic';
+   ctx.fillStyle=door.type.poswiata;ctx.font='10px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(door.floorExit?'PIĘTRO +1':door.type.nazwa,door.x,door.y);ctx.textBaseline='alphabetic';
  }ctx.textAlign='left'
  // enemies
  for(const e of enemies){if(e.hp<=0)continue;ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=e.hit>0?'#fff0f0':(PROGRESJA_WROGOW.typy[e.type]?.color||'#8c526d');ctx.beginPath();ctx.arc(0,0,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#17121c';ctx.beginPath();ctx.arc(-5,-2,2.7,0,6.28);ctx.arc(5,-2,2.7,0,6.28);ctx.fill();ctx.strokeStyle='#241722';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,7);ctx.lineTo(5,7);ctx.stroke();ctx.fillStyle='#3c2435';ctx.fillRect(-e.r,-e.r-8,e.r*2,4);ctx.fillStyle='#e75c6d';ctx.fillRect(-e.r,-e.r-8,e.r*2*Math.max(0,e.hp/e.maxHp),4);ctx.restore()}
