@@ -10,7 +10,6 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Boss strzela wachlarzem trzech pocisków; odstęp ataków wynosi 55–75 klatek.
 - Na początku piętra losowany jest jeden próg przejścia. Po oczyszczeniu pokoju porównujemy go z `numer pokoju × 5 punktów procentowych`: pokój 1 — 5%, pokój 2 — 10%, …, pokój 19 — 95%. To szansa skumulowana, a nie nowe niezależne losowanie w każdym pokoju; dzięki temu około 5% podejść dociera do bossa w pokoju 20.
 - W pokoju 20 przejście jest gwarantowane; po pokonaniu bossa wszystkie drzwi prowadzą dalej.
-- Po pokonaniu bossa wszystkie drzwi prowadzą dalej, więc na ostatnim pokoju nie ma pechowego losowania.
 
 ## Liczba i siła zwykłych wrogów
 
