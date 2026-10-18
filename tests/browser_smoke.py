@@ -50,8 +50,8 @@ with sync_playwright() as p:
     page.locator("canvas#game").click(position={"x": 100, "y": 100})
     page.keyboard.down("d")
     page.wait_for_timeout(350)
-    page.keyboard.up("d")
     moved = page.evaluate("window.__smoke()")
+    page.keyboard.up("d")
     assert "d" in moved["keys"], f"Keyboard input was not registered: {moved}"
     assert moved["x"] > start["x"] + 20, f"Movement failed: {start} -> {moved}"
 
