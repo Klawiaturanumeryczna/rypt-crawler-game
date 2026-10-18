@@ -8,7 +8,9 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Boss pojawia się w ostatnim pokoju aktualnego piętra.
 - HP bossa: `45 + 12 × numer piętra` (57 HP na piętrze 1, 69 na piętrze 2, 81 na piętrze 3).
 - Boss strzela wachlarzem trzech pocisków; odstęp ataków wynosi 55–75 klatek.
-- Szansa pojawienia się przejścia na kolejne piętro w zwykłym pokoju wynosi `numer pokoju / limit pokoi`. Przykładowo na piętrze 1: 5% w pokoju 1, 50% w pokoju 10, 95% w pokoju 19 i 100% w pokoju 20.
+- Szansa pojawienia się przejścia w zwykłym pokoju wynosi `(numer pokoju / limit pokoi)^30`. Krzywa jest celowo nieliniowa: liniowe 5%, 10%, 15%… powodowało, że niezależne losowania niemal zawsze kończyły piętro przed bossem.
+- Na piętrze 1 szansa wynosi ok. 0,02% w pokoju 15, 0,8% w pokoju 17, 4,2% w pokoju 18, 21,5% w pokoju 19 i 100% w pokoju 20. Szansa rośnie wyraźniej pod koniec, żeby boss nie był pomijany w większości runów.
+- Przy tej krzywej szacunkowo ok. 74,5% runów piętra 1 dociera do bossa bez wcześniejszego przejścia. To nadal oznacza, że wcześniejsze wyjście może ominąć bossa; jeśli boss ma być obowiązkowy, trzeba usunąć wcześniejsze wyjścia albo zmienić ich znaczenie.
 - Po pokonaniu bossa wszystkie drzwi prowadzą dalej, więc na ostatnim pokoju nie ma pechowego losowania.
 
 ## Liczba i siła zwykłych wrogów
