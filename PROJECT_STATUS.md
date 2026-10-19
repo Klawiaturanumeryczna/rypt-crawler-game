@@ -14,7 +14,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Browser roguelike, Canvas, primary game implementation in `index.html`.
 - Supporting files: `README.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md`, `ENEMY_PROGRESSION.md`, `verify.py`, `tests/browser_smoke.py`.
 - Recent gameplay changes: no item offers/pickups in floor 1 room 1 (keep 3 hearts + 2 coins); item pickup requires physical contact; four visibly distinct shooting styles; six visibly distinct movement styles.
-- Recent automated checks cover starter room, pickup contact, shooting style differences, movement style menu, and static invariants.
+- Recent automated checks cover starter room, pickup contact, shooting style differences, movement style menu, all ten active-item effects/consumption, and static invariants.
 - Last known matching file hashes from the previous verified sync (re-check before relying on them):
   - `index.html`: `8853c2e434c96948d605aa7f1ff0ad8f774be75b`
   - `tests/browser_smoke.py`: `3cdf86d030f7771afe25d79f1f6106431f7fe762`
@@ -40,7 +40,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 3. Design the familiar system before implementation; familiar cap/slots remain OPEN.
 4. Expand floor identity, secrets/events and boss variety.
 5. Plan save data and permanent unlocks after scope is agreed.
-6. Add tests for each active item and longer multi-room/floor/boss runs; automated smoke tests do not replace gameplay playtesting.
+6. Next testing gap: longer multi-room/floor/boss runs and gameplay playtesting; automated smoke tests do not replace human gameplay testing.
 
 ## Fast, safe workflow for every session
 1. Check latest commit on both default branches and latest relevant CI/deployment runs. Do this once at session start.

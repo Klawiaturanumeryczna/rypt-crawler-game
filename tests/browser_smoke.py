@@ -19,6 +19,24 @@ window.__testBossTransition=()=>{roomNo=30;floor=1;floorExitPending=false;enemie
 window.__testFireModes=()=>{const old={mode:player.fireMode,cooldown:player.cooldown,shots};const result={};for(const mode of Object.keys(FIRE_MODES)){shots=[];player.cooldown=0;player.fireMode=mode;shoot(1,0);result[mode]={count:shots.length,size:shots[0]?.r,speed:Math.hypot(shots[0]?.vx||0,shots[0]?.vy||0),mode:shots[0]?.mode}}player.fireMode=old.mode;player.cooldown=old.cooldown;shots=old.shots;return result};
 window.__testItemPickup=()=>{const oldDrops=drops,oldX=player.x,oldY=player.y,oldItems=player.items;const item={id:'pickup-test',numer:1,kategoria:'active',typ:1,nazwa:'Test pickup',ikona:'❗',opis:'test'};const d={x:player.x+50,y:player.y,r:17,type:'item',item};drops=[d];keys.clear();update();const remainsNearby=drops.includes(d)&&!d.gone;player.x=d.x-player.r-d.r-2;player.y=d.y;update();const collected=d.gone&&player.items.includes(item);drops=oldDrops;player.x=oldX;player.y=oldY;player.items=oldItems;updateHud();return {remainsNearby,collected}};
 window.__testActiveDamage=()=>{const oldEnemies=enemies,oldItems=player.items,oldKills=kills,oldChain=killChain;const target={x:player.x+120,y:player.y,r:10,hp:1,maxHp:1,speed:0,rola:'chase',type:'chaser',phase:0,dashTimer:100,dashFrames:0,cooldown:100,hit:0};enemies=[target];const item={numer:3,kategoria:'active',nazwa:'Test'};player.items=[item];useActiveItem(item);const result=target.hp<=0&&kills===oldKills+1&&killChain===oldChain+1;enemies=oldEnemies;player.items=oldItems;updateHud();return result};
+window.__testAllActiveItems=()=>{
+ const saved={hp:player.hp,maxHp:player.maxHp,coins,items:player.items,activeItemIndex:player.activeItemIndex,shots,enemyShots,enemies,kills,killChain,killChainTimer,particles};
+ const target=(xOffset,hp=20)=>({x:player.x+xOffset,y:player.y,r:10,hp,maxHp:hp,speed:0,rola:'chase',type:'chaser',phase:0,dashTimer:100,dashFrames:0,cooldown:100,hit:0});
+ const run=(n,setup=()=>{})=>{enemies=[];shots=[];enemyShots=[];particles=[];player.hp=1;player.maxHp=6;player.invuln=0;coins=0;const item={numer:n,kategoria:'active',nazwa:'Test active '+n};player.items=[item];setup();useActiveItem(item);return {hp:player.hp,coins,invuln:player.invuln,shotCount:shots.length,enemyShotCount:enemyShots.length,enemyHp:enemies.map(e=>e.hp),consumed:!player.items.includes(item)}};
+ const result={
+  1:run(1),
+  2:run(2),
+  3:run(3,()=>{enemies=[target(40)]}),
+  4:run(4,()=>{enemyShots=[{life:10},{life:10}]}),
+  5:run(5),
+  6:run(6),
+  7:run(7,()=>{enemies=[target(30),target(100)]}),
+  8:run(8),
+  9:run(9),
+  10:run(10,()=>{enemies=[target(40),target(100)];enemyShots=[{life:10},{life:10}]})
+ };
+ player.hp=saved.hp;player.maxHp=saved.maxHp;coins=saved.coins;player.items=saved.items;player.activeItemIndex=saved.activeItemIndex;shots=saved.shots;enemyShots=saved.enemyShots;enemies=saved.enemies;kills=saved.kills;killChain=saved.killChain;killChainTimer=saved.killChainTimer;particles=saved.particles;updateHud();return result;
+};
 window.__testFullHealthHeart=()=>{const d=drops.find(d=>d.type==='heart'&&!d.gone);if(!d)return false;player.hp=player.maxHp;player.x=d.x;player.y=d.y;player.invuln=999;update();return drops.some(x=>x===d&&!x.gone)};
 """
 HTML = HTML.replace(needle, instrumentation, 1)
@@ -57,10 +75,21 @@ with sync_playwright() as p:
     assert fire["spread"]["count"] == 3, f"Spread must fire three projectiles: {fire}"
     assert fire["precision"]["size"] > fire["standard"]["size"], f"Precision projectile should be visibly larger: {fire}"
     assert fire["rapid"]["size"] < fire["standard"]["size"] and fire["rapid"]["speed"] > fire["standard"]["speed"], f"Rapid fire must use smaller, faster projectiles: {fire}"
+    active = page.evaluate("window.__testAllActiveItems()")
+    assert active["1"]["hp"] == 3 and active["1"]["consumed"], f"Active item 1 must heal 1 heart and be consumed: {active['1']}"
+    assert active["2"]["coins"] == 2 and active["2"]["consumed"], f"Active item 2 must grant 2 coins and be consumed: {active['2']}"
+    assert active["3"]["enemyHp"] == [16] and active["3"]["consumed"], f"Active item 3 must damage every enemy: {active['3']}"
+    assert active["4"]["enemyShotCount"] == 0 and active["4"]["consumed"], f"Active item 4 must clear enemy projectiles: {active['4']}"
+    assert active["5"]["invuln"] >= 120 and active["5"]["consumed"], f"Active item 5 must grant 2 seconds of invulnerability: {active['5']}"
+    assert active["6"]["shotCount"] == 8 and active["6"]["consumed"], f"Active item 6 must fire eight projectiles: {active['6']}"
+    assert active["7"]["enemyHp"] == [10, 20] and active["7"]["consumed"], f"Active item 7 must damage only the nearest enemy: {active['7']}"
+    assert active["8"]["hp"] == 5 and active["8"]["consumed"], f"Active item 8 must heal 2 hearts: {active['8']}"
+    assert active["9"]["coins"] == 3 and active["9"]["consumed"], f"Active item 9 must grant 3 coins: {active['9']}"
+    assert active["10"]["enemyHp"] == [18, 18] and active["10"]["enemyShotCount"] == 0 and active["10"]["consumed"], f"Active item 10 must damage all enemies and clear projectiles: {active['10']}"
     pickup = page.evaluate("window.__testItemPickup()")
     assert pickup["remainsNearby"], f"Items should not auto-pick up from a distance: {pickup}"
     assert pickup["collected"], f"Walking into an item should collect it without pressing E: {pickup}"
 
     assert not errors, f"Browser errors: {errors}"
-    print("PASS: startup pickups; full-HP heart persistence; guaranteed shop and heart purchase; per-room exit rolls; next-room exit; room-30 bonus; start-of-floor boss and boss-room transition; active-item kill accounting; movement; shooting; pause/resume; restart; no browser errors")
+    print("PASS: startup pickups; full-HP heart persistence; guaranteed shop and heart purchase; per-room exit rolls; next-room exit; room-30 bonus; start-of-floor boss and boss-room transition; all ten active-item effects; active-item kill accounting; movement; shooting; pause/resume; restart; no browser errors")
     browser.close()

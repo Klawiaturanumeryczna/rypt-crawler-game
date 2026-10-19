@@ -37,7 +37,7 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Przedmioty nóg i strzeleckie modyfikują statystyki przy podniesieniu i wypisują zmianę. Aktywne przedmioty są zużywane po użyciu Spacji.
 - Style strzelania różnią się wzorcem, kolorem, rozmiarem i prędkością pocisków. Style ruchu różnią się prowadzeniem, unikiem/poślizgiem i sylwetką. To implementacja prototypowa; balans wymaga testów.
 - Obrażenia aktywnych przedmiotów korzystają ze wspólnej funkcji obrażeń wroga; zabójstwa, serie i dropy naliczane są tak samo jak przy pociskach.
-- Przedmioty aktywne 3, 7 i 10 korzystają ze wspólnej funkcji obrażeń przeciwnika i mogą zadać cios kończący. Test przeglądarkowy potwierdza ścieżkę zabójstwa dla przedmiotu 3; osobne testy każdego aktywnego efektu pozostają do rozbudowania.
+- Wszystkie 10 aktywnych przedmiotów ma testy przeglądarkowe efektów i zużycia: leczenie, monety, obrażenia, czyszczenie pocisków, nietykalność i rozrzut ośmiu pocisków. Testy sprawdzają też, że przedmiot 7 trafia wyłącznie najbliższego wroga, a przedmiot 10 jednocześnie rani wszystkich wrogów i usuwa ich pociski. Przedmioty 3, 7 i 10 korzystają ze wspólnej funkcji obrażeń i mogą zadać cios kończący.
 
 ## Co testować w pierwszej kolejności
 
