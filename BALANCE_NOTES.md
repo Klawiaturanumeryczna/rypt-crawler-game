@@ -8,8 +8,8 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Na piętrze 1 nie ma bossa. Od piętra 2 boss pojawia się na początku piętra, w pokoju 1. Pokój bossa nie losuje wyjścia na kolejne piętro po jego oczyszczeniu — po zwycięstwie gracz przechodzi do pokoju 2 tego samego piętra.
 - HP bossa: `45 + 12 × numer piętra` (57 HP na piętrze 1, 69 na piętrze 2, 81 na piętrze 3).
 - Boss strzela wachlarzem trzech pocisków; odstęp ataków wynosi 55–75 klatek.
-- Na początku piętra losowany jest jeden próg przejścia. Po oczyszczeniu zwykłego pokoju porównujemy go z `numer pokoju × 5 punktów procentowych`: pokój 1 — 5%, pokój 2 — 10%, …, pokój 19 — 95%. To próg skumulowany, a nie nowe niezależne losowanie w każdym pokoju. Pokój bossa na piętrach 2+ nie zużywa tego progu.
-- W pokoju 20 przejście na następne piętro jest gwarantowane. Jeśli gracz chce, może je zignorować i eksplorować do pokoju 30. Po oczyszczeniu pokoju 30 wszystkie drzwi prowadzą dalej, a na piętrze pojawia się bonusowy przedmiot.
+- Po oczyszczeniu zwykłego pokoju losujemy szansę zejścia równą `numer pokoju × 5 punktów procentowych`: pokój 1 — 5%, pokój 2 — 10% itd. To nowe losowanie po każdym pokoju, a nie jeden próg na całe piętro. Jeśli los się powiedzie, przejście pojawia się w następnym pokoju; ten pokój również trzeba oczyścić, zanim gracz będzie mógł zejść. Pokój bossa na piętrach 2+ nie wykonuje losowania zejścia.
+- W pokoju 30 przejście na następne piętro jest gwarantowane, a wszystkie drzwi prowadzą dalej; w pokoju pojawia się też bonusowy przedmiot. Wcześniej zejście może pojawić się losowo, zgodnie z rosnącą szansą po oczyszczonych pokojach.
 
 ## Liczba i siła zwykłych wrogów
 
@@ -42,10 +42,11 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 
 1. Czy gracz ma zwykle 2 monety na leczenie przed końcem piętra, ale nie kupuje serca po każdym pokoju.
 2. Czy boss na początku piętra 2+ jest wymagający, lecz możliwy do pokonania bez konkretnego przedmiotu.
-3. Czy możliwość eksploracji do 30 pokoi nie wydłuża runu nadmiernie; obserwować, jak często gracze korzystają z wyjścia w pokoju 20.
+3. Czy możliwość eksploracji do 30 pokoi nie wydłuża runu nadmiernie; obserwować, na których pokojach gracze zwykle znajdują i wybierają zejście.
 4. Czy trudne drzwi rzeczywiście czują się trudniejsze, a dodatkowy łup rekompensuje ryzyko.
 5. Czy tooltip przedmiotu jest czytelny na różnych rozdzielczościach i nie zasłania istotnych pocisków.
-6. Czy start z bossem na piętrach 2+ jest czytelny i czy gracz rozumie, że po walce przechodzi do pokoju 2, a nie od razu na następne piętro.
+6. Czy start z bossem na piętrach 2+ jest czytelny i czy po jego pokonaniu gracz przechodzi do pokoju 2, a nie od razu na następne piętro.
+7. Czy komunikat o losowaniu zejścia jasno mówi, że wyjście pojawi się w następnym pokoju i dopiero po oczyszczeniu tego pokoju będzie można z niego skorzystać.
 
 
 ## Ustalenia projektowe zapisane 2026-10-19
