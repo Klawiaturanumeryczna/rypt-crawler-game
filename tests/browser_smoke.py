@@ -75,6 +75,7 @@ with sync_playwright() as p:
     assert fire["spread"]["count"] == 3, f"Spread must fire three projectiles: {fire}"
     assert fire["precision"]["size"] > fire["standard"]["size"], f"Precision projectile should be visibly larger: {fire}"
     assert fire["rapid"]["size"] < fire["standard"]["size"] and fire["rapid"]["speed"] > fire["standard"]["speed"], f"Rapid fire must use smaller, faster projectiles: {fire}"
+    assert page.evaluate("window.__testFullHealthHeart()"), "A heart pickup must remain on the ground at full health"
     assert page.evaluate("window.__testExit(1, 0.01)"), "A low roll should trigger the room-1 exit chance"
     assert not page.evaluate("window.__testExit(1, 0.99)"), "A high roll should fail the room-1 exit chance"
     assert page.evaluate("window.__testExit(20, 0.99)"), "Room 20 should guarantee the exit roll"
@@ -99,7 +100,6 @@ with sync_playwright() as p:
     pickup = page.evaluate("window.__testItemPickup()")
     assert pickup["remainsNearby"], f"Items should not auto-pick up from a distance: {pickup}"
     assert pickup["collected"], f"Walking into an item should collect it without pressing E: {pickup}"
-    assert page.evaluate("window.__testFullHealthHeart()"), "A heart pickup must remain on the ground at full health"
 
     bossClear = page.evaluate("window.__testBossClear()")
     assert bossClear["doorOpen"], f"Clearing a room should open its doors: {bossClear}"
