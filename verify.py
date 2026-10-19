@@ -27,6 +27,10 @@ checks = {
     "active item consumes item": "player.items=player.items.filter(x=>x!==item)" in SOURCE,
     "pause and restart": "state='paused'" in SOURCE and "startRun()" in SOURCE,
     "animation loop": "requestAnimationFrame(loop)" in SOURCE,
+    "persistent profile schema and safe storage": "cryptCrawlerProfileV1" in SOURCE and "function loadMetaProfile()" in SOURCE and "function saveMetaProfile()" in SOURCE,
+    "item discoveries persist on pickup": "recordItemDiscovery(d.item)" in SOURCE and "metaProfile.discoveredItems" in SOURCE,
+    "death records run losses": "const run=recordRunDeath()" in SOURCE and "coinsLost:coins" in SOURCE and "itemsLost:player?player.items.map(item=>item.nazwa):[]" in SOURCE,
+    "codex shows persistent progress": "KODEKS / TRWAŁY POSTĘP" in SOURCE and "function showCodex()" in SOURCE,
     "run start opens firing-style choice": "showFiringChoice()" in SOURCE and "state='firingChoice'" in SOURCE,
     "firing-style choice leads to movement choice": "showMovementChoice(true)" in SOURCE and "state='movementChoice'" in SOURCE,
 }
