@@ -14,7 +14,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Browser roguelike, Canvas, primary game implementation in `index.html`.
 - Supporting files: `README.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md`, `ENEMY_PROGRESSION.md`, `verify.py`, `tests/browser_smoke.py`.
 - Recent gameplay changes: no item offers/pickups in floor 1 room 1 (keep 3 hearts + 2 coins); item pickup requires physical contact; four visibly distinct shooting styles; six visibly distinct movement styles.
-- Recent automated checks cover starter room, pickup contact, shooting style differences, movement style menu, all ten active-item effects/consumption, and static invariants.
+- Recent automated checks cover the starter room, contact-only pickup, all ten active-item effects/consumption, exit probabilities and placement, room-30 bonus, shop purchase, boss-room clearing and floor transition, six movement-physics styles, shooting projectile differences, and static invariants.
 - Last known matching file hashes from the previous verified sync (re-check before relying on them):
   - `index.html`: `8853c2e434c96948d605aa7f1ff0ad8f774be75b`
   - `tests/browser_smoke.py`: `3cdf86d030f7771afe25d79f1f6106431f7fe762`
@@ -43,7 +43,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 6. Next testing gap: longer multi-room/floor/boss runs and gameplay playtesting; automated smoke tests do not replace human gameplay testing.
 
 ## Fast, safe workflow for every session
-1. Check latest commit on both default branches and latest relevant CI/deployment runs. Do this once at session start.
+1. Check latest commit on both default branches and latest relevant CI/deployment runs. Do this once at session start. The browser-smoke workflow pins Playwright 1.64.0 and caches pip packages plus Chromium to avoid repeat downloads.
 2. Fetch only files relevant to the current task. Do not re-read every project file unless needed.
 3. Before editing a synced file, fetch it from both repos and compare content/SHA. Treat private repo as source of truth unless live repo evidence shows otherwise.
 4. Make a coherent batch of code, tests and documentation changes; avoid unnecessary commits that trigger duplicate CI runs.
