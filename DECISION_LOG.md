@@ -67,3 +67,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Robocze zasady śmierci:** przedmioty/build i waluta z bieżącego runu przepadają; trwałe odblokowania, odkrycia i postęp długoterminowy zostają. Katalog rozróżnia odkrycie od odblokowania.
 - **Wdrożone w tej partii:** lokalny profil zapisuje liczbę rozpoczętych runów, śmierci, łączne zabójstwa, najlepszy postęp, odkryte przedmioty i poznanych wrogów. Ekran śmierci pokazuje straty z runu, a Kodeks pokazuje zachowane odkrycia.
 - **OPEN / jeszcze niewdrożone:** warunki konkretnych odblokowań, system ulepszeń statystyk i specjalizacji, synergie gameplayowe, familiars/ewolucje oraz szczegółowe mechaniki ratunkowe. Nie wprowadzamy arbitralnych kosztów, cooldownów ani limitów.
+
+
+## Ratunek przed śmiercią — wdrożenie 2026-10-19
+- **D05 — wdrożony pierwszy mechanizm:** `Amulet Ostatniej Szansy` jest jednorazowym przedmiotem pasywnym. Gdy cios obniży HP do zera lub mniej, amulet zużywa się i pozostawia gracza z 1 HP; run trwa dalej.
+- Amulet jest możliwą nagrodą bonusową w pokoju 30. Nie zmieniono efektów istniejących 30 przedmiotów.
+- **OPEN:** aktywna ochrona wymagająca timingu oraz ochrona uruchamiana z wyprzedzeniem; sterowanie, cooldowny, koszty i zależność od buildu wymagają dalszych decyzji.
