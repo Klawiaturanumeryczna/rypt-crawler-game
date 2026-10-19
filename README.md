@@ -20,7 +20,7 @@ Otwórz `index.html` w nowoczesnej przeglądarce i kliknij **ROZPOCZNIJ RUN**.
 
 ## Pętla rozgrywki
 
-Każde piętro ma maksymalnie **30 pokoi**. Na piętrze 1 nie ma bossa; od piętra 2 boss pojawia się na początku piętra, w pokoju 1. Po pokonaniu bossa przechodzisz do pokoju 2 tego samego piętra. Po oczyszczeniu zwykłego pokoju losowana jest szansa zejścia: 5% w pokoju 1, 10% w pokoju 2 i tak dalej. Jeśli los się powiedzie, przejście pojawia się w następnym pokoju, który trzeba oczyścić przed zejściem. W pokoju 30 przejście jest gwarantowane i pojawia się bonusowy przedmiot.
+Każde piętro ma maksymalnie **30 pokoi**. Na piętrze 1 nie ma bossa; od piętra 2 boss pojawia się na początku piętra, w pokoju 1. Po pokonaniu bossa przechodzisz do pokoju 2 tego samego piętra. Po oczyszczeniu zwykłego pokoju losowana jest szansa zejścia: 5% w pokoju 1, 10% w pokoju 2 i tak dalej. Jeśli los się powiedzie, przejście pojawia się w następnym pokoju, który trzeba oczyścić przed zejściem. Po oczyszczeniu pokoju 20 szansa wynosi 100%, więc zejście pojawi się w pokoju 21; można z niego skorzystać albo kontynuować eksplorację. W pokoju 30 przejście jest gwarantowane i pojawia się bonusowy przedmiot.
 
 Tylko na początku pierwszego piętra pojawiają się zapasy startowe: 3 serca do podniesienia, 2 monety oraz oferty przedmiotów. Kolejne piętra nie przyznają ponownie zestawu startowego. Przedmioty trzeba podnosić klawiszem **E**.
 
