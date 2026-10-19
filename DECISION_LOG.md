@@ -53,3 +53,17 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Implemented (presentation only):** replaced generic `Item 1` labels with 30 distinct Polish names and category-appropriate icons.
 - **No gameplay/balance changes:** effects, values, drop logic, and item behaviour were not changed by this naming pass.
 - **OPEN:** thematic naming and long-term item identities can be revised later as the full item catalogue, rarities, transformations, and synergies are designed. Names do not imply that synergies or rarity systems exist yet.
+
+
+## Meta-progresja i śmierć — decyzje z 2026-10-19
+- **D01 — Siła gracza:** potężne buildy są pożądane, ale bossowie i zagrożenia nadal wymagają uwagi i umiejętności.
+- **D02 — Synergie:** docelowo wspierane są synergie liczbowe, zmiany mechaniki oraz rzadkie kombinacje, które mogą odmienić build.
+- **D03 — Familiars:** elastyczne buildy od wielu słabszych stworzeń po kilku potężnych przywołańców; własne umiejętności, synergie, ewolucje i formy. Limit i sloty pozostają OPEN.
+- **D04 — Odkrycie a odblokowanie:** odkrycie zapisuje się natychmiast, ale część elementów wymaga osobnego wyzwania lub warunku odblokowania.
+- **D05 — Aktywna ochrona:** dopuszczone są ratunki wymagające timingu oraz ochrona uruchamiana z wyprzedzeniem.
+- **D06 — Limity ratunków:** mechanizmy ratunkowe mają być ograniczone, mieć koszty/warunki i zależeć od buildu. Dokładne liczby OPEN.
+- **D07 — Tryby:** każdy tryb ma własne zasady śmierci i progresji. Sandbox/Creator i Auto-Battle/Manager pozostają poza bieżącym zakresem, dopóki użytkownik ich osobno nie priorytetyzuje.
+- **D08 — Stałe bonusy:** ograniczone ulepszenia statystyk mogą być zdobywane za osiągnięcia; specjalizacja jest opcjonalna. Wartości, koszty i limity OPEN.
+- **Robocze zasady śmierci:** przedmioty/build i waluta z bieżącego runu przepadają; trwałe odblokowania, odkrycia i postęp długoterminowy zostają. Katalog rozróżnia odkrycie od odblokowania.
+- **Wdrożone w tej partii:** lokalny profil zapisuje liczbę rozpoczętych runów, śmierci, łączne zabójstwa, najlepszy postęp, odkryte przedmioty i poznanych wrogów. Ekran śmierci pokazuje straty z runu, a Kodeks pokazuje zachowane odkrycia.
+- **OPEN / jeszcze niewdrożone:** warunki konkretnych odblokowań, system ulepszeń statystyk i specjalizacji, synergie gameplayowe, familiars/ewolucje oraz szczegółowe mechaniki ratunkowe. Nie wprowadzamy arbitralnych kosztów, cooldownów ani limitów.
