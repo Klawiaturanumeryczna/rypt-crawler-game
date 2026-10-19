@@ -40,3 +40,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Keep RNG variable but effects and rules understandable and consistent.
 - Exact familiar cap/slots, precise progression upgrades, probabilities beyond the existing room rule, final floor count, and the implementation order of future modes remain OPEN.
 - This is a design log, not a claim that all described systems already exist in the playable prototype.
+
+
+## Interakcja i wybór stylu — 2026-10-19
+
+- **Pokój startowy:** usuń oferty/pickupy przedmiotów z pierwszego pokoju; zachowaj 3 serca i 2 monety jako zapasy startowe.
+- **Podnoszenie przedmiotów:** przedmiot zbiera się automatycznie dopiero po wejściu w jego obszar kolizji. Nie wymaga osobnego klawisza interakcji; samo podejście na odległość nie wystarcza.
+- **Style startowe:** style strzelania i ruchu muszą różnić się nie tylko nazwą/liczbami, ale też czytelnym wyglądem w menu i podczas gry. Różnice mają być widoczne bez zmiany kierunku całej gry.
