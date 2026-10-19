@@ -4,7 +4,7 @@ Updated: 2026-10-19
 ## Latest implementation batch — persistent profile foundation
 - Added a versioned browser-local profile (`cryptCrawlerProfileV1`) with run starts, deaths, lifetime kills, best floor/room, discovered items and encountered enemy types.
 - Item discoveries are saved at pickup time and are independent of run inventory. Enemy types are recorded when encountered.
-- Death screen explicitly reports coins and carried items lost in the run, while long-term profile records remain. Added a Codex / Persistent Progress screen accessible from title/death overlays.
+- Death screen explicitly reports coins and carried items lost in the run, while long-term profile records remain. The Codex / Persistent Progress screen exists in code but its entry button is currently hidden, per the user's decision to defer meta-progression UI.
 - Added `Amulet Ostatniej Szansy`: a one-use passive item that consumes itself on a fatal hit and leaves the player at 1 HP. It can appear as the room-30 bonus reward; the existing 30 item effects are unchanged.
 - This is the foundation only: exact unlock requirements, permanent stat upgrades/specializations, actual gameplay synergies, familiars/evolutions, and death-prevention abilities remain OPEN; no arbitrary balance values were introduced.
 
@@ -61,6 +61,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 8. Update this file only when durable state, priorities, or workflow materially changes. Keep it concise; put detailed design decisions in `DECISION_LOG.md` and balance data in `BALANCE_NOTES.md`.
 
 ## Current gameplay batch (2026-10-19)
+- Starter weapon choice now displays per-projectile damage multiplier and firing interval (frames), using the same values that govern actual weapon cadence.
+- Research basis: Dead Cells developer commentary emphasizes distinct weapon purpose/feel; Brotato player feedback praises build variety but warns against weapons that feel too similar. See `DECISION_LOG.md` for sources and caveats.
 - Startowe bronie rozszerzone z 4 do 7 stylów: dodano Salwę, Przebijający i Wybuchowy.
 - Usunięto aktywację uniku przez Shift; Skoczek i Zwinny korzystają z automatycznych zrywów, pozostałe style zachowują różnice w przyspieszeniu/pędzie.
 - Ekran Kodeksu / Trwałego Postępu jest ukryty do czasu zaprojektowania pełnej meta-progresji. Kod profilu i lokalny zapis pozostają zachowane.
