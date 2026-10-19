@@ -26,6 +26,19 @@ window.__testMovementPhysics=()=>{
  player.movement=saved.movement;player.speedBonus=saved.speedBonus;player.step=saved.step;player.vx=saved.vx;player.vy=saved.vy;player.x=saved.x;player.y=saved.y;player.dashCooldown=saved.dashCooldown;player.dashFrames=saved.dashFrames;player.dashDirX=saved.dashDirX;player.dashDirY=saved.dashDirY;player.invuln=saved.invuln;player.cooldown=saved.cooldown;keys.clear();saved.keys.forEach(k=>keys.add(k));state=saved.state;frame=saved.frame;doorOpen=saved.doorOpen;doors=saved.doors;enemies=saved.enemies;shots=saved.shots;enemyShots=saved.enemyShots;drops=saved.drops;particles=saved.particles;roomEnvironment=saved.roomEnvironment;environmentPatches=saved.environmentPatches;fireSources=saved.fireSources;floorExitPending=saved.floorExitPending;floorExitSpawned=saved.floorExitSpawned;updateHud();return result;
 };
 window.__testItemPickup=()=>{const oldDrops=drops,oldX=player.x,oldY=player.y,oldItems=player.items;const item={id:'pickup-test',numer:1,kategoria:'active',typ:1,nazwa:'Test pickup',ikona:'❗',opis:'test'};const d={x:player.x+50,y:player.y,r:17,type:'item',item};drops=[d];keys.clear();update();const remainsNearby=drops.includes(d)&&!d.gone;player.x=d.x-player.r-d.r-2;player.y=d.y;update();const collected=d.gone&&player.items.includes(item);drops=oldDrops;player.x=oldX;player.y=oldY;player.items=oldItems;updateHud();return {remainsNearby,collected}};
+window.__testAllPassiveItems=()=>{
+ const keys=['hp','maxHp','step','speed','speedBonus','movement','fireRate','invulnDuration','damage','shotSpeed','shotSize'];
+ const saved=Object.fromEntries(keys.map(k=>[k,player[k]]));
+ const baseSpeed=MOVEMENT_TYPES.runner.speed;
+ const run=(category,n)=>{
+  player.hp=4;player.maxHp=6;player.step=1;player.speedBonus=0;player.movement='runner';player.speed=baseSpeed;player.fireRate=10;player.invulnDuration=30;player.damage=1;player.shotSpeed=5;player.shotSize=4;
+  applyPassiveItem({id:category+n,numer:n,kategoria:category,nazwa:'Test '+category+' '+n});
+  return {hp:player.hp,maxHp:player.maxHp,step:Number(player.step.toFixed(2)),speed:Number(player.speed.toFixed(2)),speedBonus:Number(player.speedBonus.toFixed(2)),fireRate:player.fireRate,invulnDuration:player.invulnDuration,damage:Number(player.damage.toFixed(2)),shotSpeed:Number(player.shotSpeed.toFixed(2)),shotSize:player.shotSize};
+ };
+ const result={baseSpeed:Number(baseSpeed.toFixed(2)),legs:{},shot:{}};
+ for(let n=1;n<=10;n++){result.legs[n]=run('legs',n);result.shot[n]=run('shot',n)}
+ keys.forEach(k=>player[k]=saved[k]);updateHud();return result;
+};
 window.__testActiveDamage=()=>{const old={enemies,items:player.items,kills,killChain,killChainTimer,drops,particles};const target={x:player.x+120,y:player.y,r:10,hp:1,maxHp:1,speed:0,rola:'chase',type:'chaser',phase:0,dashTimer:100,dashFrames:0,cooldown:100,hit:0};enemies=[target];const item={numer:3,kategoria:'active',nazwa:'Test'};player.items=[item];useActiveItem(item);const result=target.hp<=0&&kills===old.kills+1&&killChain===old.killChain+1;enemies=old.enemies;player.items=old.items;kills=old.kills;killChain=old.killChain;killChainTimer=old.killChainTimer;drops=old.drops;particles=old.particles;updateHud();return result};
 window.__testAllActiveItems=()=>{
  const saved={hp:player.hp,maxHp:player.maxHp,coins,items:player.items,activeItemIndex:player.activeItemIndex,shots,enemyShots,enemies,kills,killChain,killChainTimer,particles};
@@ -107,6 +120,15 @@ with sync_playwright() as p:
     assert active["8"]["hp"] == 5 and active["8"]["consumed"], f"Active item 8 must heal 2 hearts: {active['8']}"
     assert active["9"]["coins"] == 3 and active["9"]["consumed"], f"Active item 9 must grant 3 coins: {active['9']}"
     assert active["10"]["enemyHp"] == [18, 18] and active["10"]["enemyShotCount"] == 0 and active["10"]["consumed"], f"Active item 10 must damage all enemies and clear projectiles: {active['10']}"
+    passive = page.evaluate("window.__testAllPassiveItems()")
+    legs, shot = passive["legs"], passive["shot"]
+    assert abs(legs["1"]["step"] - 1.10) < 0.001 and abs(legs["2"]["step"] - 1.20) < 0.001 and abs(legs["6"]["step"] - 1.15) < 0.001 and abs(legs["9"]["step"] - 1.25) < 0.001, f"Movement items must apply the documented step bonuses: {legs}"
+    assert legs["3"]["maxHp"] == 8 and legs["3"]["hp"] == 6 and legs["8"]["maxHp"] == 8 and legs["8"]["hp"] == 6, f"Vitality items must increase max HP and heal: {legs}"
+    assert abs(legs["4"]["speed"] - (passive["baseSpeed"] + 0.20)) < 0.001 and legs["4"]["fireRate"] == 11 and abs(legs["10"]["speed"] - (passive["baseSpeed"] + 0.15)) < 0.001 and legs["10"]["invulnDuration"] == 50, f"Leg items 4 and 10 must apply their mixed trade-offs: {legs}"
+    assert legs["5"]["invulnDuration"] == 40 and legs["9"]["fireRate"] == 12 and abs(legs["7"]["damage"] - 1.25) < 0.001, f"Leg passive items must apply their defensive/offensive effects: {legs}"
+    assert abs(shot["1"]["damage"] - 1.25) < 0.001 and abs(shot["2"]["damage"] - 1.50) < 0.001 and abs(shot["7"]["damage"] - 1.25) < 0.001 and abs(shot["10"]["damage"] - 2.00) < 0.001, f"Shot damage items must apply documented bonuses: {shot}"
+    assert shot["3"]["fireRate"] == 8 and shot["6"]["fireRate"] == 7 and shot["7"]["fireRate"] == 11 and shot["10"]["fireRate"] == 12, f"Shot cadence items must apply documented trade-offs: {shot}"
+    assert shot["4"]["shotSpeed"] == 6 and shot["9"]["shotSpeed"] == 6.5 and shot["5"]["shotSize"] == 5 and shot["8"]["shotSize"] == 6 and shot["8"]["shotSpeed"] == 4.5, f"Shot speed/size items must apply documented effects: {shot}"
     movement = page.evaluate("window.__testMovementPhysics()")
     assert movement["runner"]["first"] > movement["drifter"]["first"] > 0, f"Drifter should accelerate into movement instead of instantly reaching full speed: {movement}"
     assert movement["momentum"]["first"] > 0 and movement["momentum"]["first"] < movement["drifter"]["first"], f"Momentum style should start with slower acceleration: {movement}"
