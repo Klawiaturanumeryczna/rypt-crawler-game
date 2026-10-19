@@ -9,9 +9,9 @@ instrumentation = """function loop(){
 window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop),keys:Array.from(keys),mouseDown:mouse.down,frame});
 window.__testExit=(r,t)=>{const old={roomNo,floorExitRoll,floorExitSpawned,doors};roomNo=r;floorExitRoll=t;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];rollFloorExit();const result=doors.map(d=>!!d.floorExit);roomNo=old.roomNo;floorExitRoll=old.floorExitRoll;floorExitSpawned=old.floorExitSpawned;doors=old.doors;return result};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
-window.__testRestart=()=>startRun();
+window.__testBossClear=()=>{enemies=[];doorOpen=false;floorExitSpawned=false;doors=[{side:'top',x:W/2,y:room.y,type:DANE_GRY.drzwi.zlote,shop:false},{side:'bottom',x:W/2,y:room.y+room.h,type:DANE_GRY.drzwi.zlote,shop:false},{side:'left',x:room.x,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false}];player.x=W/2;player.y=H/2;state='play';update();return {doorOpen,floorExitSpawned,floor,roomNo}};\nwindow.__testRoom30=()=>{const old={roomNo,floor,floorExitRoll,floorExitSpawned,floorBonusClaimed,doors,drops};roomNo=30;floor=1;floorExitRoll=.99;floorExitSpawned=false;floorBonusClaimed=false;drops=[];doors=[{shop:false},{shop:false},{shop:false},{shop:false}];rollFloorExit();const result={allExits:doors.every(d=>d.floorExit),bonus:floorBonusClaimed,item:drops.some(d=>d.type==='item')};roomNo=old.roomNo;floor=old.floor;floorExitRoll=old.floorExitRoll;floorExitSpawned=old.floorExitSpawned;floorBonusClaimed=old.floorBonusClaimed;doors=old.doors;drops=old.drops;return result};\nwindow.__testRestart=()=>startRun();
 window.__testShopPurchase=()=>{coins=2;player.hp=2;state='play';openShop();updateHud();return {state,coins,hp:player.hp,buttonDisabled:document.getElementById('buyHeart').disabled}};
-window.__testBossTransition=()=>{roomNo=20;floor=1;enemies=[];doorOpen=false;floorExitSpawned=false;doors=[{side:'top',x:W/2,y:room.y,type:DANE_GRY.drzwi.zlote,floorExit:true,shop:false},{side:'bottom',x:W/2,y:room.y+room.h,type:DANE_GRY.drzwi.zlote,shop:false},{side:'left',x:room.x,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false}];player.x=W/2;player.y=room.y;state='play';update();return {floor,roomNo,doorOpen,floorExitSpawned,bosses:enemies.filter(e=>e.type==='boss').length}};
+window.__testBossTransition=()=>{roomNo=20;floor=1;enemies=[];doorOpen=false;floorExitSpawned=false;doors=[{side:'top',x:W/2,y:room.y,type:DANE_GRY.drzwi.zlote,floorExit:true,shop:false},{side:'bottom',x:W/2,y:room.y+room.h,type:DANE_GRY.drzwi.zlote,shop:false},{side:'left',x:room.x,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false}];player.x=W/2;player.y=room.y;state='play';update();return {floor,roomNo,doorOpen,floorExitSpawned,bosses:enemies.filter(e=>e.type==='boss').length,drops:drops.map(d=>d.type)}};
 
 window.__testActiveDamage=()=>{const oldEnemies=enemies,oldItems=player.items,oldKills=kills,oldChain=killChain;const target={x:player.x+120,y:player.y,r:10,hp:1,maxHp:1,speed:0,rola:'chase',type:'chaser',phase:0,dashTimer:100,dashFrames:0,cooldown:100,hit:0};enemies=[target];const item={numer:3,kategoria:'active',nazwa:'Test'};player.items=[item];useActiveItem(item);const result=target.hp<=0&&kills===oldKills+1&&killChain===oldChain+1;enemies=oldEnemies;player.items=oldItems;updateHud();return result};
 window.__testFullHealthHeart=()=>{const d=drops.find(d=>d.type==='heart'&&!d.gone);if(!d)return false;player.hp=player.maxHp;player.x=d.x;player.y=d.y;player.invuln=999;update();return drops.some(x=>x===d&&!x.gone)};
@@ -49,13 +49,17 @@ with sync_playwright() as p:
     assert purchased["coins"] == 0 and purchased["hp"] == 4, f"Heart purchase failed: {purchased}"
     page.locator("#startBtn").click()
     boss_transition = page.evaluate("window.__testBossTransition()")
-    assert boss_transition["floor"] == 2 and boss_transition["roomNo"] == 1 and boss_transition["bosses"] == 0, f"Room-20 exit did not advance to next floor: {boss_transition}"
+    assert boss_transition["floor"] == 2 and boss_transition["roomNo"] == 1 and boss_transition["bosses"] == 1 and not boss_transition["drops"], f"Floor 2 should begin with a boss and no repeated starting supplies: {boss_transition}"
+    boss_clear = page.evaluate("window.__testBossClear()")
+    assert boss_clear["doorOpen"] and not boss_clear["floorExitSpawned"] and boss_clear["floor"] == 2 and boss_clear["roomNo"] == 1, f"Clearing the floor boss should open the route to room 2, not the next floor: {boss_clear}"
     page.evaluate("window.__testRestart()")
     assert page.evaluate("window.__testExit(1, 0.03)").count(True) == 1, "5% threshold should allow exit at roll 3%"
     assert page.evaluate("window.__testExit(1, 0.07)").count(True) == 0, "5% threshold should reject roll 7%"
     assert page.evaluate("window.__testExit(19, 0.94)").count(True) == 1, "95% threshold should allow exit at roll 94%"
     assert page.evaluate("window.__testExit(19, 0.96)").count(True) == 0, "95% threshold should reject roll 96%"
-    assert all(page.evaluate(f"window.__testExit(20, {roll})") for roll in (0.01, 0.5, 0.99)), "Room 20 must guarantee the exit"
+    assert all(page.evaluate(f"window.__testExit(20, {roll})").count(True) == 1 for roll in (0.01, 0.5, 0.99)), "Room 20 must guarantee one exit"
+    room30 = page.evaluate("window.__testRoom30()")
+    assert room30["allExits"] and room30["bonus"] and room30["item"], f"Room 30 should guarantee all exits and a bonus item: {room30}"
 
     page.evaluate("window.__testRestart()")
     page.wait_for_timeout(100)
@@ -88,5 +92,5 @@ with sync_playwright() as p:
     reset = page.evaluate("window.__smoke()")
     assert reset["state"] == "play" and reset["floor"] == 1 and reset["roomNo"] == 1, f"Restart failed: {reset}"
     assert not errors, f"Browser errors: {errors}"
-    print("PASS: startup pickups; full-HP heart persistence; guaranteed shop and heart purchase; cumulative exit thresholds; room-20 floor transition; active-item kill accounting; movement; shooting; pause/resume; restart; no browser errors")
+    print("PASS: startup pickups; full-HP heart persistence; guaranteed shop and heart purchase; cumulative exit thresholds; room-20 exit; room-30 bonus; start-of-floor boss and boss-room transition; active-item kill accounting; movement; shooting; pause/resume; restart; no browser errors")
     browser.close()
