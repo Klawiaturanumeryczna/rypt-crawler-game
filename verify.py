@@ -22,7 +22,7 @@ checks = {
     "item pickup requires physical contact": "else if(d.type==='item'&&d.item){" in SOURCE and "d.item&&keys.has('e')" not in SOURCE,
     "pickup instructions do not require E": "wejdź w przedmiot, aby go podnieść" in SOURCE and "naciśnij E, aby go podnieść" not in SOURCE and '<span class="key">E</span> podnieś przedmiot' not in SOURCE,
     "starting room has no item offers": "WYBÓR PRZEDMIOTÓW" not in SOURCE and "if(roomNo===1&&floor===1&&!shopRoom)" in SOURCE,
-    "firing styles have distinct visuals and projectile behavior": all(x in SOURCE for x in ("fire-precision","fire-spread","fire-rapid","shotSpeed=player.shotSpeed*mode.speed","s.mode==='rapid'")),
+    "seven starter weapons have distinct projectile behavior": all(x in SOURCE for x in ("fire-precision","fire-spread","fire-rapid","Salwa","Przebijający","Wybuchowy","pattern:'burst'","pierce:2","explosive:true","shotSpeed=player.shotSpeed*mode.speed")),
     "movement styles have distinct handling and silhouettes": all(x in SOURCE for x in ("player.movement==='drifter'","player.movement==='momentum'","player.movement==='twitch'","move-juggernaut","m==='hopper'")),
     "active item consumes item": "player.items=player.items.filter(x=>x!==item)" in SOURCE,
     "pause and restart": "state='paused'" in SOURCE and "startRun()" in SOURCE,
@@ -31,7 +31,7 @@ checks = {
     "persistent profile schema and safe storage": "cryptCrawlerProfileV1" in SOURCE and "function loadMetaProfile()" in SOURCE and "function saveMetaProfile()" in SOURCE,
     "item discoveries persist on pickup": "recordItemDiscovery(d.item)" in SOURCE and "metaProfile.discoveredItems" in SOURCE,
     "death records run losses": "const run=recordRunDeath()" in SOURCE and "coinsLost:coins" in SOURCE and "itemsLost:player?player.items.map(item=>item.nazwa):[]" in SOURCE,
-    "codex shows persistent progress": "KODEKS / TRWAŁY POSTĘP" in SOURCE and "function showCodex()" in SOURCE,
+    "codex UI is deferred while saved profile code is preserved": "profileBtn=null;" in SOURCE and "function showCodex()" in SOURCE and "profileBtn=document.createElement('button')" not in SOURCE,
     "run start opens firing-style choice": "showFiringChoice()" in SOURCE and "state='firingChoice'" in SOURCE,
     "firing-style choice leads to movement choice": "showMovementChoice(true)" in SOURCE and "state='movementChoice'" in SOURCE,
 }
