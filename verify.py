@@ -23,6 +23,7 @@ checks = {
     "pickup instructions do not require E": "wejdź w przedmiot, aby go podnieść" in SOURCE and "naciśnij E, aby go podnieść" not in SOURCE and '<span class="key">E</span> podnieś przedmiot' not in SOURCE,
     "starting room has no item offers": "WYBÓR PRZEDMIOTÓW" not in SOURCE and "if(roomNo===1&&floor===1&&!shopRoom)" in SOURCE,
     "seven starter weapons have distinct projectile behavior": all(x in SOURCE for x in ("fire-precision","fire-spread","fire-rapid","Salwa","Przebijający","Wybuchowy","pattern:'burst'","pierce:2","explosive:true","shotSpeed=player.shotSpeed*mode.speed")),
+    "starter weapons show damage and firing interval tradeoffs": "weaponStats" in SOURCE and "Obrażenia / pocisk:" in SOURCE and "Odstęp między strzałami:" in SOURCE and "Math.round(17*mode.rate)" in SOURCE,
     "movement styles have distinct handling and silhouettes": all(x in SOURCE for x in ("player.movement==='drifter'","player.movement==='momentum'","player.movement==='twitch'","move-juggernaut","m==='hopper'")),
     "active item consumes item": "player.items=player.items.filter(x=>x!==item)" in SOURCE,
     "pause and restart": "state='paused'" in SOURCE and "startRun()" in SOURCE,
