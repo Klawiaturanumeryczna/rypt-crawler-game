@@ -8,6 +8,7 @@ checks = {
     "enemy archetypes": all(f"{name}:" in SOURCE for name in ("chaser", "spitter", "brute", "dasher", "hexer", "boss")),
     "fixed 30-room maximum": "function maxRoomsForFloor(f){return 30}" in SOURCE,
     "per-room exit roll": "Math.random()<chance" in SOURCE and "floorExitPending=true" in SOURCE,
+    "room-20 roll guarantees exit in room 21": "const chance=Math.min(1,roomNo*.05)" in SOURCE and "if(floorExitPending&&roomNo>1)" in SOURCE,
     "exit appears in next room": "if(floorExitPending&&roomNo>1)" in SOURCE and "exitDoor.floorExit=true" in SOURCE,
     "guaranteed room-30 exit": "if(roomNo>=maxRoomsForFloor(floor))" in SOURCE and "doors.forEach(d=>d.floorExit=true)" in SOURCE,
     "room-30 bonus reward": "if(roomNo>=maxRoomsForFloor(floor))" in SOURCE and "floorBonusClaimed=true" in SOURCE,
