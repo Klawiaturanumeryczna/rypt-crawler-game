@@ -66,7 +66,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Startowe bronie rozszerzone z 4 do 7 stylów: dodano Salwę, Przebijający i Wybuchowy.
 - Usunięto aktywację uniku przez Shift; Skoczek i Zwinny korzystają z automatycznych zrywów, pozostałe style zachowują różnice w przyspieszeniu/pędzie.
 - Ekran Kodeksu / Trwałego Postępu jest ukryty do czasu zaprojektowania pełnej meta-progresji. Kod profilu i lokalny zapis pozostają zachowane.
-- Zmiany są na gałęzi `feature/starter-weapons-movement`; przed publikacją wymagają testów i synchronizacji publicznego mirroru.
+- Zmiany z gałęzi `feature/starter-weapons-movement` zostały scalone; publiczny mirror zsynchronizowany. Najnowszy odczyt CI nie zwrócił statusów uruchomień, więc testów tej ostatniej poprawki nie oznaczamy jako potwierdzonych.
 
 ## Collaboration rules
 - Work in Polish with precise, direct reports; no guessing or overstated claims.
