@@ -22,6 +22,8 @@ checks = {
     "active item consumes item": "player.items=player.items.filter(x=>x!==item)" in SOURCE,
     "pause and restart": "state='paused'" in SOURCE and "startRun()" in SOURCE,
     "animation loop": "requestAnimationFrame(loop)" in SOURCE,
+    "run start opens firing-style choice": "showFiringChoice()" in SOURCE and "state='firingChoice'" in SOURCE,
+    "firing-style choice leads to movement choice": "showMovementChoice(true)" in SOURCE and "state='movementChoice'" in SOURCE,
 }
 failed = [name for name, passed in checks.items() if not passed]
 for name, passed in checks.items():
