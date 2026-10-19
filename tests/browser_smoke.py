@@ -84,6 +84,9 @@ with sync_playwright() as p:
     assert page.evaluate("window.__smoke()['state']") == "firingChoice", "Start should open the firing-style selection"
     assert page.locator("#fireChoices .moveChoice").count() == 7, "Expected seven distinct starter weapons"
     assert page.locator("#fireChoices .choiceGlyph").count() == 7, "Every starter weapon should show a visual preview"
+    assert page.locator("#fireChoices .weaponStats").count() == 7, "Every starter weapon should show damage and firing interval"
+    assert "Odstęp między strzałami: 24 klatek" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate its slower firing interval"
+    assert "Obrażenia / pocisk: ×0.42" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate per-projectile damage"
     page.locator("#fireChoices .moveChoice").nth(1).click()
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Choosing a firing style should open movement-style selection"
     assert page.locator("#moveChoices .moveChoice").count() == 6, "Expected six movement-style choices"
