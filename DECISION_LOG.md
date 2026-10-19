@@ -2,6 +2,13 @@
 Updated: 2026-10-19
 Purpose: durable record of design decisions agreed in chat. This document records intent; it does not mean every feature is implemented.
 
+## Research-backed combat iteration — 2026-10-19
+- **Player preference evidence:** Dead Cells developers describe weapons as worthwhile when they have distinct purpose, feel, effects and play-style changes, not merely different damage numbers. Source: https://www.gamedeveloper.com/design/designing-each-of-the-50-weapons-in-i-dead-cells-i-to-feel-distinctive
+- **Community feedback evidence:** Brotato players praise build/weapon variety but some criticize options that feel mechanically similar. Sources: https://www.metacritic.com/game/brotato/user-reviews/ and https://www.reddit.com/r/brotato/comments/1le5h5o
+- **Design rule:** make each starter weapon communicate its role and trade-off; avoid adding cooldowns just for the sake of having cooldowns. Core automatic fire remains responsive, while firing intervals can differ by weapon.
+- **Implemented:** starter selection now shows per-projectile damage multiplier and the actual firing interval in game frames. Values are calculated from each weapon's current `rate` multiplier, which is also used by gameplay. This is clarity/readability work, not a major balance change.
+- **OPEN:** weapon balance remains provisional until hands-on playtesting; do not claim the research proves exact numeric damage/cooldown values.
+
 ## Core run and progression decisions
 
 1. **Run goal — D (confirmed):** one main goal combining reaching the end/boss, building a strong character, and discovering items, secrets, and combinations.
