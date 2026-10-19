@@ -26,15 +26,16 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Serce przywraca 2 HP. Serce leżące na ziemi nie znika, gdy gracz ma pełne zdrowie.
 - Za serię pięciu zabójstw w oknie trzech sekund przyznawana jest dodatkowa moneta.
 - Sklep jest gwarantowany w pokoju 2 jako fioletowe drzwi; po wejściu do sklepu nie pojawia się ponownie na tym samym piętrze.
-- Tylko w pokoju 1 piętra 1 pojawiają się 3 serca do zebrania i 2 monety. Serca nie znikają przy pełnym zdrowiu; można je zebrać po otrzymaniu obrażeń.
+- W pokoju 1 piętra 1 pojawiają się 3 serca i 2 monety, ale nie ma tam ofert ani pickupów przedmiotów. Serca nie znikają przy pełnym zdrowiu; można je zebrać po otrzymaniu obrażeń.
 - W sklepie zawsze jest serce za 2 monety. Zakup leczy 2 HP; przy pełnym zdrowiu lub braku monet przycisk zakupu jest nieaktywny.
 - Ocena wstępna: 0,5% na monetę było zbyt niskie, by sensownie finansować zakupy. 8% powinno dać walutę na przestrzeni dłuższego piętra, a premia za serię nagradza agresywną grę. Trzeba obserwować, czy łączna liczba monet nie robi leczenia zbyt łatwym.
 
 ## Przedmioty
 
 - Początkowe zapasy i oferty przedmiotów pojawiają się wyłącznie w pokoju 1 piętra 1. Kolejne piętra nie rozdają ponownie startowego zestawu. Nie ma jeszcze systemu synergii.
-- Podejście na odległość 100 jednostek pokazuje nazwę, efekt i instrukcję `E — PODNIEŚ`. Przedmiot nie podnosi się automatycznie.
+- Podejście na odległość 100 jednostek pokazuje nazwę i efekt. Pickup przedmiotu następuje automatycznie dopiero po wejściu w jego obszar kolizji; nie wymaga klawisza E.
 - Przedmioty nóg i strzeleckie modyfikują statystyki przy podniesieniu i wypisują zmianę. Aktywne przedmioty są zużywane po użyciu Spacji.
+- Style strzelania różnią się wzorcem, kolorem, rozmiarem i prędkością pocisków. Style ruchu różnią się prowadzeniem, unikiem/poślizgiem i sylwetką. To implementacja prototypowa; balans wymaga testów.
 - Obrażenia aktywnych przedmiotów korzystają ze wspólnej funkcji obrażeń wroga; zabójstwa, serie i dropy naliczane są tak samo jak przy pociskach.
 - To nadal prototyp: przedmioty aktywne 3, 7 i 10 nie zabijają przeciwników bezpośrednio. W dalszej iteracji należy podłączyć ich obrażenia do wspólnej funkcji śmierci wroga, jeśli mają móc dobijać.
 
