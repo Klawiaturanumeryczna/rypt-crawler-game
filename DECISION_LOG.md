@@ -69,6 +69,13 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **OPEN / jeszcze niewdrożone:** warunki konkretnych odblokowań, system ulepszeń statystyk i specjalizacji, synergie gameplayowe, familiars/ewolucje oraz szczegółowe mechaniki ratunkowe. Nie wprowadzamy arbitralnych kosztów, cooldownów ani limitów.
 
 
+## Startowy arsenał i sterowanie ruchem — wdrożenie 2026-10-19
+- **Decyzja użytkownika:** odłożyć ekran „Kodeks / Trwały Postęp” na późniejszy etap; usunąć Shift jako osobny klawisz uniku; urozmaicić style ruchu i dodać trzy bronie dostępne już na starcie.
+- **Wdrożone:** Kodeks nie jest pokazywany w interfejsie startowym; kod zapisu profilu pozostaje nietknięty, aby nie usuwać wcześniejszych danych przed decyzją o docelowej meta-progresji.
+- **Wdrożone:** Shift nie uruchamia już uniku. Styl „Skoczek” ma automatyczne krótkie susy podczas ruchu, a „Zwinny” automatyczne zrywy; pozostałe style zachowują własną obsługę pędu.
+- **Wdrożone:** wybór startowej broni zawiera 7 stylów: Klasyczny, Precyzyjny, Rozrzut, Szybkostrzelny, Salwa (5 pocisków), Przebijający (przechodzi przez wrogów) i Wybuchowy (obrażenia obszarowe przy trafieniu).
+- **Do weryfikacji w dalszym balansowaniu:** obrażenia, szybkostrzelność i siła broni są wartościami prototypowymi; nie uznajemy ich za finalny balans.
+
 ## Ratunek przed śmiercią — wdrożenie 2026-10-19
 - **D05 — wdrożony pierwszy mechanizm:** `Amulet Ostatniej Szansy` jest jednorazowym przedmiotem pasywnym. Gdy cios obniży HP do zera lub mniej, amulet zużywa się i pozostawia gracza z 1 HP; run trwa dalej.
 - Amulet jest możliwą nagrodą bonusową w pokoju 30. Nie zmieniono efektów istniejących 30 przedmiotów.
