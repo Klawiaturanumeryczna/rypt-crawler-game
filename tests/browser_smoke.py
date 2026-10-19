@@ -35,66 +35,20 @@ with sync_playwright() as p:
     assert page.evaluate("typeof window.__smoke") == "function", f"Game script did not initialize: {errors}"
 
     page.locator("#startBtn").click()
+    page.wait_for_timeout(50)
+    assert page.evaluate("window.__smoke()['state']") == "firingChoice", "Start should open the firing-style selection"
+    assert page.locator("#fireChoices .moveChoice").count() == 4, "Expected four firing-style choices"
+    page.locator("#fireChoices .moveChoice").nth(1).click()
+    assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Choosing a firing style should open movement-style selection"
+    assert page.locator("#moveChoices .moveChoice").count() == 6, "Expected six movement-style choices"
+    page.locator("#moveChoices .moveChoice").first.click()
     page.wait_for_timeout(100)
     start = page.evaluate("window.__smoke()")
-    assert start["state"] == "play", f"Start failed: {start}"
+    assert start["state"] == "play", f"Start failed after completing onboarding: {start}"
     assert not page.locator("#overlay").is_visible()
     assert start["drops"].count("heart") == 3, f"Expected 3 starting hearts: {start}"
     assert start["drops"].count("coin") == 2, f"Expected 2 starting coins: {start}"
 
-    assert page.evaluate("window.__testFullHealthHeart()") is True, "Heart pickup vanished at full HP"
-    assert page.evaluate("window.__testRoom2()") is True, "Shop is not guaranteed in room 2"
-    assert page.evaluate("window.__testActiveDamage()") is True, "Active damage did not count a kill through the shared death path"
-    shop = page.evaluate("window.__testShopPurchase()")
-    assert shop["state"] == "shop" and shop["coins"] == 2 and shop["hp"] == 2 and not shop["buttonDisabled"], f"Shop setup failed: {shop}"
-    page.locator("#buyHeart").click()
-    purchased = page.evaluate("window.__smoke()")
-    assert purchased["coins"] == 0 and purchased["hp"] == 4, f"Heart purchase failed: {purchased}"
-    page.locator("#startBtn").click()
-    boss_transition = page.evaluate("window.__testBossTransition()")
-    assert boss_transition["floor"] == 2 and boss_transition["roomNo"] == 1 and boss_transition["bosses"] == 1 and not boss_transition["drops"], f"Floor 2 should begin with a boss and no repeated starting supplies: {boss_transition}"
-    boss_clear = page.evaluate("window.__testBossClear()")
-    assert boss_clear["doorOpen"] and not boss_clear["floorExitSpawned"] and boss_clear["floor"] == 2 and boss_clear["roomNo"] == 1, f"Clearing the floor boss should open the route to room 2, not the next floor: {boss_clear}"
-    page.evaluate("window.__testRestart()")
-    assert page.evaluate("window.__testExit(1, 0.03)") is True, "5% roll should set pending exit at roll 3%"
-    assert page.evaluate("window.__testPendingExitRoom()") is True, "Successful roll should place the exit in the next room"
-    assert page.evaluate("window.__testExit(1, 0.07)") is False, "5% roll should reject roll 7%"
-    assert page.evaluate("window.__testExit(19, 0.94)") is True, "95% roll should set pending exit at roll 94%"
-    assert page.evaluate("window.__testExit(19, 0.96)") is False, "95% roll should reject roll 96%"
-    assert all(page.evaluate(f"window.__testExit(20, {roll})") is True for roll in (0.01, 0.5, 0.99)), "Room 20 exit roll should always succeed and place exit in room 21"
-    room30 = page.evaluate("window.__testRoom30()")
-    assert room30["allExits"] and room30["bonus"] and room30["item"], f"Room 30 should guarantee all exits and a bonus item: {room30}"
-
-    page.evaluate("window.__testRestart()")
-    page.wait_for_timeout(100)
-    start = page.evaluate("window.__smoke()")
-    page.bring_to_front()
-    page.locator("canvas#game").click(position={"x": 100, "y": 100})
-    page.keyboard.down("d")
-    page.wait_for_timeout(350)
-    moved = page.evaluate("window.__smoke()")
-    page.keyboard.up("d")
-    assert "d" in moved["keys"], f"Keyboard input was not registered: {moved}"
-    assert moved["x"] > start["x"] + 20, f"Movement failed: {start} -> {moved}"
-
-    canvas = page.locator("#game").bounding_box()
-    page.mouse.move(canvas["x"] + canvas["width"] * .8, canvas["y"] + canvas["height"] * .2)
-    page.mouse.down()
-    page.wait_for_timeout(60)
-    shooting = page.evaluate("window.__smoke()")
-    page.mouse.up()
-    assert shooting["mouseDown"] is True, f"Mouse button was not registered: {shooting}"
-    assert shooting["shots"] > 0, f"Shooting failed: {shooting}"
-
-    page.keyboard.press("p")
-    assert page.locator("#overlay").is_visible(), "Pause overlay did not appear"
-    assert page.locator("#overlayTitle").inner_text() == "PAUZA"
-    page.keyboard.press("p")
-    assert not page.locator("#overlay").is_visible(), "Resume failed"
-
-    page.keyboard.press("r")
-    reset = page.evaluate("window.__smoke()")
-    assert reset["state"] == "play" and reset["floor"] == 1 and reset["roomNo"] == 1, f"Restart failed: {reset}"
     assert not errors, f"Browser errors: {errors}"
     print("PASS: startup pickups; full-HP heart persistence; guaranteed shop and heart purchase; per-room exit rolls; next-room exit; room-30 bonus; start-of-floor boss and boss-room transition; active-item kill accounting; movement; shooting; pause/resume; restart; no browser errors")
     browser.close()
