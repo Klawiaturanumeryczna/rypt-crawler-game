@@ -60,6 +60,12 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 7. Check the resulting CI/deployment status before claiming success. Never claim a test or gameplay session occurred unless it did.
 8. Update this file only when durable state, priorities, or workflow materially changes. Keep it concise; put detailed design decisions in `DECISION_LOG.md` and balance data in `BALANCE_NOTES.md`.
 
+## Current gameplay batch (2026-10-19)
+- Startowe bronie rozszerzone z 4 do 7 stylów: dodano Salwę, Przebijający i Wybuchowy.
+- Usunięto aktywację uniku przez Shift; Skoczek i Zwinny korzystają z automatycznych zrywów, pozostałe style zachowują różnice w przyspieszeniu/pędzie.
+- Ekran Kodeksu / Trwałego Postępu jest ukryty do czasu zaprojektowania pełnej meta-progresji. Kod profilu i lokalny zapis pozostają zachowane.
+- Zmiany są na gałęzi `feature/starter-weapons-movement`; przed publikacją wymagają testów i synchronizacji publicznego mirroru.
+
 ## Collaboration rules
 - Work in Polish with precise, direct reports; no guessing or overstated claims.
 - When the user says “OK, ROB”, inspect current state, choose the highest-value safe task, implement, test, verify, document, and continue while sensible work remains.
