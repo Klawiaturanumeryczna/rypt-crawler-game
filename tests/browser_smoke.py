@@ -150,5 +150,5 @@ with sync_playwright() as p:
     page.evaluate("window.__testRestart()")
     assert page.evaluate("window.__smoke()['state']") == "firingChoice", "Restart should reset the run and reopen firing-style selection"
     assert not errors, f"Browser errors: {errors}"
-    print("PASS: startup pickups; full-HP heart persistence; shop purchase; exit probabilities and placement; room-30 bonus; boss-room clearing and floor transition; all ten active-item effects; active-item kill accounting; six movement physics styles; shooting; restart; no browser errors")
+    print("PASS: startup pickups; full-HP heart persistence; shop purchase; exit probabilities and placement; room-30 bonus; boss-room clearing and floor transition; named 30-item catalogue; all ten active-item effects; all 20 passive-item effects; active-item kill accounting; six movement physics styles; shooting; restart; no browser errors")
     browser.close()
