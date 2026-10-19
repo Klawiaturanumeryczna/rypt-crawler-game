@@ -8,6 +8,7 @@ assert needle in HTML, "Could not locate game loop for test instrumentation"
 instrumentation = """function loop(){
 window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop),keys:Array.from(keys),mouseDown:mouse.down,frame,movement:player?player.movement:null,fireMode:player?player.fireMode:null,items:player?player.items.length:null});
 window.__testItemCatalogue=()=>({count:WSZYSTKIE_PRZEDMIOTY.length,unique:new Set(WSZYSTKIE_PRZEDMIOTY.map(i=>i.nazwa)).size,names:WSZYSTKIE_PRZEDMIOTY.map(i=>i.nazwa),placeholders:WSZYSTKIE_PRZEDMIOTY.filter(i=>i.nazwa.startsWith('Item ')||/Placeholder/i.test(i.opis||'')).length,icons:WSZYSTKIE_PRZEDMIOTY.filter(i=>!i.ikona).length});
+window.__testMetaProgression=()=>{const saved={profile:metaProfile,player,coins,kills,floor,roomNo,state};metaProfile=freshMetaProfile();player={items:[WSZYSTKIE_PRZEDMIOTY[0],WSZYSTKIE_PRZEDMIOTY[1]],movement:'runner',fireMode:'standard'};coins=7;kills=4;floor=3;roomNo=12;recordItemDiscovery(player.items[0]);recordEnemyDiscovery('boss');const summary=recordRunDeath();const result={discovered:metaProfile.discoveredItems.slice(),enemies:metaProfile.discoveredEnemies.slice(),deaths:metaProfile.totalDeaths,coinsLost:summary.coinsLost,itemsLost:summary.itemsLost,bestFloor:metaProfile.bestFloor,bestRoom:metaProfile.bestRoom};metaProfile=saved.profile;player=saved.player;coins=saved.coins;kills=saved.kills;floor=saved.floor;roomNo=saved.roomNo;state=saved.state;return result};
 window.__testExit=(r,t)=>{const old={roomNo,floorExitPending,floorExitSpawned,doors,random:Math.random};roomNo=r;floorExitPending=false;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];Math.random=()=>t;rollFloorExit();const result=floorExitPending;Math.random=old.random;roomNo=old.roomNo;floorExitPending=old.floorExitPending;floorExitSpawned=old.floorExitSpawned;doors=old.doors;return result};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
 window.__testPendingExitRoom=()=>{roomNo=1;floor=1;floorExitPending=true;floorExitSpawned=false;nextRoom(2);return doors.some(d=>d.floorExit)&&!floorExitPending};
@@ -75,6 +76,12 @@ with sync_playwright() as p:
     assert page.locator("#overlay").is_visible()
     assert page.evaluate("typeof window.__smoke") == "function", f"Game script did not initialize: {errors}"
 
+    page.locator("#profileBtn").click()
+    assert page.locator("#overlayTitle").inner_text() == "KODEKS I TRWAŁY POSTĘP", "Codex button should open the persistent progress screen"
+    page.locator("#startBtn").click()
+    assert page.locator("#overlayTitle").inner_text() == "CRYPT CRAWLER", "Returning from Codex should restore the title screen"
+    assert page.locator("#profileBtn").is_visible(), "Codex button should return on the title screen"
+
     page.locator("#startBtn").click()
     page.wait_for_timeout(50)
     assert page.evaluate("window.__smoke()['state']") == "firingChoice", "Start should open the firing-style selection"
@@ -135,6 +142,11 @@ with sync_playwright() as p:
     assert movement["runner"]["coast"] == 0 and movement["drifter"]["coast"] > 0 and movement["momentum"]["coast"] > 0, f"Drifter and momentum should retain movement after input release while runner stops: {movement}"
     assert movement["hopper"]["first"] > movement["runner"]["first"] and movement["twitch"]["first"] > movement["runner"]["first"], f"Hopper and twitch should produce a faster Shift dash: {movement}"
     assert movement["juggernaut"]["first"] != movement["runner"]["first"], f"Juggernaut should have a distinct movement speed: {movement}"
+    meta = page.evaluate("window.__testMetaProgression()")
+    assert meta["discovered"] == ["active1"] and meta["enemies"] == ["boss"], f"Codex should retain item/enemy discoveries: {meta}"
+    assert meta["deaths"] == 1 and meta["coinsLost"] == 7 and meta["itemsLost"] == ["Mała Apteczka", "Sakiewka"], f"Death should record run losses: {meta}"
+    assert meta["bestFloor"] == 1 and meta["bestRoom"] == 1, f"Fresh profile should start with baseline record: {meta}"
+
     catalogue = page.evaluate("window.__testItemCatalogue()")
     assert catalogue["count"] == 30 and catalogue["unique"] == 30, f"All 30 items should have distinct names: {catalogue}"
     assert catalogue["placeholders"] == 0 and catalogue["icons"] == 0, f"Item catalogue should have no placeholders or missing icons: {catalogue}"
