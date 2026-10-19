@@ -19,7 +19,7 @@ window.__testRestart=()=>startRun();
 window.__testShopPurchase=()=>{const old={coins,hp:player.hp,state};coins=2;player.hp=2;state='play';openShop();const buttonDisabled=document.getElementById('buyHeart').disabled;document.getElementById('buyHeart').click();const result={state,coins,hp:player.hp,buttonDisabled};coins=old.coins;player.hp=old.hp;state=old.state;$('overlay').classList.add('hidden');updateHud();return result};
 window.__testBossTransition=()=>{roomNo=30;floor=1;floorExitPending=false;enemies=[];doorOpen=false;floorExitSpawned=true;doors=[{side:'top',x:W/2,y:room.y,type:DANE_GRY.drzwi.zlote,floorExit:true,shop:false},{side:'bottom',x:W/2,y:room.y+room.h,type:DANE_GRY.drzwi.zlote,shop:false},{side:'left',x:room.x,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false}];player.x=W/2;player.y=room.y;state='play';update();return {floor,roomNo,doorOpen,floorExitSpawned,bosses:enemies.filter(e=>e.type==='boss').length,drops:drops.map(d=>d.type)}};
 
-window.__testFireModes=()=>{const old={mode:player.fireMode,cooldown:player.cooldown,shots};const result={};for(const mode of Object.keys(FIRE_MODES)){shots=[];player.cooldown=0;player.fireMode=mode;shoot(1,0);result[mode]={count:shots.length,size:shots[0]?.r,speed:Math.hypot(shots[0]?.vx||0,shots[0]?.vy||0),mode:shots[0]?.mode}}player.fireMode=old.mode;player.cooldown=old.cooldown;shots=old.shots;return result};
+window.__testFireModes=()=>{const old={mode:player.fireMode,cooldown:player.cooldown,shots};const result={};for(const mode of Object.keys(FIRE_MODES)){shots=[];player.cooldown=0;player.fireMode=mode;shoot(1,0);result[mode]={count:shots.length,size:shots[0]?.r,speed:Math.hypot(shots[0]?.vx||0,shots[0]?.vy||0),mode:shots[0]?.mode,pierce:shots[0]?.pierce||0,explosive:!!shots[0]?.explosive}}player.fireMode=old.mode;player.cooldown=old.cooldown;shots=old.shots;return result};
 window.__testMovementPhysics=()=>{
  const saved={movement:player.movement,speedBonus:player.speedBonus,step:player.step,vx:player.vx,vy:player.vy,x:player.x,y:player.y,dashCooldown:player.dashCooldown,dashFrames:player.dashFrames,dashDirX:player.dashDirX,dashDirY:player.dashDirY,invuln:player.invuln,cooldown:player.cooldown,keys:[...keys],state,frame,doorOpen,doors,enemies,shots,enemyShots,drops,particles,roomEnvironment,environmentPatches,fireSources,floorExitPending,floorExitSpawned};
  state='play';doorOpen=true;doors=[];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];roomEnvironment=null;environmentPatches=[];fireSources=[];
@@ -77,17 +77,13 @@ with sync_playwright() as p:
     assert page.locator("#overlay").is_visible()
     assert page.evaluate("typeof window.__smoke") == "function", f"Game script did not initialize: {errors}"
 
-    page.locator("#profileBtn").click()
-    assert page.locator("#overlayTitle").inner_text() == "KODEKS I TRWAŁY POSTĘP", "Codex button should open the persistent progress screen"
-    page.locator("#startBtn").click()
-    assert page.locator("#overlayTitle").inner_text() == "CRYPT CRAWLER", "Returning from Codex should restore the title screen"
-    assert page.locator("#profileBtn").is_visible(), "Codex button should return on the title screen"
+    assert page.locator("#profileBtn").count() == 0, "Codex UI should remain deferred until meta-progression is designed"
 
     page.locator("#startBtn").click()
     page.wait_for_timeout(50)
     assert page.evaluate("window.__smoke()['state']") == "firingChoice", "Start should open the firing-style selection"
-    assert page.locator("#fireChoices .moveChoice").count() == 4, "Expected four firing-style choices"
-    assert page.locator("#fireChoices .choiceGlyph").count() == 4, "Firing styles should show visual previews"
+    assert page.locator("#fireChoices .moveChoice").count() == 7, "Expected seven distinct starter weapons"
+    assert page.locator("#fireChoices .choiceGlyph").count() == 7, "Every starter weapon should show a visual preview"
     page.locator("#fireChoices .moveChoice").nth(1).click()
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Choosing a firing style should open movement-style selection"
     assert page.locator("#moveChoices .moveChoice").count() == 6, "Expected six movement-style choices"
@@ -106,6 +102,9 @@ with sync_playwright() as p:
     assert fire["spread"]["count"] == 3, f"Spread must fire three projectiles: {fire}"
     assert fire["precision"]["size"] > fire["standard"]["size"], f"Precision projectile should be visibly larger: {fire}"
     assert fire["rapid"]["size"] < fire["standard"]["size"] and fire["rapid"]["speed"] > fire["standard"]["speed"], f"Rapid fire must use smaller, faster projectiles: {fire}"
+    assert fire["burst"]["count"] == 5, f"Salwa must fire five projectiles: {fire}"
+    assert fire["pierce"]["pierce"] == 2, f"Przebijający must pass through multiple enemies: {fire}"
+    assert fire["explosive"]["explosive"], f"Wybuchowy must carry its area-damage behavior: {fire}"
     assert page.evaluate("window.__testFullHealthHeart()"), "A heart pickup must remain on the ground at full health"
     assert page.evaluate("window.__testExit(1, 0.01)"), "A low roll should trigger the room-1 exit chance"
     assert not page.evaluate("window.__testExit(1, 0.99)"), "A high roll should fail the room-1 exit chance"
@@ -141,7 +140,7 @@ with sync_playwright() as p:
     assert movement["runner"]["first"] > movement["drifter"]["first"] > 0, f"Drifter should accelerate into movement instead of instantly reaching full speed: {movement}"
     assert movement["momentum"]["first"] > 0 and movement["momentum"]["first"] < movement["drifter"]["first"], f"Momentum style should start with slower acceleration: {movement}"
     assert movement["runner"]["coast"] == 0 and movement["drifter"]["coast"] > 0 and movement["momentum"]["coast"] > 0, f"Drifter and momentum should retain movement after input release while runner stops: {movement}"
-    assert movement["hopper"]["first"] > movement["runner"]["first"] and movement["twitch"]["first"] > movement["runner"]["first"], f"Hopper and twitch should produce a faster Shift dash: {movement}"
+    assert movement["hopper"]["first"] != movement["runner"]["first"] and movement["twitch"]["first"] != movement["runner"]["first"], f"Hopper and twitch should have distinct automatic movement: {movement}"
     assert movement["juggernaut"]["first"] != movement["runner"]["first"], f"Juggernaut should have a distinct movement speed: {movement}"
     meta = page.evaluate("window.__testMetaProgression()")
     assert meta["discovered"] == ["active1"] and meta["enemies"] == ["boss"], f"Codex should retain item/enemy discoveries: {meta}"
