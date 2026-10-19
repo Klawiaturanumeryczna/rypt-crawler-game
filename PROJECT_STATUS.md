@@ -1,6 +1,12 @@
 # Crypt Crawler — PROJECT STATUS
 Updated: 2026-10-19
 
+## Latest implementation batch — persistent profile foundation
+- Added a versioned browser-local profile (`cryptCrawlerProfileV1`) with run starts, deaths, lifetime kills, best floor/room, discovered items and encountered enemy types.
+- Item discoveries are saved at pickup time and are independent of run inventory. Enemy types are recorded when encountered.
+- Death screen explicitly reports coins and carried items lost in the run, while long-term profile records remain. Added a Codex / Persistent Progress screen accessible from title/death overlays.
+- This is the foundation only: exact unlock requirements, permanent stat upgrades/specializations, actual gameplay synergies, familiars/evolutions, and death-prevention abilities remain OPEN; no arbitrary balance values were introduced.
+
 ## Purpose
 Compact handoff / source of operational context for new ChatGPT sessions. This file records the working state and workflow; verify live GitHub state before relying on commit or CI status.
 
@@ -37,10 +43,10 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 
 ## Next priorities
 1. Verify latest CI runs and current parity between private source and public mirror.
-2. Expand meaningful item catalogue and synergies (current item labels/catalogue are still prototype-level).
-3. Design the familiar system before implementation; familiar cap/slots remain OPEN.
-4. Expand floor identity, secrets/events and boss variety.
-5. Plan save data and permanent unlocks after scope is agreed.
+2. Define concrete unlock conditions and implement actual permanent unlocks / optional stat specializations.
+3. Design familiar cap/slots and implement familiars, abilities, synergies and evolutions.
+4. Implement item synergies and both active protection styles after control/cooldown/cost rules are agreed.
+5. Expand floor identity, secrets/events and boss variety.
 6. Next testing gap: longer multi-room/floor/boss runs and gameplay playtesting; automated smoke tests do not replace human gameplay testing.
 
 ## Fast, safe workflow for every session
