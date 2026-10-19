@@ -19,7 +19,7 @@ window.__testRestart=()=>startRun();
 window.__testShopPurchase=()=>{const old={coins,hp:player.hp,state};coins=2;player.hp=2;state='play';openShop();const buttonDisabled=document.getElementById('buyHeart').disabled;document.getElementById('buyHeart').click();const result={state,coins,hp:player.hp,buttonDisabled};coins=old.coins;player.hp=old.hp;state=old.state;$('overlay').classList.add('hidden');updateHud();return result};
 window.__testBossTransition=()=>{roomNo=30;floor=1;floorExitPending=false;enemies=[];doorOpen=false;floorExitSpawned=true;doors=[{side:'top',x:W/2,y:room.y,type:DANE_GRY.drzwi.zlote,floorExit:true,shop:false},{side:'bottom',x:W/2,y:room.y+room.h,type:DANE_GRY.drzwi.zlote,shop:false},{side:'left',x:room.x,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false}];player.x=W/2;player.y=room.y;state='play';update();return {floor,roomNo,doorOpen,floorExitSpawned,bosses:enemies.filter(e=>e.type==='boss').length,drops:drops.map(d=>d.type)}};
 
-window.__testFireModes=()=>{const old={mode:player.fireMode,cooldown:player.cooldown,shots};const result={};for(const mode of Object.keys(FIRE_MODES)){shots=[];player.cooldown=0;player.fireMode=mode;shoot(1,0);result[mode]={count:shots.length,size:shots[0]?.r,speed:Math.hypot(shots[0]?.vx||0,shots[0]?.vy||0),mode:shots[0]?.mode,pierce:shots[0]?.pierce||0,explosive:!!shots[0]?.explosive}}player.fireMode=old.mode;player.cooldown=old.cooldown;shots=old.shots;return result};
+window.__testFireModes=()=>{const old={mode:player.fireMode,cooldown:player.cooldown,damage:player.damage,fireRate:player.fireRate,shots};const result={};for(const mode of Object.keys(FIRE_MODES)){shots=[];player.cooldown=0;player.fireMode=mode;player.damage=FIRE_MODES[mode].damage;player.fireRate=Math.max(6,Math.round(17*FIRE_MODES[mode].rate));shoot(1,0);const interval=player.fireRate;result[mode]={count:shots.length,size:shots[0]?.r,speed:Math.hypot(shots[0]?.vx||0,shots[0]?.vy||0),mode:shots[0]?.mode,pierce:shots[0]?.pierce||0,explosive:!!shots[0]?.explosive,damage:shots[0]?.damage,interval,dps:shots.length*(shots[0]?.damage||0)/interval}}player.fireMode=old.mode;player.cooldown=old.cooldown;player.damage=old.damage;player.fireRate=old.fireRate;shots=old.shots;return result};
 window.__testMovementPhysics=()=>{
  const saved={movement:player.movement,speedBonus:player.speedBonus,step:player.step,vx:player.vx,vy:player.vy,x:player.x,y:player.y,dashCooldown:player.dashCooldown,dashFrames:player.dashFrames,dashDirX:player.dashDirX,dashDirY:player.dashDirY,invuln:player.invuln,cooldown:player.cooldown,keys:[...keys],state,frame,doorOpen,doors,enemies,shots,enemyShots,drops,particles,roomEnvironment,environmentPatches,fireSources,floorExitPending,floorExitSpawned};
  state='play';doorOpen=true;doors=[];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];roomEnvironment=null;environmentPatches=[];fireSources=[];
@@ -86,7 +86,7 @@ with sync_playwright() as p:
     assert page.locator("#fireChoices .choiceGlyph").count() == 7, "Every starter weapon should show a visual preview"
     assert page.locator("#fireChoices .weaponStats").count() == 7, "Every starter weapon should show damage and firing interval"
     assert "Odstęp między strzałami: 24 klatek" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate its slower firing interval"
-    assert "Obrażenia / pocisk: ×0.42" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate per-projectile damage"
+    assert "Obrażenia / pocisk: ×0.25" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate per-projectile damage"
     page.locator("#fireChoices .moveChoice").nth(1).click()
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Choosing a firing style should open movement-style selection"
     assert page.locator("#moveChoices .moveChoice").count() == 6, "Expected six movement-style choices"
@@ -108,6 +108,8 @@ with sync_playwright() as p:
     assert fire["burst"]["count"] == 5, f"Salwa must fire five projectiles: {fire}"
     assert fire["pierce"]["pierce"] == 2, f"Przebijający must pass through multiple enemies: {fire}"
     assert fire["explosive"]["explosive"], f"Wybuchowy must carry its area-damage behavior: {fire}"
+    assert fire["spread"]["dps"] <= fire["standard"]["dps"] * 1.1, f"Spread should not have clearly higher raw single-target DPS than the standard weapon: {fire}"
+    assert fire["burst"]["dps"] <= fire["standard"]["dps"], f"Salwa should trade lower per-projectile damage for multi-target coverage, not outperform standard on raw DPS: {fire}"
     assert page.evaluate("window.__testFullHealthHeart()"), "A heart pickup must remain on the ground at full health"
     assert page.evaluate("window.__testExit(1, 0.01)"), "A low roll should trigger the room-1 exit chance"
     assert not page.evaluate("window.__testExit(1, 0.99)"), "A high roll should fail the room-1 exit chance"
