@@ -74,6 +74,8 @@ with sync_playwright() as p:
     page.wait_for_timeout(100)
     start = page.evaluate("window.__smoke()")
     assert start["state"] == "play", f"Start failed after completing onboarding: {start}"
+    controls = page.locator(".controls").inner_text().lower()
+    assert "wejdź w przedmiot" in controls and "e podnieś przedmiot" not in controls and "naciśnij e" not in controls, f"Controls must explain contact pickup without E: {controls}"
     assert not page.locator("#overlay").is_visible()
     assert start["drops"].count("heart") == 3, f"Expected 3 starting hearts: {start}"
     assert start["drops"].count("coin") == 2, f"Expected 2 starting coins: {start}"
