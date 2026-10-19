@@ -9,6 +9,7 @@ instrumentation = """function loop(){
 window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop),keys:Array.from(keys),mouseDown:mouse.down,frame});
 window.__testExit=(r,t)=>{const old={roomNo,floorExitPending,floorExitSpawned,doors,random:Math.random};roomNo=r;floorExitPending=false;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];Math.random=()=>t;rollFloorExit();const result=floorExitPending;Math.random=old.random;roomNo=old.roomNo;floorExitPending=old.floorExitPending;floorExitSpawned=old.floorExitSpawned;doors=old.doors;return result};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
+window.__testPendingExitRoom=()=>{roomNo=1;floor=1;floorExitPending=true;floorExitSpawned=false;nextRoom(2);return doors.some(d=>d.floorExit)&&!floorExitPending};
 window.__testBossClear=()=>{enemies=[];doorOpen=false;floorExitSpawned=false;doors=[{side:'top',x:W/2,y:room.y,type:DANE_GRY.drzwi.zlote,shop:false},{side:'bottom',x:W/2,y:room.y+room.h,type:DANE_GRY.drzwi.zlote,shop:false},{side:'left',x:room.x,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false},{side:'right',x:room.x+room.w,y:room.y+room.h/2,type:DANE_GRY.drzwi.zlote,shop:false}];player.x=W/2;player.y=H/2;state='play';update();return {doorOpen,floorExitSpawned,floor,roomNo}};
 window.__testRoom30=()=>{roomNo=29;floor=1;floorExitPending=false;floorExitSpawned=false;floorBonusClaimed=false;nextRoom(2);return {allExits:doors.every(d=>d.floorExit),bonus:floorBonusClaimed,item:drops.some(d=>d.type==='item')}};
 window.__testRestart=()=>startRun();
@@ -56,6 +57,7 @@ with sync_playwright() as p:
     assert boss_clear["doorOpen"] and not boss_clear["floorExitSpawned"] and boss_clear["floor"] == 2 and boss_clear["roomNo"] == 1, f"Clearing the floor boss should open the route to room 2, not the next floor: {boss_clear}"
     page.evaluate("window.__testRestart()")
     assert page.evaluate("window.__testExit(1, 0.03)") is True, "5% roll should set pending exit at roll 3%"
+    assert page.evaluate("window.__testPendingExitRoom()") is True, "Successful roll should place the exit in the next room"
     assert page.evaluate("window.__testExit(1, 0.07)") is False, "5% roll should reject roll 7%"
     assert page.evaluate("window.__testExit(19, 0.94)") is True, "95% roll should set pending exit at roll 94%"
     assert page.evaluate("window.__testExit(19, 0.96)") is False, "95% roll should reject roll 96%"
