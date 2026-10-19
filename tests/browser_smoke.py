@@ -84,7 +84,6 @@ with sync_playwright() as p:
     assert room30["allExits"] and room30["bonus"] and room30["item"], f"Room 30 should guarantee exits and a bonus item: {room30}"
     shop = page.evaluate("window.__testShopPurchase()")
     assert not shop["buttonDisabled"] and shop["coins"] == 0 and shop["hp"] == 4, f"Shop heart purchase should spend 2 coins and heal 2 HP: {shop}"
-    assert page.evaluate("window.__testFullHealthHeart()"), "A heart pickup must remain on the ground at full health"
     assert page.evaluate("window.__testActiveDamage()"), "An active item kill must increment kill and streak counters"
     active = page.evaluate("window.__testAllActiveItems()")
     assert active["1"]["hp"] == 3 and active["1"]["consumed"], f"Active item 1 must heal 1 heart and be consumed: {active['1']}"
@@ -100,6 +99,7 @@ with sync_playwright() as p:
     pickup = page.evaluate("window.__testItemPickup()")
     assert pickup["remainsNearby"], f"Items should not auto-pick up from a distance: {pickup}"
     assert pickup["collected"], f"Walking into an item should collect it without pressing E: {pickup}"
+    assert page.evaluate("window.__testFullHealthHeart()"), "A heart pickup must remain on the ground at full health"
 
     bossClear = page.evaluate("window.__testBossClear()")
     assert bossClear["doorOpen"], f"Clearing a room should open its doors: {bossClear}"
