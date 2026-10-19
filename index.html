@@ -31,6 +31,17 @@ const $=id=>document.getElementById(id);
 const W=canvas.width,H=canvas.height, room={x:72,y:58,w:816,h:484};
 const keys=new Set(); let mouse={x:W/2+100,y:H/2,down:false};
 let state='title',player, enemies=[],shots=[],enemyShots=[],drops=[],particles=[],floor=1,roomNo=1,roomTier=2,kills=0,killChain=0,killChainTimer=0,coins=0,frame=0,shake=0,doorOpen=false,doors=[],roomSeed=1,spawnTimer=0,floorExitSpawned=false,floorExitPending=false,shopUsedFloor=false,floorBonusClaimed=false,roomEnvironment=null,environmentPatches=[],fireSources=[];
+// Nazwy przedmiotow sa kosmetyczne; efekty i balans pozostaja w OPISY_PRZEDMIOTOW oraz applyPassiveItem/useActiveItem.
+const NAZWY_PRZEDMIOTOW = {
+ aktywne:['Mała Apteczka','Sakiewka','Fala Uderzeniowa','Impuls Oczyszczający','Tarcza Eteryczna','Gwiezdna Salwa','Znak Egzekucji','Wielka Apteczka','Złota Sakwa','Fala Oczyszczenia'],
+ nogi:['Lekkie Buty','Buty Wiatru','Nagolenniki Witalności','Sprinterskie Nagolenniki','Skóra Widmo','Buty Wędrowca','Stalowe Obcasy','Nagolenniki Życia','Buty Błyskawicy','Strażnicze Nagolenniki'],
+ strzelanie:['Ciężki Pocisk','Rdzeń Mocy','Cewka Szybkostrzelna','Soczewka Prędkości','Kaliber Rozszerzony','Mechanizm Gatlinga','Komora Odrzutu','Pocisk Oblężniczy','Napęd Hiperprzestrzenny','Niszczyciel']
+};
+const IKONY_PRZEDMIOTOW = {
+ aktywne:['🩹','🪙','💥','🌀','🛡️','🌟','☠️','💊','💰','✨'],
+ nogi:['👟','💨','❤️','⚡','👻','🥾','🔩','💖','⚡','🛡️'],
+ strzelanie:['🔩','🔋','🧲','🔭','🎯','⚙️','💣','🧱','🚀','💀']
+};
 // Dane gry trzymamy w jednym miejscu. Dodawanie nowych typów nie wymaga przebudowy całej logiki.
 const DANE_GRY = {
  drzwi: {
@@ -41,9 +52,9 @@ const DANE_GRY = {
   wielokolorowe:{id:'wielokolorowe',nazwa:'SPECJALNE',specjalne:true,kolor:'rainbow',poswiata:'#ffffff',opis:'Kolor zarezerwowany dla przyszłych mechanik specjalnych.'}
  },
  przedmioty: {
-  aktywne:Array.from({length:10},(_,i)=>({id:'active'+(i+1),nazwa:'Item '+(i+1),typ:1,kategoria:'active',numer:i+1,ikona:'❗',opis:'Placeholder — przedmiot aktywny.'})),
-  nogi:Array.from({length:10},(_,i)=>({id:'legs'+(i+1),nazwa:'Item '+(i+1),typ:2,kategoria:'legs',numer:i+1,ikona:'👟',opis:'Placeholder — przedmiot na nogi.'})),
-  strzelanie:Array.from({length:10},(_,i)=>({id:'shot'+(i+1),nazwa:'Item '+(i+1),typ:3,kategoria:'shot',numer:i+1,ikona:'🔫',opis:'Placeholder — przedmiot do strzelania.'}))
+  aktywne:Array.from({length:10},(_,i)=>({id:'active'+(i+1),nazwa:NAZWY_PRZEDMIOTOW.aktywne[i],typ:1,kategoria:'active',numer:i+1,ikona:IKONY_PRZEDMIOTOW.aktywne[i]})),
+  nogi:Array.from({length:10},(_,i)=>({id:'legs'+(i+1),nazwa:NAZWY_PRZEDMIOTOW.nogi[i],typ:2,kategoria:'legs',numer:i+1,ikona:IKONY_PRZEDMIOTOW.nogi[i]})),
+  strzelanie:Array.from({length:10},(_,i)=>({id:'shot'+(i+1),nazwa:NAZWY_PRZEDMIOTOW.strzelanie[i],typ:3,kategoria:'shot',numer:i+1,ikona:IKONY_PRZEDMIOTOW.strzelanie[i]}))
  },
  dropy: {moneta:{id:'coin',szansaBazowa:.08,opis:'Waluta; bazowa szansa 8% na zabitego wroga'},serce:{id:'heart',szansa:.025,opis:'Odnawia 1 serce; bazowa szansa 2,5% na zabitego wroga'}}
 };

@@ -7,6 +7,7 @@ needle = "function loop(){"
 assert needle in HTML, "Could not locate game loop for test instrumentation"
 instrumentation = """function loop(){
 window.__smoke=()=>({state,x:player?player.x:null,y:player?player.y:null,shots:shots.length,floor,roomNo,hp:player?player.hp:null,maxHp:player?player.maxHp:null,coins,drops:drops.filter(d=>!d.gone).map(d=>d.type),shop:doors.some(d=>d.shop),keys:Array.from(keys),mouseDown:mouse.down,frame,movement:player?player.movement:null,fireMode:player?player.fireMode:null,items:player?player.items.length:null});
+window.__testItemCatalogue=()=>({count:WSZYSTKIE_PRZEDMIOTY.length,unique:new Set(WSZYSTKIE_PRZEDMIOTY.map(i=>i.nazwa)).size,names:WSZYSTKIE_PRZEDMIOTY.map(i=>i.nazwa),placeholders:WSZYSTKIE_PRZEDMIOTY.filter(i=>/^Item \\d+$/.test(i.nazwa)||/Placeholder/i.test(i.opis||'')).length,icons:WSZYSTKIE_PRZEDMIOTY.filter(i=>!i.ikona).length});
 window.__testExit=(r,t)=>{const old={roomNo,floorExitPending,floorExitSpawned,doors,random:Math.random};roomNo=r;floorExitPending=false;floorExitSpawned=false;doors=[{shop:false},{shop:false},{shop:false},{shop:false}];Math.random=()=>t;rollFloorExit();const result=floorExitPending;Math.random=old.random;roomNo=old.roomNo;floorExitPending=old.floorExitPending;floorExitSpawned=old.floorExitSpawned;doors=old.doors;return result};
 window.__testRoom2=()=>{roomNo=1;nextRoom(2);return doors.some(d=>d.shop)};
 window.__testPendingExitRoom=()=>{roomNo=1;floor=1;floorExitPending=true;floorExitSpawned=false;nextRoom(2);return doors.some(d=>d.floorExit)&&!floorExitPending};
@@ -112,6 +113,10 @@ with sync_playwright() as p:
     assert movement["runner"]["coast"] == 0 and movement["drifter"]["coast"] > 0 and movement["momentum"]["coast"] > 0, f"Drifter and momentum should retain movement after input release while runner stops: {movement}"
     assert movement["hopper"]["first"] > movement["runner"]["first"] and movement["twitch"]["first"] > movement["runner"]["first"], f"Hopper and twitch should produce a faster Shift dash: {movement}"
     assert movement["juggernaut"]["first"] != movement["runner"]["first"], f"Juggernaut should have a distinct movement speed: {movement}"
+    catalogue = page.evaluate("window.__testItemCatalogue()")
+    assert catalogue["count"] == 30 and catalogue["unique"] == 30, f"All 30 items should have distinct names: {catalogue}"
+    assert catalogue["placeholders"] == 0 and catalogue["icons"] == 0, f"Item catalogue should have no placeholders or missing icons: {catalogue}"
+
     pickup = page.evaluate("window.__testItemPickup()")
     assert pickup["remainsNearby"], f"Items should not auto-pick up from a distance: {pickup}"
     assert pickup["collected"], f"Walking into an item should collect it without pressing E: {pickup}"

@@ -14,8 +14,9 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Browser roguelike, Canvas, primary game implementation in `index.html`.
 - Supporting files: `README.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md`, `ENEMY_PROGRESSION.md`, `verify.py`, `tests/browser_smoke.py`.
 - Recent gameplay changes: no item offers/pickups in floor 1 room 1 (keep 3 hearts + 2 coins); item pickup requires physical contact; four visibly distinct shooting styles; six visibly distinct movement styles.
+- Item catalogue pass: all 30 existing items now have distinct Polish names and category-appropriate icons. This is a presentation-only change; effects and balance remain unchanged. Synergies, rarity, transformations, and full item identities remain OPEN.
 - Recent automated checks cover the starter room, contact-only pickup, all ten active-item effects/consumption, exit probabilities and placement, room-30 bonus, shop purchase, boss-room clearing and floor transition, six movement-physics styles, shooting projectile differences, and static invariants.
-- Last known matching file hashes from the previous verified sync (re-check before relying on them):
+- Historical file hashes from an earlier sync (not current after subsequent changes; always fetch both repositories and compare current blob SHAs before relying on parity):
   - `index.html`: `8853c2e434c96948d605aa7f1ff0ad8f774be75b`
   - `tests/browser_smoke.py`: `3cdf86d030f7771afe25d79f1f6106431f7fe762`
   - `verify.py`: `b2e7c9c0879d1bacfcea05795fd0db109420197f`

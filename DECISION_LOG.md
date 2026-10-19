@@ -47,3 +47,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Pokój startowy:** usuń oferty/pickupy przedmiotów z pierwszego pokoju; zachowaj 3 serca i 2 monety jako zapasy startowe.
 - **Podnoszenie przedmiotów:** przedmiot zbiera się automatycznie dopiero po wejściu w jego obszar kolizji. Nie wymaga osobnego klawisza interakcji; samo podejście na odległość nie wystarcza.
 - **Style startowe:** style strzelania i ruchu muszą różnić się nie tylko nazwą/liczbami, ale też czytelnym wyglądem w menu i podczas gry. Różnice mają być widoczne bez zmiany kierunku całej gry.
+
+
+## Item catalogue — 2026-10-19
+- **Implemented (presentation only):** replaced generic `Item 1` labels with 30 distinct Polish names and category-appropriate icons.
+- **No gameplay/balance changes:** effects, values, drop logic, and item behaviour were not changed by this naming pass.
+- **OPEN:** thematic naming and long-term item identities can be revised later as the full item catalogue, rarities, transformations, and synergies are designed. Names do not imply that synergies or rarity systems exist yet.
