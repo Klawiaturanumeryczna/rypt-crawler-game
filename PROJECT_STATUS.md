@@ -63,6 +63,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Current gameplay batch (2026-10-19)
 - Starter weapon choice displays per-projectile damage multiplier and firing interval (frames), using the same values that govern actual weapon cadence.
 - Research-backed first balance pass: Spread damage reduced to `0.40` per projectile and Salwa to `0.25`; static and browser-smoke checks now guard against projectile-count alone making their raw single-target DPS exceed the standard weapon. Exact balance remains provisional pending playtesting.
+- Browser smoke now verifies real collision behavior for Piercing (three targets maximum) and Explosive (primary hit plus 60% splash damage within 72 px).
 - Research basis: Dead Cells developer commentary emphasizes distinct weapon purpose/feel; Brotato player feedback praises build variety but warns against weapons that feel too similar. See `DECISION_LOG.md` for sources and caveats.
 - Startowe bronie rozszerzone z 4 do 7 stylów: dodano Salwę, Przebijający i Wybuchowy.
 - Usunięto aktywację uniku przez Shift; Skoczek i Zwinny korzystają z automatycznych zrywów, pozostałe style zachowują różnice w przyspieszeniu/pędzie.
