@@ -16,7 +16,7 @@ Otwórz `index.html` w nowoczesnej przeglądarce i kliknij **ROZPOCZNIJ RUN**.
 - **Spacja** — użycie aktywnego przedmiotu; aktywny przedmiot zostaje zużyty.
 - **P** — pauza / powrót do gry.
 - **R** — rozpoczęcie nowego runu.
-- **Shift** — krótki sus w stylu ruchu „Skoczek”.
+- **Shift** — sus w stylu „Skoczek” albo krótki unik w stylu „Zwinny”.
 - Style ruchu różnią się prowadzeniem i wyglądem postaci: poślizg, rozpęd, uniki, sus i ciężka sylwetka są widoczne podczas gry.
 
 ## Pętla rozgrywki
@@ -29,7 +29,7 @@ Tylko w pierwszym pokoju pierwszego piętra pojawiają się 3 serca i 2 monety. 
 
 Dostępnych jest sześć stylów ruchu: Podstawowe bieganie (natychmiastowe sterowanie), Szybki ślizg (bezwładność), Skoczek (mocny sus na Shift), Rozpęd (płynne przyspieszenie), Zwinny (krótki, częsty unik na Shift) i Ciężki krok (opancerzona sylwetka). Każdy ma inny kolor/kształt postaci. Cztery style strzelania również są widoczne od razu: Precyzyjny (duży złoty pocisk), Klasyczny, Rozrzut (wachlarz trzech różowych pocisków) i Szybkostrzelny (małe, szybkie turkusowe pociski).
 
-Przedmioty aktywne są używane Spacją. Przedmioty na nogi i do strzelania modyfikują statystyki przy podniesieniu. Nie ma obecnie systemu synergii. Część aktywnych efektów zadaje obrażenia, ale nie może bezpośrednio dobić wroga — to znane ograniczenie prototypu.
+Przedmioty aktywne są używane Spacją. Przedmioty na nogi i do strzelania modyfikują statystyki przy podniesieniu. Nie ma obecnie systemu synergii. Aktywne efekty zadają obrażenia przez wspólną ścieżkę obrażeń przeciwnika, więc mogą również zadać cios kończący. Balans i czytelność tych efektów nadal wymagają testów.
 
 ## Drzwi, zagrożenie i sklep
 
