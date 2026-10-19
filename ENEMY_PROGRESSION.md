@@ -1,7 +1,7 @@
 # Progresja przeciwników — Crypt Crawler
 
 ## Zasady projektowe
-- Piętra mają stałą długość 20 pokoi.
+- Każde piętro ma maksymalnie 30 pokoi. Przejście może pojawić się wcześniej po losowaniu po oczyszczeniu pokoju; od pokoju 21 gracz może kontynuować eksplorację, a pokój 30 gwarantuje przejście i bonusowy przedmiot.
 - Kolejne piętra zwiększają wytrzymałość i szybkość wrogów oraz zmieniają pulę archetypów.
 - Przeciwnicy nie powinni wymagać konkretnego przedmiotu do pokonania.
 - Wartości poniżej są prototypowe i wymagają testów rozgrywki.
@@ -31,7 +31,7 @@ Na trudnych drzwiach dodatkowo zwiększane są wagi cięższych archetypów: Bru
 - **Brute:** większy i wytrzymalszy przeciwnik, który naciera na gracza.
 - **Dasher:** wykonuje krótkie, szybkie szarże.
 - **Hexer:** przeciwnik dystansowy z szybszym pociskiem niż Spitter.
-- **Boss piętra:** pojawia się w pokoju 20; ma `45 + 12 × numer piętra` HP i strzela wachlarzem trzech pocisków co 55–75 klatek.
+- **Boss piętra:** od piętra 2 pojawia się na początku piętra, w pokoju 1; piętro 1 nie ma bossa. Ma `45 + 12 × numer piętra` HP (69 HP na piętrze 2, 81 HP na piętrze 3) i strzela wachlarzem trzech pocisków co 55–75 klatek. Po pokonaniu bossa przejście prowadzi do pokoju 2 tego samego piętra.
 
 ## Skalowanie statystyk
 
@@ -39,6 +39,13 @@ Na trudnych drzwiach dodatkowo zwiększane są wagi cięższych archetypów: Bru
 - Szybkość rośnie o 3,5% na piętro, maksymalnie o 30% premii, a potem stosowany jest mnożnik trudności drzwi.
 - Łatwe drzwi mnożą szybkość przez 0,92; średnie przez 1,00; trudne przez 1,08.
 - Poziom trudności resetuje się przy wejściu do każdego pokoju, więc modyfikatory nie kumulują się przez kolejne drzwi.
+
+## Stan zgodny z aktualną implementacją (2026-10-19)
+
+- Kod `index.html` ustala limit piętra funkcją `maxRoomsForFloor(f){return 30}`.
+- Boss jest tworzony tylko przy `floor>1 && roomNo===1`; w tym pokoju nie losuje się przejścia na następne piętro po wygranej.
+- Szansa zejścia jest liczona po oczyszczeniu kwalifikującego się pokoju jako `Math.min(1, roomNo * 0.05)`. Udane losowanie umieszcza zejście w następnym pokoju, który również trzeba oczyścić.
+- To jest opis prototypu; nie wszystkie docelowe systemy zapisane w `DECISION_LOG.md` są już zaimplementowane.
 
 ## Do dopracowania
 
