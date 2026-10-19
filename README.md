@@ -20,9 +20,9 @@ Otwórz `index.html` w nowoczesnej przeglądarce i kliknij **ROZPOCZNIJ RUN**.
 
 ## Pętla rozgrywki
 
-Każde piętro ma dokładnie **20 pokoi**. Boss pojawia się w pokoju 20. Na początku piętra losowany jest próg przejścia: po oczyszczeniu pokoju 1 szansa wynosi 5%, pokoju 2 — 10%, i tak dalej do 95% w pokoju 19. To skumulowany próg, a nie niezależne losowanie w każdym pokoju; około 5% podejść dociera do bossa. W pokoju 20 przejście jest gwarantowane po oczyszczeniu pokoju.
+Każde piętro ma maksymalnie **30 pokoi**. Na piętrze 1 nie ma bossa; od piętra 2 boss pojawia się na początku piętra, w pokoju 1. Po pokonaniu bossa przechodzisz do pokoju 2 tego samego piętra. Po oczyszczeniu zwykłych pokoi rośnie szansa pojawienia się przejścia: próg wynosi 5% w pokoju 1, 10% w pokoju 2 i tak dalej. W pokoju 20 przejście jest gwarantowane, ale można je zignorować i eksplorować do pokoju 30. Oczyszczenie pokoju 30 gwarantuje przejście i daje bonusowy przedmiot. Szansa jest skumulowanym progiem losowanym na początku piętra, a nie nowym niezależnym losowaniem w każdym pokoju.
 
-Na początku pierwszego pokoju pojawiają się 3 serca do podniesienia, 2 monety, 6 przedmiotów ruchu oraz po 2 losowe przedmioty aktywne, na nogi i do strzelania. Przedmioty trzeba podnosić klawiszem **E**.
+Tylko na początku pierwszego piętra pojawiają się zapasy startowe: 3 serca do podniesienia, 2 monety oraz oferty przedmiotów. Kolejne piętra nie przyznają ponownie zestawu startowego. Przedmioty trzeba podnosić klawiszem **E**.
 
 ## Style ruchu i przedmioty
 
@@ -44,7 +44,7 @@ Przedmioty aktywne są używane Spacją. Przedmioty na nogi i do strzelania mody
 
 ## Wrogowie i boss
 
-Pula przeciwników zmienia się wraz z piętrem. Zwykłe HP rośnie o 14% na piętro, szybkość o 3,5% na piętro z limitem premii 30%. Boss ma `45 + 12 × numer piętra` HP i strzela wachlarzem trzech pocisków. Szczegóły znajdują się w [ENEMY_PROGRESSION.md](ENEMY_PROGRESSION.md) oraz [BALANCE_NOTES.md](BALANCE_NOTES.md).
+Pula przeciwników zmienia się wraz z piętrem. Zwykłe HP rośnie o 14% na piętro, szybkość o 3,5% na piętro z limitem premii 30%. Boss pojawia się na początku każdego piętra od piętra 2 i ma `45 + 12 × numer piętra` HP; strzela wachlarzem trzech pocisków. Szczegóły znajdują się w [ENEMY_PROGRESSION.md](ENEMY_PROGRESSION.md) oraz [BALANCE_NOTES.md](BALANCE_NOTES.md).
 
 ## Znane ograniczenia i testy
 
