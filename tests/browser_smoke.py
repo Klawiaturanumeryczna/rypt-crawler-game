@@ -44,6 +44,7 @@ with sync_playwright() as p:
     page.locator("#fireChoices .moveChoice").nth(1).click()
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Choosing a firing style should open movement-style selection"
     assert page.locator("#moveChoices .moveChoice").count() == 6, "Expected six movement-style choices"
+    assert page.locator("#moveChoices .choiceGlyph").count() == 6, "Movement styles should show six visual previews"
     page.locator("#moveChoices .moveChoice").first.click()
     page.wait_for_timeout(100)
     start = page.evaluate("window.__smoke()")
