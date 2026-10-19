@@ -5,6 +5,7 @@ Updated: 2026-10-19
 - Added a versioned browser-local profile (`cryptCrawlerProfileV1`) with run starts, deaths, lifetime kills, best floor/room, discovered items and encountered enemy types.
 - Item discoveries are saved at pickup time and are independent of run inventory. Enemy types are recorded when encountered.
 - Death screen explicitly reports coins and carried items lost in the run, while long-term profile records remain. Added a Codex / Persistent Progress screen accessible from title/death overlays.
+- Added `Amulet Ostatniej Szansy`: a one-use passive item that consumes itself on a fatal hit and leaves the player at 1 HP. It can appear as the room-30 bonus reward; the existing 30 item effects are unchanged.
 - This is the foundation only: exact unlock requirements, permanent stat upgrades/specializations, actual gameplay synergies, familiars/evolutions, and death-prevention abilities remain OPEN; no arbitrary balance values were introduced.
 
 ## Purpose
@@ -45,7 +46,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 1. Verify latest CI runs and current parity between private source and public mirror.
 2. Define concrete unlock conditions and implement actual permanent unlocks / optional stat specializations.
 3. Design familiar cap/slots and implement familiars, abilities, synergies and evolutions.
-4. Implement item synergies and both active protection styles after control/cooldown/cost rules are agreed.
+4. Implement item synergies and both active protection styles after control/cooldown/cost rules are agreed. The one-use automatic rescue item is implemented.
 5. Expand floor identity, secrets/events and boss variety.
 6. Next testing gap: longer multi-room/floor/boss runs and gameplay playtesting; automated smoke tests do not replace human gameplay testing.
 
