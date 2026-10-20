@@ -37,6 +37,14 @@ window.__testMovementBursts=()=>{
  const result={hopper:sample('hopper',32),twitch:sample('twitch',44)};
  player.movement=saved.movement;player.speedBonus=saved.speedBonus;player.step=saved.step;player.vx=saved.vx;player.vy=saved.vy;player.x=saved.x;player.y=saved.y;keys.clear();saved.keys.forEach(k=>keys.add(k));state=saved.state;frame=saved.frame;doorOpen=saved.doorOpen;doors=saved.doors;enemies=saved.enemies;shots=saved.shots;enemyShots=saved.enemyShots;drops=saved.drops;particles=saved.particles;roomEnvironment=saved.roomEnvironment;environmentPatches=saved.environmentPatches;fireSources=saved.fireSources;floorExitPending=saved.floorExitPending;floorExitSpawned=saved.floorExitSpawned;updateHud();return result;
 };
+window.__testTerrainMovement=()=>{
+ const saved={movement:player.movement,speedBonus:player.speedBonus,step:player.step,vx:player.vx,vy:player.vy,x:player.x,y:player.y,keys:[...keys],state,frame,roomEnvironment,environmentPatches,doorOpen,doors,enemies,shots,enemyShots,drops,particles,fireSources,floorExitPending,floorExitSpawned};
+ state='play';doorOpen=true;doors=[];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];fireSources=[];keys.clear();
+ const patch={x:W/2+40,y:H/2-30,w:80,h:60};environmentPatches=[patch];player.x=patch.x-25;player.y=H/2;player.step=1;player.speedBonus=0;player.movement='runner';player.vx=0;player.vy=0;
+ const sample=terrain=>{roomEnvironment=terrain;environmentPatches=[patch];player.x=patch.x+20;player.y=H/2;player.vx=0;player.vy=0;keys.clear();keys.add('d');const before=player.x;update();const first=player.x-before;const insideStart=player.x;let inside=0;for(let i=0;i<4;i++){const x=player.x;update();inside+=player.x-x}player.x=patch.x+patch.w+20;player.y=H/2;player.vx=0;player.vy=0;keys.clear();keys.add('d');const beforeOutside=player.x;update();const outside=player.x-beforeOutside;return {first:Number(first.toFixed(3)),inside:Number(inside.toFixed(3)),insideStart:Number(insideStart.toFixed(3)),outside:Number(outside.toFixed(3))}};
+ const result={sand:sample('sand'),ice:sample('ice'),normal:sample(null)};
+ player.movement=saved.movement;player.speedBonus=saved.speedBonus;player.step=saved.step;player.vx=saved.vx;player.vy=saved.vy;player.x=saved.x;player.y=saved.y;keys.clear();saved.keys.forEach(k=>keys.add(k));state=saved.state;frame=saved.frame;roomEnvironment=saved.roomEnvironment;environmentPatches=saved.environmentPatches;doorOpen=saved.doorOpen;doors=saved.doors;enemies=saved.enemies;shots=saved.shots;enemyShots=saved.enemyShots;drops=saved.drops;particles=saved.particles;fireSources=saved.fireSources;floorExitPending=saved.floorExitPending;floorExitSpawned=saved.floorExitSpawned;updateHud();return result;
+};
 window.__testMovementPhysics=()=>{
  const saved={movement:player.movement,speedBonus:player.speedBonus,step:player.step,vx:player.vx,vy:player.vy,x:player.x,y:player.y,dashCooldown:player.dashCooldown,dashFrames:player.dashFrames,dashDirX:player.dashDirX,dashDirY:player.dashDirY,invuln:player.invuln,cooldown:player.cooldown,keys:[...keys],state,frame,doorOpen,doors,enemies,shots,enemyShots,drops,particles,roomEnvironment,environmentPatches,fireSources,floorExitPending,floorExitSpawned};
  state='play';doorOpen=true;doors=[];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];roomEnvironment=null;environmentPatches=[];fireSources=[];
@@ -183,6 +191,12 @@ with sync_playwright() as p:
     assert bursts["hopper"]["firstBurstFrame"] == 26 and bursts["hopper"]["burstFrames"] == 6, f"Hopper should perform its six-frame automatic boost on the 26th moving frame: {bursts}"
     assert bursts["twitch"]["firstBurstFrame"] == 38 and bursts["twitch"]["burstFrames"] == 4, f"Twitch should perform its four-frame automatic boost on the 38th moving frame: {bursts}"
     
+    terrain = page.evaluate("window.__testTerrainMovement()")
+    assert abs(terrain["sand"]["first"] - terrain["normal"]["first"] * 0.62) < 0.01, f"Sand should scale the player's first movement step by 0.62: {terrain}"
+    assert abs(terrain["ice"]["first"] - terrain["normal"]["first"] * 1.25) < 0.01, f"Ice should scale the player's first movement step by 1.25: {terrain}"
+    assert abs(terrain["sand"]["outside"] - terrain["normal"]["outside"]) < 0.01, f"Leaving sand should immediately restore normal travel speed: {terrain}"
+    assert abs(terrain["ice"]["outside"] - terrain["normal"]["outside"]) < 0.01, f"Leaving ice should immediately restore normal travel speed: {terrain}"
+
     movement = page.evaluate("window.__testMovementPhysics()")
     assert movement["runner"]["first"] > movement["drifter"]["first"] > 0, f"Drifter should accelerate into movement instead of instantly reaching full speed: {movement}"
     assert movement["momentum"]["first"] > 0 and movement["momentum"]["first"] < movement["drifter"]["first"], f"Momentum style should start with slower acceleration: {movement}"
