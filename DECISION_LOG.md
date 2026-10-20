@@ -102,3 +102,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Zakres:** wyłącznie parametry i testy fizyki ruchu; brak zmian animacji, grafiki i mapowania sterowania. Zachować odrębne role stylów.
 - **Zmiana prototypowa:** Drifter szybciej reaguje na kierunek i ma wyraźniejszy poślizg po puszczeniu wejścia; Momentum rozpędza się szybciej niż wcześniej. Testy mierzą osiąganie prędkości, zmianę kierunku, coast i normalizację ruchu po skosie.
 - **OPEN:** ostateczne odczucie wymaga ręcznego testu z klawiaturą; automatyczne testy nie potrafią same potwierdzić, że ruch jest przyjemny.
+
+
+## Test regresyjny modyfikatorów terenu — 2026-10-20
+- Dodano w `tests/browser_smoke.py` test uruchamiający rzeczywistą funkcję `update()` z kontrolowanym stanem gracza na zwykłym terenie, piasku i lodzie.
+- Test chroni istniejące mnożniki ruchu: piasek ×0,62 oraz lód ×1,25, a także sprawdza powrót do normalnej prędkości po wyjściu z pola.
+- To wyłącznie test regresyjny: kod produkcyjny, fizyka, grafika, animacje i balans broni pozostają bez zmian. CI przeszło na SHA `9b04a069a3ea0b1c6e1c78a04253882f41000f0a`; ręczny test klawiaturą nadal pozostaje OPEN jako ocena subiektywnego odczucia sterowania.
+- Uwaga o procesie: pierwsze dwa przebiegi CI wykazały błędy konfiguracji nowego helpera testowego; zostały poprawione, a trzeci przebieg na powyższym SHA zakończył się sukcesem.
