@@ -156,3 +156,16 @@ Rozszerzono test Chromium o stały scenariusz 180 klatek z trzema nieruchomymi c
 Wyniki potwierdzają odrębne zachowanie: Przebijający zadał 6,8 obrażeń każdemu z trzech celów w linii, a Wybuchowy zadał obrażenia wszystkim celom dzięki odłamkom. Rozrzut i Salwa trafiają cele poza osią przy skupisku, lecz ich łączne obrażenia w tym scenariuszu są niższe niż Klasycznego. To może być właściwa cena za pokrycie obszaru, ale wymaga oceny podczas gry.
 
 Sygnał do dalszej analizy: Precyzyjny zadał 11,25 wobec 10,00 obrażeń Klasycznego w tym samym oknie 180 klatek przeciw jednemu celowi i utrzymuje większe obrażenia pojedynczego trafienia. Nie zmieniono parametrów; sprawdzić podczas ręcznego playtestu, czy większy pocisk i szybszy lot uzasadniają tę przewagę, czy należy skorygować jeden z tych parametrów.
+
+
+## Ryzyko dostępności zakupów w pierwszym sklepie — 2026-10-20
+
+Sklep jest dostępny przez drzwi z pokoju 2. Gracz zaczyna z 2 monetami; pasywny przedmiot kosztuje 4, aktywny 5, serce 2. Bazowa szansa na monetę z pokonanego wroga wynosi 8% (mnożona przez trudność pokoju), a nagroda za serię to 1 moneta co 5 kolejnych zabójstw. Poniższe szacunki zakładają 8% dla każdego zabitego wroga, podniesienie wszystkich dropów i brak innych źródeł monet:
+
+| Zabójstwa przed sklepem | Pasywny za 4 — seria utrzymana | Aktywny za 5 — seria utrzymana | Pasywny — bez premii za serię | Aktywny — bez premii za serię |
+|---:|---:|---:|---:|---:|
+| 4 | 3,44% | 0,19% | 3,44% | 0,19% |
+| 5 | 34,09% | 5,44% | 5,44% | 0,45% |
+| 6 | 39,36% | 7,73% | 7,73% | 0,85% |
+
+To model matematyczny niezależnych dropów, nie pomiar z długiego runu. Rzeczywista szansa zależy od trudności drzwi, liczby zabójstw, przerwania serii i tego, czy gracz zbierze monety. Sygnał: w pierwszym sklepie serce jest zwykle dostępne, ale zakup przedmiotu może być rzadki, szczególnie aktywnego. Ceny pozostają prototypowe — nie zmieniono ich bez szerszej oceny tempa ekonomii i długości runu.
