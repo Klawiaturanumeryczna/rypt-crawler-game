@@ -86,3 +86,15 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Added a browser regression test that drives the real `update()` loop using controlled player state on ordinary floor, sand, and ice.
 - The test protects the current terrain movement multipliers (sand ×0.62, ice ×1.25) and checks that moving off the patch returns to normal speed. It changes no production physics, artwork, animation, or weapon values.
 - CI: PR #14 passed `verify.py` and Chromium browser smoke on head `9b04a069a3ea0b1c6e1c78a04253882f41000f0a`. Manual keyboard playtesting remains necessary to judge game feel.
+
+
+## Gameplay UX i balans — iteracja 2026-10-20
+- Dodano widoczny wewnątrz planszy pasek HP z wartością liczbową i paskiem zdrowia, niezależny od małego HUD-u nad canvasem.
+- Etykiety drzwi mają teraz 20 px (wcześniej 10 px) i są umieszczane na tabliczkach po wewnętrznej stronie pokoju, zamiast na samym przejściu.
+- Sklep pozostaje osobnym pokojem. Zakup serca odbywa się przez podejście do przedmiotu na podłodze (2 monety, +2 HP); nie wymaga kliknięcia przycisku ani myszy.
+- Kanał zdarzeń pokazuje tylko ostatni ważny komunikat, a podnoszenie przedmiotów/monet nie spamuje historią statystyk.
+- Style ruchu dostały jawne zalety i wady. Taran faktycznie otrzymuje 25% mniej obrażeń, ale porusza się wolniej. Prędkości pozostałych stylów skorygowano, aby zmniejszyć dublowanie ról.
+- Siedem broni startowych zachowano, ale przebudowano ich parametry i dodano do wyboru DPS teoretyczny oraz konkretne plusy/minusy. To wstępny balans wymagający dalszych testów walki.
+- Testy przeglądarkowe rozszerzono o zakup bez myszy, widoczność HP i redukcję obrażeń Tarana. Wyniki CI należy oceniać dla najnowszego SHA gałęzi.
+
+- Rozszerzono sklep o dwie fizyczne oferty przedmiotów: pasywny za 4 monety i aktywny za 5 monet, obok serca za 2 monety. Zakup następuje przez kontakt z ofertą, jeśli gracz ma wystarczająco monet.
