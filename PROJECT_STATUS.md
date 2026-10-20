@@ -80,3 +80,9 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Do not ask “what next?” if a safe, useful next task is clear.
 - Do not make major balance/mechanics decisions without approval. Record unresolved questions as OPEN and gather evidence before recommending.
 - Do not modify Fly With Me or Music Manager while working on Crypt Crawler.
+
+
+## Movement terrain regression coverage — 2026-10-20
+- Added a browser regression test that drives the real `update()` loop using controlled player state on ordinary floor, sand, and ice.
+- The test protects the current terrain movement multipliers (sand ×0.62, ice ×1.25) and checks that moving off the patch returns to normal speed. It changes no production physics, artwork, animation, or weapon values.
+- CI: PR #14 passed `verify.py` and Chromium browser smoke on head `9b04a069a3ea0b1c6e1c78a04253882f41000f0a`. Manual keyboard playtesting remains necessary to judge game feel.
