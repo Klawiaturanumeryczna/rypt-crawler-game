@@ -169,3 +169,8 @@ Sklep jest dostępny przez drzwi z pokoju 2. Gracz zaczyna z 0 monetami, ale pok
 | 6 | 39,36% | 7,73% | 7,73% | 0,85% |
 
 To model matematyczny niezależnych dropów, nie pomiar z długiego runu. Rzeczywista szansa zależy od trudności drzwi, liczby zabójstw, przerwania serii i tego, czy gracz zbierze monety. Sygnał: w pierwszym sklepie serce jest zwykle dostępne, ale zakup przedmiotu może być rzadki, szczególnie aktywnego. Ceny pozostają prototypowe — nie zmieniono ich bez szerszej oceny tempa ekonomii i długości runu.
+
+
+## Test poprawności zakupów w sklepie — 2026-10-20
+
+Dodano test Chromium dla obu ofert przedmiotów. Przedmiot pasywny ma pozostać na miejscu przy 3 monetach i zostać kupiony przy 4; aktywny ma pozostać na miejscu przy 4 i zostać kupiony przy 5. Test sprawdza rzeczywistą kolizję, zmianę salda i dodanie przedmiotu do ekwipunku. Nie zmienia cen ani zachowania gry; chroni przed przypadkowym zakupem bez środków i regresją warunków zakupu.
