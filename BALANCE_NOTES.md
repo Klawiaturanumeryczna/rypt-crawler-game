@@ -186,3 +186,7 @@ To izolowana symulacja dropów, a nie pełny run: nie symuluje przemieszczania s
 ### Zmierzone wyniki symulacji Chromium — 2026-10-20
 
 Na 10 000 prób w każdym poziomie trudności: łatwe — 567 monet (5,67%) i 209 serc (2,09%); średnie — 775 monet (7,75%) i 257 serc (2,57%); trudne — 1207 monet (12,07%) i 375 serc (3,75%). Premia za serię: 2000 monet na 10 000 kolejnych eliminacji (1 moneta co 5). Wynik pochodzi z deterministycznego testu rzeczywistej funkcji `damageEnemy()`. To izolowany pomiar dropów, nie pełny run ani prognoza zakupów w pierwszym sklepie. Ceny pozostają bez zmian.
+
+
+### Wyniki testu ekonomii (Chromium, 2026-10-20)
+10 000 prób na poziom trudności: łatwe — 5,67% monet i 2,09% serc; średnie — 7,75% monet i 2,57% serc; trudne — 12,07% monet i 3,75% serc. Premia za serię: 2000 monet na 10 000 kolejnych prób. To izolowany pomiar dropów, nie pełny run ani prognoza zakupów w pierwszym sklepie. Ceny pozostają bez zmian.
