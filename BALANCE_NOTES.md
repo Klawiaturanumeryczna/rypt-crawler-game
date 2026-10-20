@@ -73,3 +73,6 @@ Dodano test przeglądarkowy wywołujący rzeczywistą funkcję `createEnemy()` z
 Bez zmian w animacjach i grafice. Wprowadzono niewielkie korekty wyłącznie fizyki ruchu: Drifter interpoluje prędkość z wagą 0,22 dla wejścia kierunkowego (wcześniej 0,18) i zachowuje 90% prędkości na klatkę po puszczeniu klawiszy; Momentum przyspiesza z wagą 0,14 zamiast 0,09. Celem jest skrócenie czasu dochodzenia do prędkości roboczej i wyraźniejsze rozdzielenie poślizgu od rozpędzania.
 
 Dodano testy przeglądarkowe oparte na rzeczywistej pętli gry: czas dojścia do 95% prędkości, reakcja na zmianę kierunku, wytracanie pędu i prędkość po skosie. Testy chronią granice projektowe, nie zastępują subiektywnego playtestu. Wartości nadal wymagają oceny podczas gry.
+
+
+Dodatkowy test regresyjny ruchu: dla Runner, Drifter i Momentum prędkość po skosie jest mierzona dopiero po ustaleniu prędkości i musi odpowiadać prędkości na wprost. To odróżnia prawidłową normalizację kierunku od początkowej fazy rozpędzania.
