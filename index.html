@@ -212,8 +212,8 @@ function update(){
  // Ruch specjalny działa automatycznie — bez Shift i bez osobnego przycisku uniku.
  if(player.movement==='hopper'&&mm>0){player.hopTimer=(player.hopTimer||0)+1;if(player.hopTimer>=move.hopInterval){player.hopTimer=0;player.hopFrames=6}if(player.hopFrames>0){player.vx=mx*move.speed*1.9;player.vy=my*move.speed*1.9;player.hopFrames--}else{player.vx=mx*move.speed*.72;player.vy=my*move.speed*.72}}
  else if(player.movement==='twitch'&&mm>0){player.twitchTimer=(player.twitchTimer||0)+1;if(player.twitchTimer>=move.burstInterval){player.twitchTimer=0;player.twitchFrames=4}const boost=player.twitchFrames>0?1.85:1;player.vx=mx*move.speed*boost;player.vy=my*move.speed*boost;if(player.twitchFrames>0)player.twitchFrames--}
- else if(player.movement==='drifter'){player.vx=player.vx*.82+mx*move.speed*.18;player.vy=player.vy*.82+my*move.speed*.18;if(!mm){player.vx*=.96;player.vy*=.96}}
- else if(player.movement==='momentum'){player.vx+=(mx*move.speed-player.vx)*.09;player.vy+=(my*move.speed-player.vy)*.09}
+ else if(player.movement==='drifter'){if(mm){player.vx=player.vx*.78+mx*move.speed*.22;player.vy=player.vy*.78+my*move.speed*.22}else{player.vx*=.90;player.vy*=.90}}
+ else if(player.movement==='momentum'){player.vx+=(mx*move.speed-player.vx)*.14;player.vy+=(my*move.speed-player.vy)*.14}
  else{player.vx=mx*move.speed;player.vy=my*move.speed}
  let terrainSpeed=1;for(const patch of environmentPatches){if(player.x>patch.x&&player.x<patch.x+patch.w&&player.y>patch.y&&player.y<patch.y+patch.h){terrainSpeed=roomEnvironment==='sand'?.62:roomEnvironment==='ice'?1.25:1;break}}player.x+=(player.vx||0)*(player.step||1)*terrainSpeed;player.y+=(player.vy||0)*(player.step||1)*terrainSpeed;
  player.x=Math.max(room.x+player.r,Math.min(room.x+room.w-player.r,player.x));player.y=Math.max(room.y+player.r,Math.min(room.y+room.h-player.r,player.y));if(player.x===room.x+player.r||player.x===room.x+room.w-player.r)player.vx=0;if(player.y===room.y+player.r||player.y===room.y+room.h-player.r)player.vy=0;
