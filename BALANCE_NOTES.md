@@ -160,7 +160,7 @@ Sygnał do dalszej analizy: Precyzyjny zadał 11,25 wobec 10,00 obrażeń Klasyc
 
 ## Ryzyko dostępności zakupów w pierwszym sklepie — 2026-10-20
 
-Sklep jest dostępny przez drzwi z pokoju 2. Gracz zaczyna z 2 monetami; pasywny przedmiot kosztuje 4, aktywny 5, serce 2. Bazowa szansa na monetę z pokonanego wroga wynosi 8% (mnożona przez trudność pokoju), a nagroda za serię to 1 moneta co 5 kolejnych zabójstw. Poniższe szacunki zakładają 8% dla każdego zabitego wroga, podniesienie wszystkich dropów i brak innych źródeł monet:
+Sklep jest dostępny przez drzwi z pokoju 2. Gracz zaczyna z 0 monetami, ale pokój startowy zawiera dwa dropy monet (po ich zebraniu ma 2); pasywny przedmiot kosztuje 4, aktywny 5, serce 2. Bazowa szansa na monetę z pokonanego wroga wynosi 8% (mnożona przez trudność pokoju), a nagroda za serię to 1 moneta co 5 kolejnych zabójstw. Poniższe szacunki zakładają 8% dla każdego zabitego wroga, podniesienie wszystkich dropów i brak innych źródeł monet:
 
 | Zabójstwa przed sklepem | Pasywny za 4 — seria utrzymana | Aktywny za 5 — seria utrzymana | Pasywny — bez premii za serię | Aktywny — bez premii za serię |
 |---:|---:|---:|---:|---:|
