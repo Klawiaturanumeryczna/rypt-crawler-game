@@ -132,3 +132,27 @@ Czas do co najmniej 5 obrażeń, w klatkach gry (nieruchomy cel, rzeczywiste poc
 | Wybuchowy | 146 | 169 |
 
 Wynik potwierdza mocną zależność Rozrzutu i Salwy od dystansu. Precyzyjny wypada szybciej niż Klasyczny w tym kontrolowanym teście; Szybkostrzelny nie jest tu najszybszy mimo krótkiego interwału, ponieważ zadaje mniejsze obrażenia na trafienie. Przebijający i Wybuchowy wypadają wolniej przeciw pojedynczemu celowi, co pasuje do ich ról przeciw grupom. To tylko punkt odniesienia: test nie modeluje poruszających się wrogów, wielu celów, presji walki ani błędów celowania. Nie zmieniono statystyk broni na podstawie samego tego pomiaru.
+
+
+## Test ról broni przeciw grupie — 2026-10-20
+
+Rozszerzono test Chromium o stały scenariusz 180 klatek z trzema nieruchomymi celami: w skupisku (różnica pionowa 32 px) oraz ustawionymi w linii (odstęp poziomy 25 px). Test ma sprawdzać, czy Rozrzut, Salwa i Wybuchowy rzeczywiście trafiają cele poza osią środkowego strzału, a Przebijający może zadawać obrażenia trzem celom ustawionym w jednej linii. Klasyczny służy jako kontrola, która nie powinna trafiać celów poza linią ani za pierwszym celem. To test rzeczywistych pocisków i kolizji, bez zmiany statystyk broni; wyniki są zależne od ograniczonego scenariusza i nie zastępują walki z poruszającymi się wrogami.
+
+
+### Wynik testu grupowego Chromium (2026-10-20)
+
+Łączne obrażenia po 180 klatkach; trzy cele nieruchome z 130 px dystansu. „Skupisko” oznacza cele na tej samej osi poziomej i ±32 px pionowo; „linia” oznacza cele w jednej linii, oddalone poziomo o 25 px.
+
+| Broń | Skupisko | Linia |
+|---|---:|---:|
+| Precyzyjny | 11,25 | 11,25 |
+| Klasyczny | 10,00 | 10,00 |
+| Rozrzut | 8,64 | 2,88 |
+| Szybkostrzelny | 9,92 | 9,92 |
+| Salwa | 8,80 | 5,28 |
+| Przebijający | 6,80 | 20,40 |
+| Wybuchowy | 12,32 | 12,32 |
+
+Wyniki potwierdzają odrębne zachowanie: Przebijający zadał 6,8 obrażeń każdemu z trzech celów w linii, a Wybuchowy zadał obrażenia wszystkim celom dzięki odłamkom. Rozrzut i Salwa trafiają cele poza osią przy skupisku, lecz ich łączne obrażenia w tym scenariuszu są niższe niż Klasycznego. To może być właściwa cena za pokrycie obszaru, ale wymaga oceny podczas gry.
+
+Sygnał do dalszej analizy: Precyzyjny zadał 11,25 wobec 10,00 obrażeń Klasycznego w tym samym oknie 180 klatek przeciw jednemu celowi i utrzymuje większe obrażenia pojedynczego trafienia. Nie zmieniono parametrów; sprawdzić podczas ręcznego playtestu, czy większy pocisk i szybszy lot uzasadniają tę przewagę, czy należy skorygować jeden z tych parametrów.
