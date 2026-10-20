@@ -98,3 +98,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Testy przeglądarkowe rozszerzono o zakup bez myszy, widoczność HP i redukcję obrażeń Tarana. Wyniki CI należy oceniać dla najnowszego SHA gałęzi.
 
 - Rozszerzono sklep o dwie fizyczne oferty przedmiotów: pasywny za 4 monety i aktywny za 5 monet, obok serca za 2 monety. Zakup następuje przez kontakt z ofertą, jeśli gracz ma wystarczająco monet.
+
+## Test balansu broni — 2026-10-20
+- Scalono PR #16: test Chromium mierzy czas do zadania 5 obrażeń wszystkim siedmiu broniom z odległości 40 px i 180 px, używając rzeczywistej pętli gry, pocisków i kolizji.
+- Wyniki zapisano w BALANCE_NOTES.md. Rozrzut: 95 klatek z bliska / 321 z daleka; Salwa: 94 / 526. To potwierdza ich wyraźną zależność od dystansu w kontrolowanym teście.
+- Testy Chromium i weryfikacja statyczna przeszły dla PR #16. Nie zmieniano parametrów broni; pomiar nie zastępuje walki z ruchomymi przeciwnikami ani ręcznego playtestu.
