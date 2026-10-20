@@ -76,3 +76,9 @@ Dodano testy przeglądarkowe oparte na rzeczywistej pętli gry: czas dojścia do
 
 
 Dodatkowy test regresyjny ruchu: dla Runner, Drifter i Momentum prędkość po skosie jest mierzona dopiero po ustaleniu prędkości i musi odpowiadać prędkości na wprost. To odróżnia prawidłową normalizację kierunku od początkowej fazy rozpędzania.
+
+
+## Modyfikatory terenu — test regresyjny 2026-10-20
+- Wartości pozostają bez zmian: piasek ×0,62, lód ×1,25.
+- Dodano test przeglądarkowy oparty na rzeczywistej pętli `update()`, który sprawdza mnożniki i przywrócenie normalnego przesuwania po opuszczeniu pola terenu.
+- To zabezpieczenie istniejących zasad, nie zmiana balansu. Nie daje też odpowiedzi na subiektywne pytanie, czy ruch po lodzie/piasku jest przyjemny — potrzebny jest ręczny playtest.
