@@ -30,6 +30,13 @@ window.__testMovementFeel=()=>{
  const result={runner:sample('runner'),drifter:sample('drifter'),momentum:sample('momentum')};
  player.movement=saved.movement;player.speedBonus=saved.speedBonus;player.step=saved.step;player.vx=saved.vx;player.vy=saved.vy;player.x=saved.x;player.y=saved.y;keys.clear();saved.keys.forEach(k=>keys.add(k));state=saved.state;frame=saved.frame;doorOpen=saved.doorOpen;doors=saved.doors;enemies=saved.enemies;shots=saved.shots;enemyShots=saved.enemyShots;drops=saved.drops;particles=saved.particles;roomEnvironment=saved.roomEnvironment;environmentPatches=saved.environmentPatches;fireSources=saved.fireSources;floorExitPending=saved.floorExitPending;floorExitSpawned=saved.floorExitSpawned;updateHud();return result;
 };
+window.__testMovementBursts=()=>{
+ const saved={movement:player.movement,speedBonus:player.speedBonus,step:player.step,vx:player.vx,vy:player.vy,x:player.x,y:player.y,keys:[...keys],state,frame,doorOpen,doors,enemies,shots,enemyShots,drops,particles,roomEnvironment,environmentPatches,fireSources,floorExitPending,floorExitSpawned};
+ state='play';doorOpen=true;doors=[];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];roomEnvironment=null;environmentPatches=[];fireSources=[];
+ const sample=(mode,frames)=>{const speed=MOVEMENT_TYPES[mode].speed;player.x=W/2;player.y=H/2;player.movement=mode;player.speedBonus=0;player.step=1;player.vx=0;player.vy=0;player.hopTimer=0;player.hopFrames=0;player.twitchTimer=0;player.twitchFrames=0;keys.clear();keys.add('d');const values=[];for(let i=1;i<=frames;i++){update();values.push({frame:i,speed:Math.hypot(player.vx,player.vy)})}const burst=values.filter(v=>v.speed>speed*1.5);const result={baseline:Number(speed.toFixed(3)),maxSpeed:Number(Math.max(...values.map(v=>v.speed)).toFixed(3)),burstFrames:burst.length,firstBurstFrame:burst[0]?.frame??null,lastBurstFrame:burst[burst.length-1]?.frame??null};return result};
+ const result={hopper:sample('hopper',32),twitch:sample('twitch',44)};
+ player.movement=saved.movement;player.speedBonus=saved.speedBonus;player.step=saved.step;player.vx=saved.vx;player.vy=saved.vy;player.x=saved.x;player.y=saved.y;keys.clear();saved.keys.forEach(k=>keys.add(k));state=saved.state;frame=saved.frame;doorOpen=saved.doorOpen;doors=saved.doors;enemies=saved.enemies;shots=saved.shots;enemyShots=saved.enemyShots;drops=saved.drops;particles=saved.particles;roomEnvironment=saved.roomEnvironment;environmentPatches=saved.environmentPatches;fireSources=saved.fireSources;floorExitPending=saved.floorExitPending;floorExitSpawned=saved.floorExitSpawned;updateHud();return result;
+};
 window.__testMovementPhysics=()=>{
  const saved={movement:player.movement,speedBonus:player.speedBonus,step:player.step,vx:player.vx,vy:player.vy,x:player.x,y:player.y,dashCooldown:player.dashCooldown,dashFrames:player.dashFrames,dashDirX:player.dashDirX,dashDirY:player.dashDirY,invuln:player.invuln,cooldown:player.cooldown,keys:[...keys],state,frame,doorOpen,doors,enemies,shots,enemyShots,drops,particles,roomEnvironment,environmentPatches,fireSources,floorExitPending,floorExitSpawned};
  state='play';doorOpen=true;doors=[];enemies=[];shots=[];enemyShots=[];drops=[];particles=[];roomEnvironment=null;environmentPatches=[];fireSources=[];
@@ -171,6 +178,10 @@ with sync_playwright() as p:
     for mode in ("drifter", "momentum"):
         assert abs(movement_feel[mode]["diagonalSpeed"] - movement_feel[mode]["targetSpeed"]) < 0.01, f"{mode} diagonal cruising speed should match straight-line cruising speed: {movement_feel}"
     
+    bursts = page.evaluate("window.__testMovementBursts()")
+    assert bursts["hopper"]["firstBurstFrame"] == 26 and bursts["hopper"]["burstFrames"] == 6, f"Hopper should perform its six-frame automatic boost on the 26th moving frame: {bursts}"
+    assert bursts["twitch"]["firstBurstFrame"] == 38 and bursts["twitch"]["burstFrames"] == 4, f"Twitch should perform its four-frame automatic boost on the 38th moving frame: {bursts}"
+    
     movement = page.evaluate("window.__testMovementPhysics()")
     assert movement["runner"]["first"] > movement["drifter"]["first"] > 0, f"Drifter should accelerate into movement instead of instantly reaching full speed: {movement}"
     assert movement["momentum"]["first"] > 0 and movement["momentum"]["first"] < movement["drifter"]["first"], f"Momentum style should start with slower acceleration: {movement}"
@@ -200,5 +211,5 @@ with sync_playwright() as p:
     page.evaluate("window.__testRestart()")
     assert page.evaluate("window.__smoke()['state']") == "firingChoice", "Restart should reset the run and reopen firing-style selection"
     assert not errors, f"Browser errors: {errors}"
-    print("PASS: enemy HP scaling by floor and door tier; startup pickups; full-HP heart persistence; shop purchase; exit probabilities and placement; room-30 bonus; boss-room clearing and floor transition; named 30-item catalogue; all ten active-item effects; all 20 passive-item effects; active-item kill accounting; six movement physics styles; movement acceleration, coast, reversal and diagonal speed; shooting; restart; no browser errors")
+    print("PASS: enemy HP scaling by floor and door tier; startup pickups; full-HP heart persistence; shop purchase; exit probabilities and placement; room-30 bonus; boss-room clearing and floor transition; named 30-item catalogue; all ten active-item effects; all 20 passive-item effects; active-item kill accounting; six movement physics styles; movement acceleration, coast, reversal, diagonal speed and automatic burst cadence; shooting; restart; no browser errors")
     browser.close()
