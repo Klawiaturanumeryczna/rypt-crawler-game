@@ -82,3 +82,30 @@ Dodatkowy test regresyjny ruchu: dla Runner, Drifter i Momentum prędkość po s
 - Wartości pozostają bez zmian: piasek ×0,62, lód ×1,25.
 - Dodano test przeglądarkowy oparty na rzeczywistej pętli `update()`, który sprawdza mnożniki i przywrócenie normalnego przesuwania po opuszczeniu pola terenu.
 - To zabezpieczenie istniejących zasad, nie zmiana balansu. Nie daje też odpowiedzi na subiektywne pytanie, czy ruch po lodzie/piasku jest przyjemny — potrzebny jest ręczny playtest.
+
+
+## Wstępny balans ról ruchu i broni — 2026-10-20
+
+### Style ruchu
+- Biegacz: 3,25 — natychmiastowe start/stop i skręt, bez specjalnej premii.
+- Drifter: 3,80 — szybki z długim ślizgiem; trudniej go zatrzymać i zawrócić.
+- Skoczek: 2,85 — wolniejszy pomiędzy automatycznymi susami.
+- Rozpęd: 4,10 — wysoka prędkość maksymalna, ale stopniowe przyspieszanie.
+- Zwinny: 2,90 — niska prędkość bazowa, rekompensowana krótkimi automatycznymi zrywami.
+- Taran: 2,85 i 25% mniej obrażeń; wymiana szybkości na wytrzymałość jest teraz mechaniczna, nie tylko wizualna.
+- Nie zmieniono interwałów susów (Skoczek: 26 klatek / 6 klatek zrywu; Zwinny: 38 / 4). Testy istniejących pętli ruchu muszą potwierdzić, że role są rozróżnialne i nie łamią normalizacji ruchu po skosie.
+
+### Bronie startowe
+- Precyzyjny: 1,25 obrażeń, interwał 21 klatek — mocniejszy strzał, wolniejszy rytm.
+- Klasyczny: 1,00 / 17 — punkt odniesienia.
+- Rozrzut: 0,36 na pocisk, 3 pociski, interwał 23 — najlepszy z bliska, słabszy z dystansu.
+- Szybkostrzelny: 0,62 / 11 — szybkie poprawki celowania, słabszy pojedynczy pocisk.
+- Salwa: 0,22 na pocisk, 5 pocisków, interwał 23 — potencjał przeciw grupie, słabe trafienie pojedyncze.
+- Przebijający: 0,85 / 23 i do 3 celów — słabszy przeciw jednemu celowi, mocny w linii.
+- Wybuchowy: 0,80 / 24 i 60% obrażeń odłamkowych w promieniu 72 px — niski DPS bezpośredni, rekompensowany obszarem.
+- DPS na ekranie wyboru jest teoretyczny i zakłada trafienie wszystkich pocisków; rzeczywisty wynik zależy od celności, rozrzutu i ustawienia wrogów.
+- Balans jest iteracją startową. Kolejny krok: testy walki w Chromium na równych scenariuszach oraz sprawdzenie czasu zabicia dla każdej broni na jednym i wielu celach.
+
+### Sklep — fizyczne oferty
+- Każdy sklep oferuje losowy przedmiot pasywny za 4 monety, losowy przedmiot aktywny za 5 monet i serce za 2 monety (+2 HP). Zakup następuje przez wejście w przedmiot; przy niewystarczającej liczbie monet oferta zostaje na podłodze.
+- Ceny 4/5 są prototypowe. Trzeba sprawdzić w testach dłuższego runu, czy waluta wpada wystarczająco często, by sklep był decyzją taktyczną, a nie dekoracją.
