@@ -109,3 +109,26 @@ Dodatkowy test regresyjny ruchu: dla Runner, Drifter i Momentum prędkość po s
 ### Sklep — fizyczne oferty
 - Każdy sklep oferuje losowy przedmiot pasywny za 4 monety, losowy przedmiot aktywny za 5 monet i serce za 2 monety (+2 HP). Zakup następuje przez wejście w przedmiot; przy niewystarczającej liczbie monet oferta zostaje na podłodze.
 - Ceny 4/5 są prototypowe. Trzeba sprawdzić w testach dłuższego runu, czy waluta wpada wystarczająco często, by sklep był decyzją taktyczną, a nie dekoracją.
+
+## Empiryczny test czasu zadawania obrażeń — 2026-10-20
+
+Dodano test Chromium, który strzela przez rzeczywistą pętlę gry do nieruchomego celu i mierzy liczbę klatek potrzebnych do zadania co najmniej 5 obrażeń. Każdy z siedmiu stylów broni jest badany z bliska (40 px) i z dystansu (180 px). Test wymaga, by każdy styl rzeczywiście trafiał cel, oraz sprawdza, czy Rozrzut i Salwa działają szybciej z bliska niż z daleka. Wynik uwzględnia czas dolotu, szybkostrzelność, rozrzut i kolizje — nie tylko teoretyczny DPS.
+
+To test regresyjny w kontrolowanych warunkach, nie dowód na ostateczny balans: nie modeluje poruszających się przeciwników, uników gracza, presji kilku wrogów ani pełnej walki. Nie zmienia parametrów produkcyjnych. Po uruchomieniu CI należy zachować rzeczywiste wyniki przed rozważaniem kolejnych zmian balansu.
+
+
+### Wynik pomiaru Chromium (2026-10-20)
+
+Czas do co najmniej 5 obrażeń, w klatkach gry (nieruchomy cel, rzeczywiste pociski i kolizje):
+
+| Broń | 40 px | 180 px |
+|---|---:|---:|
+| Precyzyjny | 64 | 81 |
+| Klasyczny | 70 | 89 |
+| Rozrzut | 95 | 321 |
+| Szybkostrzelny | 90 | 106 |
+| Salwa | 94 | 526 |
+| Przebijający | 117 | 134 |
+| Wybuchowy | 146 | 169 |
+
+Wynik potwierdza mocną zależność Rozrzutu i Salwy od dystansu. Precyzyjny wypada szybciej niż Klasyczny w tym kontrolowanym teście; Szybkostrzelny nie jest tu najszybszy mimo krótkiego interwału, ponieważ zadaje mniejsze obrażenia na trafienie. Przebijający i Wybuchowy wypadają wolniej przeciw pojedynczemu celowi, co pasuje do ich ról przeciw grupom. To tylko punkt odniesienia: test nie modeluje poruszających się wrogów, wielu celów, presji walki ani błędów celowania. Nie zmieniono statystyk broni na podstawie samego tego pomiaru.
