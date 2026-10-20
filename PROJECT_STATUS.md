@@ -60,7 +60,11 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 7. Check the resulting CI/deployment status before claiming success. Never claim a test or gameplay session occurred unless it did.
 8. Update this file only when durable state, priorities, or workflow materially changes. Keep it concise; put detailed design decisions in `DECISION_LOG.md` and balance data in `BALANCE_NOTES.md`.
 
-## Current gameplay batch (2026-10-19)
+## Current gameplay batch (2026-10-20)
+- Movement feel pass: modestly increased Drifter's steering response while preserving a longer coast, and increased Momentum's acceleration. Added browser regression checks for time-to-95%-speed, direction reversal, coast, and diagonal speed. No animation/art/control mapping changes. Human playtesting still required.
+- Added browser regression coverage for actual enemy HP creation: floor scaling, easy/hard door HP multipliers, and the floor-2 boss HP formula. This protects current prototype values; it does not establish that the balance is fun or final.
+
+## Previous gameplay batch (2026-10-19)
 - Starter weapon choice displays per-projectile damage multiplier and firing interval (frames), using the same values that govern actual weapon cadence.
 - Research-backed first balance pass: Spread damage reduced to `0.40` per projectile and Salwa to `0.25`; static and browser-smoke checks now guard against projectile-count alone making their raw single-target DPS exceed the standard weapon. Exact balance remains provisional pending playtesting.
 - Browser smoke now verifies real collision behavior for Piercing (three targets maximum) and Explosive (primary hit plus 60% splash damage within 72 px).
