@@ -108,3 +108,5 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Pełny test Chromium i weryfikacja statyczna przeszły dla PR #17. Obserwacja do ręcznego playtestu: Precyzyjny zadaje nieco więcej obrażeń niż Klasyczny w równym oknie czasu; statystyki pozostają bez zmian do czasu oceny odczuć i walki z ruchomymi wrogami.
 
 - Analiza ekonomii sklepu: przy 4–6 zabójstwach przed sklepem i bazowym dropie monet 8% szansa na zakup przedmiotu za 4/5 monet może być niska (szczegóły i założenia w BALANCE_NOTES.md). Ceny pozostają otwarte do testu dłuższego runu; bez automatycznej zmiany balansu.
+
+- Scalono PR #18 po poprawce testu: zakupy w sklepie mają teraz test progów cenowych w Chromium. Oferta pasywna odrzuca 3 monety i przyjmuje 4; aktywna odrzuca 4 i przyjmuje 5. Test weryfikuje fizyczny kontakt, saldo, zniknięcie oferty i kategorię zakupionego przedmiotu. CI: run 39485755846 — sukces.
