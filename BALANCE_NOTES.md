@@ -181,3 +181,8 @@ Dodano test Chromium dla obu ofert przedmiotów. Przedmiot pasywny ma pozostać 
 Dodano test Chromium, który wywołuje produkcyjną funkcję `damageEnemy()` dla 10 000 zabójstw na każdym poziomie trudności pokoju (łatwy, średni, trudny), z deterministycznym generatorem liczb losowych. Mierzy rzeczywiste dropy monet i serc oraz premię za serię zabójstw. Test sprawdza, czy zaobserwowane częstości mieszczą się w szerokich granicach tolerancji względem skonfigurowanych szans; nie zmienia mechanik gry.
 
 To izolowana symulacja dropów, a nie pełny run: nie symuluje przemieszczania się, podnoszenia dropów, rzeczywistej liczby wrogów w kolejnych pokojach, przeżywalności ani decyzji gracza. Zatem nie mówi bezpośrednio, jaki procent graczy kupi przedmiot za 4/5 monet przed pierwszym sklepem. Wyniki służą do potwierdzenia działania mnożników dropu i premii za serię; ceny pozostają bez zmian do czasu pomiaru pełnego przebiegu ekonomii.
+
+
+### Zmierzone wyniki symulacji Chromium — 2026-10-20
+
+Na 10 000 prób w każdym poziomie trudności: łatwe — 567 monet (5,67%) i 209 serc (2,09%); średnie — 775 monet (7,75%) i 257 serc (2,57%); trudne — 1207 monet (12,07%) i 375 serc (3,75%). Premia za serię: 2000 monet na 10 000 kolejnych eliminacji (1 moneta co 5). Wynik pochodzi z deterministycznego testu rzeczywistej funkcji `damageEnemy()`. To izolowany pomiar dropów, nie pełny run ani prognoza zakupów w pierwszym sklepie. Ceny pozostają bez zmian.
