@@ -61,3 +61,15 @@ Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie 
 - Trudność ma rosnąć przez nowe zagrożenia, zachowania i bossów, a nie głównie przez pompowanie HP.
 - Rzadkość przedmiotu nie oznacza automatycznie większej siły; przedmioty mogą pełnić różne role, transformować postać i tworzyć wyjątkowe synergie.
 - Pomysły poza aktualnym zakresem: (1) Sandbox/Kreator do ręcznego ustawiania mobów, przedmiotów i buildów oraz testowania synergii; (2) osobny tryb Auto-Battle/Menedżer, w którym postać sama się porusza i walczy, a gracz zarządza buildem, modyfikatorami i mnożnikami. Nie implementować tych trybów w obecnej iteracji.
+
+
+## Regresja skalowania HP przeciwników — 2026-10-20
+
+Dodano test przeglądarkowy wywołujący rzeczywistą funkcję `createEnemy()` z kontrolowanymi wartościami piętra i poziomu drzwi. Test zabezpiecza pięć punktów odniesienia: Chaser ma 2 HP na piętrze 1 i 3 HP na piętrze 3; Brute ma 4 HP na łatwych drzwiach i 8 HP na trudnych drzwiach piętra 1; boss piętra 2 ma 69 HP zgodnie z osobnym wzorem. Test nie zmienia balansu — chroni istniejące reguły przed przypadkową regresją. Nie zastępuje testów rozgrywki ani oceny odczuć gracza.
+
+
+## Płynność sterowania — iteracja 2026-10-20
+
+Bez zmian w animacjach i grafice. Wprowadzono niewielkie korekty wyłącznie fizyki ruchu: Drifter interpoluje prędkość z wagą 0,22 dla wejścia kierunkowego (wcześniej 0,18) i zachowuje 90% prędkości na klatkę po puszczeniu klawiszy; Momentum przyspiesza z wagą 0,14 zamiast 0,09. Celem jest skrócenie czasu dochodzenia do prędkości roboczej i wyraźniejsze rozdzielenie poślizgu od rozpędzania.
+
+Dodano testy przeglądarkowe oparte na rzeczywistej pętli gry: czas dojścia do 95% prędkości, reakcja na zmianę kierunku, wytracanie pędu i prędkość po skosie. Testy chronią granice projektowe, nie zastępują subiektywnego playtestu. Wartości nadal wymagają oceny podczas gry.
