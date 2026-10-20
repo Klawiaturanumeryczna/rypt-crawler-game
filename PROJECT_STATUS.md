@@ -106,3 +106,5 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 
 - Rozszerzono test o trzy cele w skupisku i w linii. W 180 klatkach Rozrzut i Salwa faktycznie rozdzielają obrażenia na cele w skupisku; Przebijający zadaje 6,8 obrażeń każdemu z trzech celów w linii (20,4 łącznie); Wybuchowy zadaje 12,32 łącznie dzięki obrażeniom obszarowym.
 - Pełny test Chromium i weryfikacja statyczna przeszły dla PR #17. Obserwacja do ręcznego playtestu: Precyzyjny zadaje nieco więcej obrażeń niż Klasyczny w równym oknie czasu; statystyki pozostają bez zmian do czasu oceny odczuć i walki z ruchomymi wrogami.
+
+- Analiza ekonomii sklepu: przy 4–6 zabójstwach przed sklepem i bazowym dropie monet 8% szansa na zakup przedmiotu za 4/5 monet może być niska (szczegóły i założenia w BALANCE_NOTES.md). Ceny pozostają otwarte do testu dłuższego runu; bez automatycznej zmiany balansu.
