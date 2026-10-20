@@ -183,6 +183,5 @@ Dodano test Chromium, który wywołuje produkcyjną funkcję `damageEnemy()` dla
 To izolowana symulacja dropów, a nie pełny run: nie symuluje przemieszczania się, podnoszenia dropów, rzeczywistej liczby wrogów w kolejnych pokojach, przeżywalności ani decyzji gracza. Zatem nie mówi bezpośrednio, jaki procent graczy kupi przedmiot za 4/5 monet przed pierwszym sklepem. Wyniki służą do potwierdzenia działania mnożników dropu i premii za serię; ceny pozostają bez zmian do czasu pomiaru pełnego przebiegu ekonomii.
 
 
-
 ### Wyniki testu ekonomii (Chromium, 2026-10-20)
 10 000 prób na poziom trudności: łatwe — 5,67% monet i 2,09% serc; średnie — 7,75% monet i 2,57% serc; trudne — 12,07% monet i 3,75% serc. Premia za serię: 2000 monet na 10 000 kolejnych prób. To izolowany pomiar dropów, nie pełny run ani prognoza zakupów w pierwszym sklepie. Ceny pozostają bez zmian.
