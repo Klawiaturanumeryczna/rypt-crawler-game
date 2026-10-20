@@ -174,3 +174,10 @@ To model matematyczny niezależnych dropów, nie pomiar z długiego runu. Rzeczy
 ## Test poprawności zakupów w sklepie — 2026-10-20
 
 Dodano test Chromium dla obu ofert przedmiotów. Przedmiot pasywny ma pozostać na miejscu przy 3 monetach i zostać kupiony przy 4; aktywny ma pozostać na miejscu przy 4 i zostać kupiony przy 5. Test sprawdza rzeczywistą kolizję, zmianę salda i dodanie przedmiotu do ekwipunku. Nie zmienia cen ani zachowania gry; chroni przed przypadkowym zakupem bez środków i regresją warunków zakupu.
+
+
+## Symulacja dropów ekonomii sklepu przez rzeczywistą logikę zabójstwa — 2026-10-20
+
+Dodano test Chromium, który wywołuje produkcyjną funkcję `damageEnemy()` dla 10 000 zabójstw na każdym poziomie trudności pokoju (łatwy, średni, trudny), z deterministycznym generatorem liczb losowych. Mierzy rzeczywiste dropy monet i serc oraz premię za serię zabójstw. Test sprawdza, czy zaobserwowane częstości mieszczą się w szerokich granicach tolerancji względem skonfigurowanych szans; nie zmienia mechanik gry.
+
+To izolowana symulacja dropów, a nie pełny run: nie symuluje przemieszczania się, podnoszenia dropów, rzeczywistej liczby wrogów w kolejnych pokojach, przeżywalności ani decyzji gracza. Zatem nie mówi bezpośrednio, jaki procent graczy kupi przedmiot za 4/5 monet przed pierwszym sklepem. Wyniki służą do potwierdzenia działania mnożników dropu i premii za serię; ceny pozostają bez zmian do czasu pomiaru pełnego przebiegu ekonomii.
