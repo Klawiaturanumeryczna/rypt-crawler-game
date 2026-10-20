@@ -109,3 +109,14 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Test chroni istniejące mnożniki ruchu: piasek ×0,62 oraz lód ×1,25, a także sprawdza powrót do normalnej prędkości po wyjściu z pola.
 - To wyłącznie test regresyjny: kod produkcyjny, fizyka, grafika, animacje i balans broni pozostają bez zmian. CI przeszło na SHA `9b04a069a3ea0b1c6e1c78a04253882f41000f0a`; ręczny test klawiaturą nadal pozostaje OPEN jako ocena subiektywnego odczucia sterowania.
 - Uwaga o procesie: pierwsze dwa przebiegi CI wykazały błędy konfiguracji nowego helpera testowego; zostały poprawione, a trzeci przebieg na powyższym SHA zakończył się sukcesem.
+
+
+## Czytelność HUD, drzwi, sklepu i ról — 2026-10-20
+- **HP:** zdrowie musi być widoczne na samej planszy przez cały run; dodano stały panel z liczbą HP i paskiem zdrowia.
+- **Drzwi:** etykiety zwiększono z 10 px do 20 px i przeniesiono na tabliczki wewnątrz pokoju, aby nie leżały na samym przejściu.
+- **Sklep:** osobny pokój, bez zakupów przez kliknięcie UI. Serce leży na podłodze i kupuje się automatycznie po wejściu w kontakt, jeśli gracz ma co najmniej 2 monety i brakuje mu HP. Cena 2 monety / leczenie 2 HP pozostają bez zmian.
+- **Log:** pickupy i zmiany każdej statystyki nie powinny tworzyć historii komunikatów; zachowujemy pojedynczy status ważnego zdarzenia, bez logowania podniesienia przedmiotu.
+- **Ruch:** każdy styl ma jawne plusy i minusy. Taran dostaje rzeczywistą redukcję obrażeń 25% i niższą prędkość. Nie przywracamy aktywnego uniku.
+- **Broń:** pozostaje 7 wyborów, ale zbalansowanych pod różne role; ekran wyboru pokazuje obrażenia, teoretyczny DPS i plusy/minusy. Wartości są nowym punktem startowym, nie finalnym balansem.
+
+- Sklep zawiera trzy oferty na podłodze: losowy przedmiot pasywny za 4 monety, losowy aktywny za 5 monet oraz serce za 2 monety (+2 HP). Ceny są wartościami prototypowymi do późniejszego testu ekonomii; wszystkie zakupy odbywają się przez kontakt z ofertą, bez myszy.
