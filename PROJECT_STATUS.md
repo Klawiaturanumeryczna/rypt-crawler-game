@@ -103,3 +103,6 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Scalono PR #16: test Chromium mierzy czas do zadania 5 obrażeń wszystkim siedmiu broniom z odległości 40 px i 180 px, używając rzeczywistej pętli gry, pocisków i kolizji.
 - Wyniki zapisano w BALANCE_NOTES.md. Rozrzut: 95 klatek z bliska / 321 z daleka; Salwa: 94 / 526. To potwierdza ich wyraźną zależność od dystansu w kontrolowanym teście.
 - Testy Chromium i weryfikacja statyczna przeszły dla PR #16. Nie zmieniano parametrów broni; pomiar nie zastępuje walki z ruchomymi przeciwnikami ani ręcznego playtestu.
+
+- Rozszerzono test o trzy cele w skupisku i w linii. W 180 klatkach Rozrzut i Salwa faktycznie rozdzielają obrażenia na cele w skupisku; Przebijający zadaje 6,8 obrażeń każdemu z trzech celów w linii (20,4 łącznie); Wybuchowy zadaje 12,32 łącznie dzięki obrażeniom obszarowym.
+- Pełny test Chromium i weryfikacja statyczna przeszły dla PR #17. Obserwacja do ręcznego playtestu: Precyzyjny zadaje nieco więcej obrażeń niż Klasyczny w równym oknie czasu; statystyki pozostają bez zmian do czasu oceny odczuć i walki z ruchomymi wrogami.
