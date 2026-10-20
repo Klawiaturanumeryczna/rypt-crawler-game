@@ -95,3 +95,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **D05 — wdrożony pierwszy mechanizm:** `Amulet Ostatniej Szansy` jest jednorazowym przedmiotem pasywnym. Gdy cios obniży HP do zera lub mniej, amulet zużywa się i pozostawia gracza z 1 HP; run trwa dalej.
 - Amulet jest możliwą nagrodą bonusową w pokoju 30. Nie zmieniono efektów istniejących 30 przedmiotów.
 - **OPEN:** aktywna ochrona wymagająca timingu oraz ochrona uruchamiana z wyprzedzeniem; sterowanie, cooldowny, koszty i zależność od buildu wymagają dalszych decyzji.
+
+
+## Płynność ruchu — iteracja 2026-10-20
+- **Cel:** sterowanie ma być równie przyjemne i płynne jak w dobrych twin-stick/room-based roguelike'ach, ale nie ma kopiować 1:1 TBoI ani Enter the Gungeon.
+- **Zakres:** wyłącznie parametry i testy fizyki ruchu; brak zmian animacji, grafiki i mapowania sterowania. Zachować odrębne role stylów.
+- **Zmiana prototypowa:** Drifter szybciej reaguje na kierunek i ma wyraźniejszy poślizg po puszczeniu wejścia; Momentum rozpędza się szybciej niż wcześniej. Testy mierzą osiąganie prędkości, zmianę kierunku, coast i normalizację ruchu po skosie.
+- **OPEN:** ostateczne odczucie wymaga ręcznego testu z klawiaturą; automatyczne testy nie potrafią same potwierdzić, że ruch jest przyjemny.
