@@ -259,3 +259,8 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 ## 2026-10-21 — zachowanie trudności po powrocie
 - Migawka pokoju zapisuje również poziom trudności drzwi. Powrót z fizycznego sklepu nie zmienia już trudnego/łatwego pokoju na średni w HUD ani w logice dropów.
 - Test Chromium sprawdza, że pokój zapisany na poziomie trudnym pozostaje na tym samym poziomie po odtworzeniu.
+
+
+## 2026-10-21 — ekonomia sklepu: blokada przerzucania ofert
+- Sklep jest jednorazowy na piętro: po powrocie do pokoju wejściowego jego drzwi nie otwierają ponownie sklepu. Zapobiega to nieograniczonemu odświeżaniu losowych przedmiotów.
+- Nie zmieniono cen ani dropów; zmiana zamyka lukę w ekonomii.
