@@ -29,6 +29,8 @@ checks = {
     "starter weapons show damage, DPS and explicit pros/cons": "weaponStats" in SOURCE and "Obrażenia / pocisk:" in SOURCE and "DPS teoretyczny:" in SOURCE and "mode.tradeoff" in SOURCE and "Math.round(17*mode.rate)" in SOURCE,
     "spread and burst raw DPS are not inflated by projectile count": "damage:.5,rate:1.5,pattern:'spread'" in SOURCE and "damage:.32,rate:1.65,pattern:'burst'" in SOURCE,
     "movement styles have distinct handling, pros/cons and real Juggernaut defense": all(x in SOURCE for x in ("player.movement==='drifter'","player.movement==='momentum'","player.movement==='twitch'","move-juggernaut","m==='hopper'","40% mniej obrażeń","dmg*.6")),
+    "boss guarantees a stat item and special exit without coin/heart drops": "const defeatedBoss=e.type==='boss'" in SOURCE and "BOSS POKONANY" in SOURCE and "exitDoor.floorExit=true" in SOURCE and "if(!defeatedBoss&&killChain%5===0)" in SOURCE,
+    "Stalowe Obcasy create damaging ground trails": "player.trailDamage&&frame%18===0" in SOURCE and "damageEnemy(e,.5,trail.x,trail.y)" in SOURCE and "trails=trails.filter(trail=>trail.life>0)" in SOURCE,
     "active item consumes item": "player.items=player.items.filter(x=>x!==item)" in SOURCE,
     "pause and restart": "state='paused'" in SOURCE and "startRun()" in SOURCE,
     "animation loop": "requestAnimationFrame(loop)" in SOURCE,
