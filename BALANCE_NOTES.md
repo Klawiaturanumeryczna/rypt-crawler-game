@@ -279,3 +279,9 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - Klawisz zmiany ruchu: `Q`; mapa: `M`; ruch: `WASD`; strzelanie kierunkowe: strzałki; LPM nadal strzela do kursora.
 - Ułatwienie strzelania: większy promień kolizji pocisków, dłuższe życie pocisku oraz ciaśniejszy wachlarz Rozrzutu i Salwy.
 - Mocniejsze role ruchu: Biegacz otrzymuje 15% mniej obrażeń; Drifter 25% więcej; Rozpęd 15% więcej; Skoczek jest nietykalny podczas susów; Zwinny podczas 5-klatkowego zrywu; Taran nadal redukuje obrażenia o 65%. Wartości są prototypowe i podlegają dalszym testom.
+
+
+## 2026-10-21 — zróżnicowanie wizualne pięter
+- Dodano pięć własnych motywów wizualnych, zmieniających paletę podłogi, obramowania, runiczne ślady i światło narożnych pochodni: zarośnięta krypta, grota grzybów, kuźnia popiołu, lodowa świątynia i krwawy księżyc.
+- Wzory płytek są deterministyczne dla piętra/pokoju, więc nie migają i nie losują się na nowo przy każdej klatce. Nie zmieniają kolizji ani geometrii połączeń.
+- Graf pokojów nadal jest tym samym sprawdzonym, spójnym grafem 6×5; ta iteracja poprawia rozpoznawalność wizualną poziomów, nie dodaje nowych mechanik.
