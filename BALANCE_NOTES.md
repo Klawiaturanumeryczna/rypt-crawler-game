@@ -297,3 +297,10 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 
 ### Oczekiwane testy pomiarowe
 Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę po zwolnieniu klawisza, a także TTK pojedynczego celu z bliska/daleka i obrażenia zadane grupie/układowi liniowemu. Te metryki kontrolują mechanikę; nie zastępują ręcznego playtestu.
+
+## Ruch: Skoczek kontra Zwinny — korekta 2026-10-21
+
+- **Skoczek:** pozostaje stylem z automatycznym, rytmicznym susem co 22 klatki; przez 8 klatek ma szybszy ruch i ochronę, ale jest wolny między susami. To styl przewidywalny, oparty na rytmie.
+- **Zwinny:** nie wykonuje już automatycznego zrywu co 26 klatek. Ma prędkość bazową 3,3 i odpala 4-klatkowy zryw 2,2× oraz ochronę po ostrym skręcie (zmiana kierunku, iloczyn skalarny <0,25); odnowienie 24 klatki. Otrzymuje +10% obrażeń. To styl oparty na aktywnym prowadzeniu kierunku.
+- Usunięto okrągły obrys podczas obu uników. Zamiast niego Skoczek pokazuje krótkie kreski ruchu, a Zwinny wąskie smugi zrywu.
+- To wartości prototypowe. Test Chromium potwierdza wyzwalacze i parametry; ocena przyjemności wymaga ręcznego playtestu.

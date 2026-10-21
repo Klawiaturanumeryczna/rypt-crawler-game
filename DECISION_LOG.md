@@ -203,3 +203,11 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Drifter zostaje szybki i lekko bezwładny, ale po puszczeniu kierunku traci pęd szybciej (0,70 na klatkę). Rozpęd zostaje wolniejszy w reakcji na nowe wejście (współczynnik 0,14), ale mocniej hamuje po puszczeniu kierunku (0,65). To zachowuje ich rolę, a usuwa długi, niekontrolowany poślizg.
 - Rozrzut oraz Salwa nie mogą być dwiema odmianami tego samego wachlarza. Rozrzut: szerokie ±0,42 rad, śrut ×0,50, krótki dystans. Salwa: wąskie ±0,07 rad, pociski ×0,62, większa prędkość pocisków i długa przerwa między seriami — średni dystans i skupienie na jednym celu.
 - Wartości są iteracją prototypową. Decyzja o ich finalności wymaga pomiaru TTK/obrażeń oraz ręcznego playtestu; testy automatyczne nie dowodzą przyjemności sterowania.
+
+## Sterowanie i odrębne style uniku — 2026-10-21
+
+- W aktualnym kodzie obowiązuje **M = mapa, V = wybór stylu ruchu, B = broń**. W PROJECT_STATUS.md znaleziono stary zapis o Q; poprawiono go w tej iteracji.
+- Skoczek i Zwinny nie mogą mieć tego samego automatycznego zrywu. Skoczek zachowuje rytmiczny sus co 22 klatki. Zwinny uruchamia krótki zryw ochronny tylko po ostrym skręcie, z 24-klatkowym odnowieniem i +10% otrzymywanych obrażeń.
+- Usunięto okrągły ring przy zrywie, który wyglądał jak przypadkowe kółka. Feedback jest kreskowy i kierunkowy, nie kołowy.
+- Nie dodawać osobnego klawisza Shift do uniku bez uzgodnienia; to nie jest wymagane do rozdzielenia tych archetypów.
+- Research: w dyskusjach graczy ETG często powtarza się, że zwykłe omijanie pocisków jest ważniejsze niż spamowanie rollem, a roll powinien być narzędziem sytuacyjnym; część graczy wskazuje też na trade-off: mysz daje precyzję celowania, pad daje wygodę kierunków ruchu. Źródła: https://www.reddit.com/r/EnterTheGungeon/comments/1t4crf0/dificuldade_em_desviar/ ; https://www.reddit.com/r/EnterTheGungeon/comments/1dc0fgy/ ; https://enterthegungeon.wiki.gg/wiki/Dodge_Roll_%28Move%29 . W Isaac gracze wprost opisują bezwładność po puszczeniu klawisza jako coś, co część osób lubi, a innych frustruje: https://www.reddit.com/r/bindingofisaac/comments/18om7ee . To jakościowe przykłady opinii, nie reprezentatywna ankieta.

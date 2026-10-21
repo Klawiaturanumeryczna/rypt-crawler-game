@@ -187,7 +187,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 
 ## Iteracja grafiki i odczuć — 2026-10-21
 - Wdrożono: własne sylwetki potworów fantasy w Canvas, bardziej czytelna mapa odkrywania, mocniejsze trade-offy stylów ruchu i łatwiejsze trafianie bronią.
-- Sterowanie zmiany ruchu przeniesione z `V` na `Q`; `M` pozostaje mapą.
+- Skrót wyboru stylu ruchu to V; M otwiera mapę, a B wybór broni.
 - Testy przeglądarkowe obejmują archetypy skórek i nowy mnożnik obrażeń Biegacza. Ręczny playtest nie jest deklarowany.
 
 
@@ -202,3 +202,9 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Rozrzut jest teraz szeroką bronią bliskiego dystansu (5 śrutów ×0,50, wachlarz ±0,42 rad). Salwa jest skupioną serią (5 pocisków ×0,62, wachlarz ±0,07 rad, szybszy pocisk), z długą przerwą po strzale.
 - Dodano/zmieniono asercje Chromium dla reakcji na skręt, drogi po zwolnieniu kierunku oraz oddzielnego użycia skrótu ruchu. TTK i testy grup/kolumn są już w smoke teście i powinny być oceniane ponownie dla nowych parametrów.
 - Ograniczenie: nie wykonano ręcznego testu klawiaturą; nie uznajemy balansu za finalny, a CI musi przejść przed scaleniem.
+
+## Iteracja sterowania — 2026-10-21
+- Usunięto nakładające się zachowanie Zwinnego i Skoczka. Skoczek zachowuje automatyczny rytm susów; Zwinny dostaje zryw wyłącznie po ostrym skręcie, z 24-klatkowym odnowieniem.
+- Usunięto okrągłe obrysy podczas zrywu; zastąpiono je krótkimi smugami ruchu.
+- Testy mają rozróżniać brak automatycznego zrywu Zwinnego od jego aktywacji przy ostrym skręcie.
+- Sterowanie pozostaje: M mapa, V styl ruchu, B broń. Nie dodano klawisza Shift do uniku.

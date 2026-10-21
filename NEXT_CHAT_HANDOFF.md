@@ -47,3 +47,11 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Drifter i Rozpęd dostały mocniejsze hamowanie po pomiarze Chromium: Drifter zachowuje 70% prędkości na klatkę po puszczeniu kierunku, Rozpęd 65%. Prógi drogi po puszczeniu pozostają regresyjną blokadą. Drifter ma krótszy, kontrolowany poślizg (0,70); Rozpęd nadal przyspiesza i skręca ciężej, ale lepiej hamuje (0,65).
 - Rozrzut to szeroki strzał z bardzo bliska; Salwa to wąska, skupiona seria na średni dystans. Asercje TTK i obrażeń grupowych należy przejrzeć po zmianie kształtu wachlarza.
 - Najnowsze zmiany wymagają uruchomienia `python verify.py` i `python tests/browser_smoke.py` oraz sprawdzenia CI przed scaleniem. Nie wykonano ręcznego playtestu.
+
+## Dopisek 2026-10-21 — różne mechaniki Skoczka i Zwinnego
+- W poprzedniej wersji oba style wykonywały automatyczne przyspieszenie z krótką nietykalnością; różniły się głównie cyklem 22/26 klatek. To było zbyt podobne.
+- Skoczek: rytmiczny automatyczny sus co 22 klatki, 8 klatek przyspieszenia/ochrony, wolny między susami.
+- Zwinny: prędkość bazowa 3,3; zryw 2,2× na 4 klatki po ostrym skręcie, 24 klatki odnowienia i +10% otrzymywanych obrażeń. Zryw wymaga świadomego zmieniania kierunku, nie odpala się sam w stałym ruchu.
+- Usunięto okrągłe obrysy zrywu, które były mylące. Brak nowego klawisza uniku; M mapa, V ruch, B broń.
+- Wnioski z researchu: gracze ETG polecają najpierw precyzyjnie omijać pociski, a roll zostawiać na sytuacje wymagające szybkiego repositioningu; w Isaac bezwładność jest polaryzująca. Zachowuj wybór między ruchem natychmiastowym i bezwładnym, ale nie zmuszaj wszystkich archetypów do podobnego auto-zrywu.
+- PR wymaga zielonego verify.py i Chromium; nie wykonano ręcznego playtestu.
