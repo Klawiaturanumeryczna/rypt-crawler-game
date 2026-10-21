@@ -129,3 +129,11 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Dodano niewielką mapkę pokoju w prawym górnym rogu: gracz, przeciwnicy i drzwi są oznaczeni osobnymi punktami.
 - Ruch wrogów rozdzielono na sześć ról: bezpośredni pościg (chaser), krążenie (spitter), ciężki ruch z fazami przyspieszenia (brute), szarża (dasher), boczne manewry (hexer) i boss z krótkimi szarżami.
 - Testy Chromium sprawdzają przyciski wyboru w trakcie runu, obecność mapki, czytelność tekstu i odmienne role ruchu. Ręczny test rozgrywki nadal potrzebny do oceny odczuć i balansu.
+
+
+## Nagroda bossa i mocniejsze trade-offy — 2026-10-21
+- Boss gwarantuje losowy przedmiot z puli statystyk/ruchu/strzelania; nie wypuszcza monet ani serc, a zabójstwo bossa nie uruchamia bonusu monetowego za serię.
+- W pokoju bossa wskazane są specjalne złote drzwi; po zwycięstwie gracz musi do nich dojść, aby wejść na kolejne piętro.
+- Log zachowuje informację o nowym piętrze i celu bossa, zamiast nadpisywać ją zwykłym opisem pokoju.
+- Style ruchu i strzelania otrzymały wyraźniejsze plusy/minusy. Stalowe Obcasy zostawiają krótko działające pola raniące przeciwników; rozmiar pocisku z itemu Pocisk Oblężniczy jest już obsługiwany.
+- Powiększono tekst ofert sklepu; wartości balansu pozostają prototypowe i wymagają ręcznego playtestu.
