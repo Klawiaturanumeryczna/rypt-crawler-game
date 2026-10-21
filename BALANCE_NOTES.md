@@ -248,3 +248,9 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - Przy wyjściu z pokoju zapisywane są drzwi i ich typy, sklep/zejście, pozostawione dropy, teren specjalny, pola terenu, źródła ognia, przeszkody oraz stan wrogów i pocisków wroga.
 - Powrót odtwarza zapisany stan zamiast losować nowy układ drzwi, inne przeszkody lub nowy teren. Pozostawione monety/przedmioty nie znikają tylko dlatego, że gracz zajrzał do sklepu albo wrócił do poprzedniego pokoju.
 - Test Chromium sprawdza odtworzenie drzwi, dropu, HP wroga, pocisku, terenu i przeszkody. To test techniczny trwałości stanu, nie ręczny playtest.
+
+
+## 2026-10-21 — progresja trudności zgodna z mapą
+- Liczba potencjalnych wrogów nie używa już numeru pola (`roomNo`), który jest identyfikatorem wierszowym, a nie miarą drogi od startu.
+- Progresja wykorzystuje pasmo głębokości oparte na odległości Manhattan (x+y) w siatce 6×5. Dalekie pokoje są trudniejsze, a sąsiednie pola nie dostają skoku trudności tylko dlatego, że zmienił się numer ID.
+- Test Chromium sprawdza kilka punktów mapy, w tym kontrast między pokojem 6 i 7.
