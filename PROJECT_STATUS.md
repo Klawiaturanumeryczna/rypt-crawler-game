@@ -162,3 +162,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Aktualizacja 2026-10-21 — stan pokojów
 - Dodano migawki pokojów przy przejściu: zachowują układ drzwi, dropy, środowisko, zagrożenia oraz stan przeciwników i ich pocisków.
 - Powrót do pokoju odtwarza stan zamiast generować nowy układ; sklep nie nadpisuje migawki pokoju gospodarza.
+
+
+## Aktualizacja 2026-10-21 — trudność według głębokości
+- Skalowanie liczby wrogów opiera się na głębokości pola na mapie, a nie na identyfikatorze wierszowym pokoju.
+- Dodano test regresyjny pasm głębokości dla startu, dalekich pól i pokoju 30.
