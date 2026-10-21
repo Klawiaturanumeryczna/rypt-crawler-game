@@ -176,3 +176,10 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Aktualizacja 2026-10-21 — sklep bez ponownego losowania ofert
 - Po wyjściu ze sklepu fioletowe drzwi w pokoju macierzystym przestają być wejściem do sklepu. Nie da się wracać i losować nowego zestawu ofert w nieskończoność.
 - Dodano test Chromium sprawdzający odtworzenie pokoju po wykorzystaniu sklepu.
+
+
+## Aktualizacja 2026-10-21 — proceduralna mapa i skrót ruchu
+- M otwiera wyłącznie mapę piętra; V otwiera wybór ruchu; B otwiera wybór broni. Instrukcje startowe i stałe sterowanie zostały ujednolicone.
+- Generowanie piętra zmieniono z pełnej kratownicy na połączony losowy labirynt 6×5: najpierw powstaje drzewo łączące wszystkie 30 pokojów, potem losowo dodawane są nieliczne pętle. Drzwi i mapa korzystają z tej samej listy połączeń.
+- Mapa pokazuje faktyczne korytarze, większe pola, bieżący pokój i oznaczone zejście. Pokój 30 ma tylko prawdziwe wyjścia brzegowe; brakujące połączenia wewnętrzne nie tworzą fałszywych drzwi.
+- Style ruchu i strzelania mają teraz znacznie mocniejsze różnice. Parametry są prototypowe i podlegają dalszemu balansowaniu po testach.
