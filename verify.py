@@ -40,6 +40,7 @@ checks = {
     "active item consumes item": "player.items=player.items.filter(x=>x!==item)" in SOURCE,
     "pause and restart": "state='paused'" in SOURCE and "startRun()" in SOURCE,
     "procedural 6x5 maze stays connected with reciprocal corridors": "function buildFloorGrid()" in SOURCE and "connections:[]" in SOURCE and "const visited=new Set([1]),stack=[grid[0]]" in SOURCE and "function gridNeighbor(id,side)" in SOURCE and "node.connections.includes(side)" in SOURCE and "nextRoom(door.type.tier,!!door.shop,door.side)" in SOURCE and "clearedRooms.add(floor+':'+roomNo)" in SOURCE,
+    "five distinct procedural floor visual themes": "const FLOOR_THEMES=[" in SOURCE and all(name in SOURCE for name in ["KRYPTA ZAROŚNIĘTA","GROTA GRZYBÓW","KUŹNIA POPIOŁU","LODOWA ŚWIĄTYNIA","KRWAWY KSIĘŻYC"]) and "FLOOR_THEMES[(floor-1)%FLOOR_THEMES.length]" in SOURCE and "theme.deco" in SOURCE,
     "enemy-count progression follows grid depth": "function roomDepthBand(id)" in SOURCE and "2+floor+roomDepthBand(roomNo)" in SOURCE and "Math.floor(roomNo/5)" not in SOURCE,
     "M toggles map and Q changes movement": "function drawFullMap()" in SOURCE and "bigMapOpen=!bigMapOpen" in SOURCE and "MAPA KRYPTY" in SOURCE and "e.key.toLowerCase()==='q'&&state==='play'" in SOURCE and "M — mapa piętra • Q — styl ruchu" in SOURCE,
     "original fantasy monster silhouettes": "function drawEnemySprite(e)" in SOURCE and all(s in SOURCE for s in ["werewolf","witch","ogre","vampire","mummy","dwarf","cow","dragon"]) and "type,skin,tier:cfg.tier" in SOURCE,
