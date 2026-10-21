@@ -237,3 +237,8 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - Po wylosowaniu zejście ma przypisany konkretny pokój i stronę drzwi; ponowne wejście odtwarza to samo wyjście zamiast losować inne drzwi.
 - Oczekiwanie na zejście nie jest zużywane przez powrót do już odwiedzonego pokoju. Sklep nie dziedziczy oznaczenia zejścia z pokoju, z którego do niego wejść.
 - Wyjście bossa i gwarantowane wyjścia z pokoju 30 również zachowują swoją pozycję w obrębie piętra.
+
+
+## 2026-10-21 — poprawka wyjścia po bossie
+- Audyt backtrackingu wykrył osobną ścieżkę: po pokonaniu bossa drzwi były oznaczane jako zejście, ale nie zapisywano ich pokoju i strony. Po powrocie mogło więc pojawić się zejście przy innych drzwiach.
+- Pokonanie bossa zapisuje teraz lokalizację wyjścia tak samo jak pozostałe ścieżki. Dodano test Chromium sprawdzający rzeczywistą funkcję obrażeń bossa i zgodność zapisanego kierunku z oznaczonymi drzwiami.
