@@ -55,3 +55,16 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Usunięto okrągłe obrysy zrywu, które były mylące. Brak nowego klawisza uniku; M mapa, V ruch, B broń.
 - Wnioski z researchu: gracze ETG polecają najpierw precyzyjnie omijać pociski, a roll zostawiać na sytuacje wymagające szybkiego repositioningu; w Isaac bezwładność jest polaryzująca. Zachowuj wybór między ruchem natychmiastowym i bezwładnym, ale nie zmuszaj wszystkich archetypów do podobnego auto-zrywu.
 - PR wymaga zielonego verify.py i Chromium; nie wykonano ręcznego playtestu.
+
+
+## MAX MARATON — audyt topologii mapy (2026-10-21)
+- W gałęzi `test/dungeon-grid-seed-sweep` dodano test `window.__testDungeonGridBatch()`: 128 deterministycznych seedów generatora.
+- Kontrole obejmują wymiary/ID 30 pokojów, współrzędne 6×5, prawidłowe kierunki, brak wyjść poza granice, korytarze wzajemne, spójność grafu, 29–48 krawędzi i różnorodność co najmniej 100 grafów.
+- Test nie zmienia mechaniki gry; przed scaleniem wymagane zielone CI (verify.py + Chromium). Po scaleniu trzeba zsynchronizować mirror i potwierdzić Pages.
+- Następny większy kierunek po teście: audyt czytelności mapy i zgodności widocznych korytarzy z odkryciem pokoi. Nie zmieniać zasad piętra ani limitu 30 pokojów bez zgody użytkownika.
+
+
+## MAX MARATON — markery mapy piętra (2026-10-21)
+- W gałęzi `ux/map-room-markers-v2` dodano czytelne znaczniki `B` dla bossa (piętro 2+) oraz `S` dla dostępnego sklepu. Marker sklepu opiera się na rzeczywistym stanie drzwi i znika po użyciu sklepu.
+- Legenda mapy została rozdzielona na dwie linie. Test Chromium sprawdza marker aktualnego i zapisanego sklepu, bossa, zejścia i sklepu już wykorzystanego.
+- To zmiana wyłącznie informacyjna/UI; nie zmienia układu piętra, walki ani ekonomii. Wymagane zielone CI przed scaleniem.

@@ -50,6 +50,7 @@ checks = {
     "friendlier projectile aiming and range": "shotSize=Math.max(3,player.shotSize*mode.size+1.25)" in SOURCE and "[-.42,-.21,0,.21,.42]" in SOURCE and "[-.07,-.035,0,.035,.07]" in SOURCE and "life:115" in SOURCE,
     "movement archetypes have real defense tradeoffs": "player.movement==='runner'?dmg*.85" in SOURCE and "player.movement==='drifter'?dmg*1.25" in SOURCE and "player.movement==='momentum'?dmg*1.15" in SOURCE and "player.movement==='hopper'&&(player.hopFrames||0)>0" in SOURCE,
     "map clarifies actual generated connections and unknown rooms": "Korytarze pokazują rzeczywiste połączenia" in SOURCE and "node.id===30?'WYJŚCIE':'?'" in SOURCE,
+    "floor map marks bosses and available shops": "function roomMapMarkers(id)" in SOURCE and "boss:floor>1&&id===1" in SOURCE and "shop:!shopUsedFloor" in SOURCE and "B: boss (piętro 2+)" in SOURCE and "S: dostępny sklep" in SOURCE,
     "hazards have gameplay effects and visuals": all(x in SOURCE for x in ("type==='rock'","type==='pit'","type==='vent'","hazard.cooldown=90","player.x+=dx/d*2.1","Hazards are gameplay objects")),
     "in-game Polish guide explains mechanics": "Cel i zasady" in SOURCE and "Elementy terenu" in SOURCE and "Ekonomia i przedmioty" in SOURCE,
     "shop remains a separate physical room with a return door": "shopRoomActive=true;shopEntrySide=exitSide" in SOURCE and "shopRoomActive){shopRoomActive=false;enterRoom(2,'',false)" in SOURCE and "ctx.fillText(shopRoomActive?'SKLEP'" in SOURCE,

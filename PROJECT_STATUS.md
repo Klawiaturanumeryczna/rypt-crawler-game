@@ -208,3 +208,16 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Usunięto okrągłe obrysy podczas zrywu; zastąpiono je krótkimi smugami ruchu.
 - Testy mają rozróżniać brak automatycznego zrywu Zwinnego od jego aktywacji przy ostrym skręcie.
 - Sterowanie pozostaje: M mapa, V styl ruchu, B broń. Nie dodano klawisza Shift do uniku.
+
+
+## Audyt generatora map — 2026-10-21
+- Rozszerzono smoke test Chromium o 128 deterministycznych wariantów generatora piętra.
+- Każdy wariant sprawdza 30 unikalnych pokoi w siatce 6×5, poprawność współrzędnych, brak połączeń wychodzących poza granice, wzajemność korytarzy, spójność grafu i rozsądny zakres liczby krawędzi.
+- Test sprawdza też, czy generator faktycznie tworzy zróżnicowane grafy (co najmniej 100 różnych układów w 128 próbach).
+- To zwiększa pewność poprawności topologii, ale samo w sobie nie dowodzi, że układ jest atrakcyjny w rozgrywce; nie zmieniono zasad generowania ani limitu 30 pokoi.
+
+
+## Czytelność mapy piętra — 2026-10-21
+- Mapa pełnego piętra oznacza teraz pokoje bossów (B na piętrach 2+) i pokoje z dostępnym sklepem (S).
+- Marker sklepu korzysta z rzeczywistego stanu drzwi bieżącego lub zapisanego pokoju i znika po wykorzystaniu sklepu; nie tworzy dodatkowego wejścia ani nie zmienia ekonomii.
+- Legenda została rozbita na dwie linie, aby objaśnić markery bez ścisku. Dodano kontrole źródła i test Chromium dla bieżącego/zapisanego sklepu, bossa i zejścia.
