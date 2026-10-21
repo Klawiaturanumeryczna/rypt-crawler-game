@@ -183,3 +183,9 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Generowanie piętra zmieniono z pełnej kratownicy na połączony losowy labirynt 6×5: najpierw powstaje drzewo łączące wszystkie 30 pokojów, potem losowo dodawane są nieliczne pętle. Drzwi i mapa korzystają z tej samej listy połączeń.
 - Mapa pokazuje faktyczne korytarze, większe pola, bieżący pokój i oznaczone zejście. Pokój 30 ma tylko prawdziwe wyjścia brzegowe; brakujące połączenia wewnętrzne nie tworzą fałszywych drzwi.
 - Style ruchu i strzelania mają teraz znacznie mocniejsze różnice. Parametry są prototypowe i podlegają dalszemu balansowaniu po testach.
+
+
+## Iteracja grafiki i odczuć — 2026-10-21
+- W toku: własne sylwetki potworów fantasy w Canvas, bardziej czytelna mapa odkrywania, mocniejsze trade-offy stylów ruchu i łatwiejsze trafianie bronią.
+- Sterowanie zmiany ruchu przeniesione z `V` na `Q`; `M` pozostaje mapą.
+- Testy przeglądarkowe obejmują archetypy skórek i nowy mnożnik obrażeń Biegacza. Ręczny playtest nie jest deklarowany.
