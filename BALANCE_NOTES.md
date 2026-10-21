@@ -231,3 +231,9 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - Szansa na zejście rośnie o 5 punktów procentowych za każdy unikalny oczyszczony pokój na bieżącym piętrze, a nie za numer pola w siatce.
 - Powrót do wysokiego ID (np. pokój 25) nie daje już sztucznie wysokiej szansy, jeśli gracz oczyścił mało pokojów; ponowne czyszczenie odwiedzonego pokoju nie zwiększa licznika.
 - Testy Chromium obejmują rozbieżność między ID pokoju a liczbą unikalnych oczyszczonych pokojów.
+
+
+## 2026-10-21 — trwałość zejścia
+- Po wylosowaniu zejście ma przypisany konkretny pokój i stronę drzwi; ponowne wejście odtwarza to samo wyjście zamiast losować inne drzwi.
+- Oczekiwanie na zejście nie jest zużywane przez powrót do już odwiedzonego pokoju. Sklep nie dziedziczy oznaczenia zejścia z pokoju, z którego do niego wejść.
+- Wyjście bossa i gwarantowane wyjścia z pokoju 30 również zachowują swoją pozycję w obrębie piętra.
