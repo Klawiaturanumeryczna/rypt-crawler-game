@@ -144,3 +144,8 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - M jest przypisane do pełnej mapy piętra; zmiana stylu ruchu odbywa się przyciskiem RUCH, a broń przyciskiem BROŃ lub klawiszem B.
 - Pokoje oczyszczone są oznaczane w bieżącej rozgrywce i pozostają bez wrogów przy powrocie.
 - Teren: kolizyjne kamienie, dziury z okresowym obrażeniem/spowolnieniem, okresowe podmuchy wentylatorów.
+
+
+## Korekta progresji zejścia — 2026-10-21
+- W siatce 6×5 numer pokoju oznacza pozycję, nie kolejność eksploracji. Szansa na zejście rośnie więc na podstawie liczby unikalnych oczyszczonych pokojów na bieżącym piętrze (+5 pp za każdy), a nie na podstawie `roomNo`.
+- Licznik ignoruje ponowne wejście do już oczyszczonego pokoju. Po 20 unikalnych oczyszczonych pokojach szansa wynosi 100%; gwarantowane wyjście z pokoju 30 pozostaje osobną regułą.
