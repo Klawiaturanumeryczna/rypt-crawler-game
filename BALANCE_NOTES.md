@@ -242,3 +242,9 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 ## 2026-10-21 — poprawka wyjścia po bossie
 - Audyt backtrackingu wykrył osobną ścieżkę: po pokonaniu bossa drzwi były oznaczane jako zejście, ale nie zapisywano ich pokoju i strony. Po powrocie mogło więc pojawić się zejście przy innych drzwiach.
 - Pokonanie bossa zapisuje teraz lokalizację wyjścia tak samo jak pozostałe ścieżki. Dodano test Chromium sprawdzający rzeczywistą funkcję obrażeń bossa i zgodność zapisanego kierunku z oznaczonymi drzwiami.
+
+
+## 2026-10-21 — trwałość stanu pokojów
+- Przy wyjściu z pokoju zapisywane są drzwi i ich typy, sklep/zejście, pozostawione dropy, teren specjalny, pola terenu, źródła ognia, przeszkody oraz stan wrogów i pocisków wroga.
+- Powrót odtwarza zapisany stan zamiast losować nowy układ drzwi, inne przeszkody lub nowy teren. Pozostawione monety/przedmioty nie znikają tylko dlatego, że gracz zajrzał do sklepu albo wrócił do poprzedniego pokoju.
+- Test Chromium sprawdza odtworzenie drzwi, dropu, HP wroga, pocisku, terenu i przeszkody. To test techniczny trwałości stanu, nie ręczny playtest.
