@@ -184,3 +184,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Pokój 30:** gwarantowane zejście pokazuje się tylko przy krawędziach planszy. Brak korytarza między dwoma sąsiadami nie może być pokazywany jako drzwi.
 - **Ruch:** mocne role (precyzyjny Biegacz, szybki i ślizgający Drifter, cykliczny Skoczek, bardzo szybki lecz bezwładny Rozpęd, wolny zrywający Zwinny, opancerzony lecz ciężki Taran). Wartości numeryczne pozostają prototypowe.
 - **Broń:** Precyzyjny = duży pojedynczy strzał i długa przerwa; Rozrzut = mocny z bliska, słaby z daleka; Szybkostrzelny = częste słabe trafienia; Salwa = duży potencjał wielopociskowy i długa przerwa; Przebijający = linie wrogów; Wybuchowy = mocny pocisk i obszar kosztem prędkości; Klasyczny = opcja stabilna bez specjalizacji.
+
+
+## Wizualna mikro-rewolucja i sterowanie — 2026-10-21
+- Kierunek: autorskie, czytelne sylwetki fantasy (wilkołak, wiedźma, ogr, wampir, mumia, smok; rzadziej krasnolud i krowa), bez kopiowania rozpoznawalnych postaci z istniejących gier.
+- `M` służy wyłącznie do mapy; zmianę stylu ruchu przypisujemy do `Q`. `WASD` porusza postacią, strzałki strzelają kierunkowo, LPM strzela do kursora.
+- Ruch ma mocne kompromisy mechaniczne, nie tylko różnice prędkości. Strzelanie ma być bardziej wybaczające, dlatego poprawiamy wielkość hitboxa i czas życia pocisków oraz zmniejszamy nadmierny rozrzut.
+- Generowana mapa ma pokazywać rzeczywiste połączenia, a stan nieodwiedzonych pokoi powinien być wizualnie odróżniony od odwiedzonych.
