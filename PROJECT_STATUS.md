@@ -116,3 +116,13 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Dodano deterministyczną symulację Chromium: 10 000 wywołań rzeczywistej funkcji `damageEnemy()` dla każdego z trzech poziomów trudności pokoju.
 - Test mierzy częstość dropów monet i serc oraz premię za serię co 5 zabójstw; wyniki są wypisywane w logu CI.
 - To test reguł dropu, nie symulacja pełnego runu ani dowód na dostępność zakupów przed sklepem. Ceny 4/5 monet nadal pozostają bez zmian.
+
+
+## Czytelność UI, mapa i zachowanie przeciwników — 2026-10-21
+- Dodano stałe przyciski **BROŃ: ... · ZMIEŃ** i **RUCH: ... · ZMIEŃ** poza planszą. W trakcie runu wybór broni wraca bezpośrednio do gry i nie wymusza ponownego wyboru ruchu; skrót **B** otwiera wybór broni, **M** pozostaje wyborem ruchu.
+- Ekrany wyboru mają responsywny układ trzech kolumn na szerokim ekranie, przewijanie w obrębie overlayu i mniejsze odstępy, żeby karty nie wychodziły poza planszę.
+- Interfejs i arena dostały spokojniejszą, stonowaną paletę ziemi/kamienia, prostsze obramowania i bardziej klasyczny, oldschoolowy charakter RPG. To tymczasowy placeholder graficzny, nie finalne assety.
+- Opis przedmiotu/sklepu używa większej czcionki 13–14 px i dynamicznego łamania tekstu.
+- Dodano niewielką mapkę pokoju w prawym górnym rogu: gracz, przeciwnicy i drzwi są oznaczeni osobnymi punktami.
+- Ruch wrogów rozdzielono na sześć ról: bezpośredni pościg (chaser), krążenie (spitter), ciężki ruch z fazami przyspieszenia (brute), szarża (dasher), boczne manewry (hexer) i boss z krótkimi szarżami.
+- Testy Chromium sprawdzają przyciski wyboru w trakcie runu, obecność mapki, czytelność tekstu i odmienne role ruchu. Ręczny test rozgrywki nadal potrzebny do oceny odczuć i balansu.
