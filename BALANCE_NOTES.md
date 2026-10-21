@@ -217,3 +217,11 @@ Czas eliminacji (klatki; mniej = szybciej) dla pojedynczego celu, bez ruchu prze
 | Wybuchowy | 147 | 170 |
 
 Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każdemu z trzech bliskich celów; Salwa 5,76 celowi centralnemu i 1,92 każdemu z dwóch bocznych; Przebijający 5,25 każdemu z trzech celów w linii; Wybuchowy 5,4 celowi bezpośrednio trafionemu i 3,24 każdemu pobliskiemu celowi. To pomiar kontrolowany, nie ostateczny balans z ruchomymi przeciwnikami.
+
+
+## 2026-10-21 — układ piętra i przeszkody
+- Zmieniono przechodzenie między pokojami na kierunkowe przejścia po stałej siatce 6×5. Każde pole ma sąsiadów zgodnych z położeniem; nie ma losowego teleportowania między niepowiązanymi pokojami.
+- Pokój 30 znajduje się w prawym dolnym rogu siatki; gwarantowane zejście znajduje się na jej zewnętrznej krawędzi.
+- M otwiera/zamyka dużą mapę piętra. Mały minimap pokoju pozostaje widoczny.
+- Kamienie są kolizyjne, dziury ograniczają prędkość i zadają 0,5 obrażenia co 90 klatek, a wentylatory odpychają gracza przez 38 z każdych 180 klatek, gdy gracz jest blisko.
+- Ruch po pokoju oczyszczonym nie losuje ponownie przeciwników. Elementy specjalne piasek/lód/ogień pozostają osobną mechaniką.
