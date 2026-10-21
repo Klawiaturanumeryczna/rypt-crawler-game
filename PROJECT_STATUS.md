@@ -226,3 +226,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Poprawka obsługi skrótu V — 2026-10-21
 - Powtarzane zdarzenia `keydown` dla V są ignorowane tak jak dla M/B/P, aby przy przytrzymaniu klawisza nie otwierać wielokrotnie wyboru ruchu.
 - Dodano regresyjny test Chromium dla powtarzanego zdarzenia V i kontrolę źródła. Nie zmienia to mapowania klawiszy ani mechaniki ruchu.
+
+
+## Czytelność monet — 2026-10-21
+- Monety w lochu są teraz rysowane jako okrągłe, złote żetony z wewnętrznym tłoczeniem, zamiast rombu podobnego do zwykłego dropu.
+- Dodano test Chromium sprawdzający kontrakt rysowania oraz kontrolę źródła. Ekonomia i wartości dropów pozostają bez zmian.

@@ -73,3 +73,9 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 ## MAX MARATON — powtarzany skrót ruchu (2026-10-21)
 - W gałęzi `fix/repeated-movement-hotkey` dodano V do strażnika powtarzanych zdarzeń klawiatury. Przytrzymanie V nie powinno wielokrotnie otwierać wyboru stylu ruchu.
 - Dodano asercję Chromium i kontrolę `verify.py`. Wymagane zielone CI, potem synchronizacja mirrora i Pages.
+
+
+## MAX MARATON — czytelniejszy drop monet (2026-10-21)
+- Gałąź `ui/coin-drop-visual` dodaje `drawCoinDrop`: okrągły złoty żeton z obwódką, wewnętrznym pierścieniem i centralnym znakiem.
+- Test Chromium sprawdza dwa łuki, wypełnienie, trzy obrysy i centralny znak. Zmiana jest wizualna; nie rusza ekonomii.
+- Przed scaleniem wymagane zielone CI, po scaleniu synchronizacja mirrora i deployment.
