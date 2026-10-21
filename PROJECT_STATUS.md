@@ -194,3 +194,11 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Dodatkowa iteracja wizualna pięter — 2026-10-21
 - Dodano pięć palet/motywów pięter z runicznymi detalami i światłem narożnych pochodni; dekoracje są deterministyczne dla pokoju.
 - Geometria przejść pozostaje bez zmian, a wizualne wzory nie wpływają na kolizje ani na testy ruchu.
+
+
+## Iteracja sterowania i broni rozrzutowych — 2026-10-21
+- Skrót ruchu ujednolicony do V w kodzie, instrukcji i testach; M pozostaje mapą, B wyborem broni.
+- Drifter zachował szybkość, ale ma krótszy poślizg (współczynnik 0,70 po puszczeniu kierunku); Rozpęd zachował powolne przyspieszanie, ale mocniej hamuje (0,65).
+- Rozrzut jest teraz szeroką bronią bliskiego dystansu (5 śrutów ×0,50, wachlarz ±0,42 rad). Salwa jest skupioną serią (5 pocisków ×0,62, wachlarz ±0,07 rad, szybszy pocisk), z długą przerwą po strzale.
+- Dodano/zmieniono asercje Chromium dla reakcji na skręt, drogi po zwolnieniu kierunku oraz oddzielnego użycia skrótu ruchu. TTK i testy grup/kolumn są już w smoke teście i powinny być oceniane ponownie dla nowych parametrów.
+- Ograniczenie: nie wykonano ręcznego testu klawiaturą; nie uznajemy balansu za finalny, a CI musi przejść przed scaleniem.

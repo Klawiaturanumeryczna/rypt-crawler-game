@@ -196,3 +196,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 ## Motywy proceduralnych pięter — 2026-10-21
 - Każde piętro cyklicznie używa innego autorskiego motywu wizualnego: zarośnięta krypta, grota grzybów, kuźnia popiołu, lodowa świątynia, krwawy księżyc.
 - Motyw zmienia paletę, detale płytek, runy i światło. Wzory są deterministyczne i czysto wizualne; nie mają wpływu na hitboxy ani topologię lochu.
+
+
+## Sterowanie i rozdzielenie ról broni — 2026-10-21
+- Zatwierdzony w kodzie skrót wyboru ruchu to **V**; **M** jest wyłącznie mapą, a **B** wyborem broni. Nowszy kod oraz instrukcja są źródłem prawdy nad starszymi notatkami, które przez chwilę wymieniały Q.
+- Drifter zostaje szybki i lekko bezwładny, ale po puszczeniu kierunku traci pęd szybciej (0,70 na klatkę). Rozpęd zostaje wolniejszy w reakcji na nowe wejście (współczynnik 0,14), ale mocniej hamuje po puszczeniu kierunku (0,65). To zachowuje ich rolę, a usuwa długi, niekontrolowany poślizg.
+- Rozrzut oraz Salwa nie mogą być dwiema odmianami tego samego wachlarza. Rozrzut: szerokie ±0,42 rad, śrut ×0,50, krótki dystans. Salwa: wąskie ±0,07 rad, pociski ×0,62, większa prędkość pocisków i długa przerwa między seriami — średni dystans i skupienie na jednym celu.
+- Wartości są iteracją prototypową. Decyzja o ich finalności wymaga pomiaru TTK/obrażeń oraz ręcznego playtestu; testy automatyczne nie dowodzą przyjemności sterowania.

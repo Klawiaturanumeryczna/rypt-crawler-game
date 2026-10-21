@@ -125,11 +125,11 @@ with sync_playwright() as p:
     assert page.locator("#fireChoices .choiceGlyph").count() == 7, "Every starter weapon should show a visual preview"
     assert page.locator("#fireChoices .weaponStats").count() == 7, "Every starter weapon should show damage and firing interval"
     selection = page.evaluate("window.__testWeaponSelection()")
-    expected_weapons = {"precision": (3.8, 32), "standard": (1.0, 17), "spread": (0.62, 19), "rapid": (0.24, 6), "burst": (1.05, 32), "pierce": (0.72, 24), "explosive": (1.5, 31)}
+    expected_weapons = {"precision": (3.8, 32), "standard": (1.0, 17), "spread": (0.50, 19), "rapid": (0.24, 6), "burst": (0.62, 32), "pierce": (0.72, 24), "explosive": (1.5, 31)}
     for key, (damage, interval) in expected_weapons.items():
         assert selection[key]["mode"] == key and abs(selection[key]["damage"] - damage) < 0.001 and selection[key]["fireRate"] == interval and selection[key]["state"] == "movementChoice", f"Selecting {key} must apply its real damage and cadence before movement choice: {selection}"
     assert "Odstęp: 32 klatek" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate its slower firing interval"
-    assert "Obrażenia / pocisk: ×1.05" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate per-projectile damage"
+    assert "Obrażenia / pocisk: ×0.62" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate per-projectile damage"
     page.locator("#fireChoices .moveChoice").nth(1).click()
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Choosing a firing style should open movement-style selection"
     assert page.locator("#moveChoices .moveChoice").count() == 6, "Expected six movement-style choices"
@@ -176,8 +176,9 @@ with sync_playwright() as p:
     group_damage = page.evaluate("window.__testWeaponGroupDamage()")
     print(f"WEAPON_GROUP_DAMAGE over 180 frames: {group_damage}")
     assert group_damage["cluster"]["standard"]["perTarget"][1:] == [0, 0], f"Standard fire should not hit targets offset vertically from its line: {group_damage}"
-    for key in ("spread", "burst", "explosive"):
-        assert all(damage > 0 for damage in group_damage["cluster"][key]["perTarget"]), f"{key} should affect a clustered group, including targets off the center line: {group_damage}"
+    assert all(damage > 0 for damage in group_damage["cluster"]["spread"]["perTarget"]), f"Spread should cover all targets in a close cluster: {group_damage}"
+    assert group_damage["cluster"]["burst"]["perTarget"][0] > 0 and group_damage["cluster"]["burst"]["perTarget"][1:] == [0, 0], f"Salwa should stay focused on the center line rather than behaving like a wide shotgun: {group_damage}"
+    assert all(damage > 0 for damage in group_damage["cluster"]["explosive"]["perTarget"]), f"Explosive fire should damage nearby targets by splash: {group_damage}"
     assert all(damage > 0 for damage in group_damage["line"]["pierce"]["perTarget"]), f"Piercing fire should damage all three aligned targets: {group_damage}"
     assert group_damage["line"]["standard"]["perTarget"][1:] == [0, 0], f"Standard fire should not hit targets behind the first target: {group_damage}"
     impacts = page.evaluate("window.__testProjectileEffects()")
@@ -243,10 +244,10 @@ with sync_playwright() as p:
     assert hud["hp"] and hud["canvasHpOverlay"], f"HP should remain visible in HUD and canvas: {hud}"
     movement_feel = page.evaluate("window.__testMovementFeel()")
     assert movement_feel["runner"]["accelerationFrames"] == 1 and movement_feel["runner"]["reached95"], f"Runner should retain instant directional response: {movement_feel}"
-    assert movement_feel["drifter"]["reached95"] and movement_feel["drifter"]["accelerationFrames"] <= 14, f"Drifter should reach near-cruising speed without feeling sluggish: {movement_feel}"
+    assert movement_feel["drifter"]["reached95"] and movement_feel["drifter"]["accelerationFrames"] <= 10, f"Drifter should reach near-cruising speed without feeling sluggish: {movement_feel}"
     assert movement_feel["momentum"]["reached95"] and movement_feel["momentum"]["accelerationFrames"] <= 22, f"Momentum should accelerate gradually but reach cruising speed in a reasonable time: {movement_feel}"
-    assert movement_feel["drifter"]["reversalFrames"] <= 4 and movement_feel["momentum"]["reversalFrames"] <= 12, f"Inertia styles should preserve glide while still responding to deliberate direction changes: {movement_feel}"
-    assert movement_feel["drifter"]["coastDistance"] > movement_feel["momentum"]["coastDistance"] > 0, f"Drifter should retain a longer coast than Momentum, with both preserving some glide: {movement_feel}"
+    assert movement_feel["drifter"]["reversalFrames"] <= 3 and movement_feel["momentum"]["reversalFrames"] <= 12, f"Inertia styles should preserve glide while still responding to deliberate direction changes: {movement_feel}"
+    assert 0 < movement_feel["drifter"]["coastDistance"] < 12 and 0 < movement_feel["momentum"]["coastDistance"] < 18, f"Both styles should retain only a short, controllable coast after input release: {movement_feel}"
     assert abs(movement_feel["runner"]["diagonalSpeed"] - movement_feel["runner"]["targetSpeed"]) < 0.01, f"Diagonal movement should not be faster than straight movement: {movement_feel}"
     for mode in ("drifter", "momentum", "twitch", "juggernaut"):
         assert abs(movement_feel[mode]["diagonalSpeed"] - movement_feel[mode]["targetSpeed"]) < 0.01, f"{mode} diagonal cruising speed should match straight-line cruising speed: {movement_feel}"
@@ -309,8 +310,8 @@ with sync_playwright() as p:
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "The movement button should open movement selection"
     page.locator("#moveChoices .moveChoice").first.click()
     assert page.evaluate("window.__smoke()['state']") == "play", "Movement selection should return to gameplay"
-    page.keyboard.press("q")
-    assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Q should open movement selection"
+    page.keyboard.press("v")
+    assert page.evaluate("window.__smoke()['state']") == "movementChoice", "V should open movement selection"
     page.keyboard.press("Escape")
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Movement overlay should remain until a choice is made"
     page.locator("#moveChoices .moveChoice").first.click()

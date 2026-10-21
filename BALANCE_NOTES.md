@@ -285,3 +285,15 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - Dodano pięć własnych motywów wizualnych, zmieniających paletę podłogi, obramowania, runiczne ślady i światło narożnych pochodni: zarośnięta krypta, grota grzybów, kuźnia popiołu, lodowa świątynia i krwawy księżyc.
 - Wzory płytek są deterministyczne dla piętra/pokoju, więc nie migają i nie losują się na nowo przy każdej klatce. Nie zmieniają kolizji ani geometrii połączeń.
 - Graf pokojów nadal jest tym samym sprawdzonym, spójnym grafem 6×5; ta iteracja poprawia rozpoznawalność wizualną poziomów, nie dodaje nowych mechanik.
+
+
+## Korekta sterowania i rozdzielenie broni rozrzutowych — 2026-10-21
+
+- **Drifter:** bez zmiany wysokiej prędkości bazowej (5,8) pętla ruchu teraz bierze 48% wektora wejścia i 52% poprzedniego pędu, a po puszczeniu klawisza zachowuje 70% prędkości na klatkę. Ma nadal czuć się szybki i lekko ślizgający, ale nie ma sunąć długo po puszczeniu kierunku.
+- **Rozpęd:** zachowuje najwyższą prędkość i powolne rozpędzanie (współczynnik 0,14), ale hamuje po puszczeniu klawisza z mnożnikiem 0,65 zamiast 0,95. To nadal cięższy styl od Driftera, ale zatrzymanie jest realnie osiągalne.
+- **Rozrzut:** pięć śrutów, wachlarz ±0,42 rad, ×0,50 obrażeń na pocisk, odstęp ok. 19 klatek. Rola: bardzo bliski dystans / szerokie pokrycie. Kosztem są gwałtownie spadające obrażenia na średnim i dalekim dystansie.
+- **Salwa:** pięć pocisków w wąskim wachlarzu ±0,07 rad, ×0,62 obrażeń na pocisk, odstęp ok. 32 klatek; pociski są szybsze (mnożnik 1,22). Rola: skupiona krótka seria na średnim dystansie, silnie karząca za chybienie albo zmianę kierunku celu podczas długiego cooldownu.
+- **Sterowanie:** `M` otwiera mapę, `V` wybiera styl ruchu, `B` wybiera broń. Aktualny kod, podpowiedzi, instrukcja i testy mają być zgodne; `Q` nie zmienia już stylu ruchu.
+
+### Oczekiwane testy pomiarowe
+Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę po zwolnieniu klawisza, a także TTK pojedynczego celu z bliska/daleka i obrażenia zadane grupie/układowi liniowemu. Te metryki kontrolują mechanikę; nie zastępują ręcznego playtestu.
