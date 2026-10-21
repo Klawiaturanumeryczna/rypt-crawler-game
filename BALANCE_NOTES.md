@@ -254,3 +254,8 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - Liczba potencjalnych wrogów nie używa już numeru pola (`roomNo`), który jest identyfikatorem wierszowym, a nie miarą drogi od startu.
 - Progresja wykorzystuje pasmo głębokości oparte na odległości Manhattan (x+y) w siatce 6×5. Dalekie pokoje są trudniejsze, a sąsiednie pola nie dostają skoku trudności tylko dlatego, że zmienił się numer ID.
 - Test Chromium sprawdza kilka punktów mapy, w tym kontrast między pokojem 6 i 7.
+
+
+## 2026-10-21 — zachowanie trudności po powrocie
+- Migawka pokoju zapisuje również poziom trudności drzwi. Powrót z fizycznego sklepu nie zmienia już trudnego/łatwego pokoju na średni w HUD ani w logice dropów.
+- Test Chromium sprawdza, że pokój zapisany na poziomie trudnym pozostaje na tym samym poziomie po odtworzeniu.
