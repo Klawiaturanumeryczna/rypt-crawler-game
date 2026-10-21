@@ -167,7 +167,7 @@ function damageEnemy(e,amount,impactX=e.x,impactY=e.y){
   log('STATYSTYKA — zabójstwa: '+oldKills+' → '+kills+'. Seria: '+oldChain+' → '+killChain+'.');
   if(!defeatedBoss&&killChain%5===0){const oldCoins=coins;coins++;log('NAGRODA ZA SERIĘ — '+killChain+' zabójstw! Monety: '+oldCoins+' → '+coins+' (+1 moneta).')}
   const lootMultiplier=TRUDNOSC_POKOJU[roomTier].mnoznikLupu;
-  if(defeatedBoss){const reward=pick([...DANE_GRY.przedmioty.nogi,...DANE_GRY.przedmioty.strzelanie]);drops.push({x:e.x,y:e.y,r:12,type:'item',item:reward});floorExitSpawned=true;const exitDoor=pick(doors.filter(d=>!d.shop));if(exitDoor)exitDoor.floorExit=true;log('BOSS POKONANY — nagroda: '+reward.nazwa+'. Podnieś przedmiot, a potem wejdź w złote drzwi, aby przejść na piętro '+(floor+1)+'.');}
+  if(defeatedBoss){const reward=pick([...DANE_GRY.przedmioty.nogi,...DANE_GRY.przedmioty.strzelanie]);drops.push({x:e.x,y:e.y,r:12,type:'item',item:reward});const exitDoor=pick(doors.filter(d=>!d.shop));if(exitDoor){floorExitRoomId=roomNo;floorExitSide=exitDoor.side;floorExitSpawned=true;exitDoor.floorExit=true}log('BOSS POKONANY — nagroda: '+reward.nazwa+'. Podnieś przedmiot, a potem wejdź w złote drzwi, aby przejść na piętro '+(floor+1)+'.');}
   else{if(Math.random()<DANE_GRY.dropy.moneta.szansaBazowa*lootMultiplier)drops.push({x:e.x,y:e.y,r:7,type:DANE_GRY.dropy.moneta.id});if(Math.random()<DANE_GRY.dropy.serce.szansa*lootMultiplier)drops.push({x:e.x,y:e.y,r:8,type:DANE_GRY.dropy.serce.id});}
   for(let i=0;i<9;i++)particles.push({x:e.x,y:e.y,vx:rand(-2.5,2.5),vy:rand(-2.5,2.5),life:25,r:rand(2,4),color:'#8f7da9'});
   updateHud();return true;
