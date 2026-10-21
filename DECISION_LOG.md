@@ -120,3 +120,12 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Broń:** pozostaje 7 wyborów, ale zbalansowanych pod różne role; ekran wyboru pokazuje obrażenia, teoretyczny DPS i plusy/minusy. Wartości są nowym punktem startowym, nie finalnym balansem.
 
 - Sklep zawiera trzy oferty na podłodze: losowy przedmiot pasywny za 4 monety, losowy aktywny za 5 monet oraz serce za 2 monety (+2 HP). Ceny są wartościami prototypowymi do późniejszego testu ekonomii; wszystkie zakupy odbywają się przez kontakt z ofertą, bez myszy.
+
+## Czytelność UI, mapa i zachowanie przeciwników — 2026-10-21
+- Dodano stałe przyciski **BROŃ: ... · ZMIEŃ** i **RUCH: ... · ZMIEŃ** poza planszą. W trakcie runu wybór broni wraca bezpośrednio do gry i nie wymusza ponownego wyboru ruchu; skrót **B** otwiera wybór broni, **M** pozostaje wyborem ruchu.
+- Ekrany wyboru mają responsywny układ trzech kolumn na szerokim ekranie, przewijanie w obrębie overlayu i mniejsze odstępy, żeby karty nie wychodziły poza planszę.
+- Interfejs i arena dostały spokojniejszą, stonowaną paletę ziemi/kamienia, prostsze obramowania i bardziej klasyczny, oldschoolowy charakter RPG. To tymczasowy placeholder graficzny, nie finalne assety.
+- Opis przedmiotu/sklepu używa większej czcionki 13–14 px i dynamicznego łamania tekstu.
+- Dodano niewielką mapkę pokoju w prawym górnym rogu: gracz, przeciwnicy i drzwi są oznaczeni osobnymi punktami.
+- Ruch wrogów rozdzielono na sześć ról: bezpośredni pościg (chaser), krążenie (spitter), ciężki ruch z fazami przyspieszenia (brute), szarża (dasher), boczne manewry (hexer) i boss z krótkimi szarżami.
+- Testy Chromium sprawdzają przyciski wyboru w trakcie runu, obecność mapki, czytelność tekstu i odmienne role ruchu. Ręczny test rozgrywki nadal potrzebny do oceny odczuć i balansu.
