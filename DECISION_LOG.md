@@ -149,3 +149,8 @@ Purpose: durable record of design decisions agreed in chat. This document record
 ## Korekta progresji zejścia — 2026-10-21
 - W siatce 6×5 numer pokoju oznacza pozycję, nie kolejność eksploracji. Szansa na zejście rośnie więc na podstawie liczby unikalnych oczyszczonych pokojów na bieżącym piętrze (+5 pp za każdy), a nie na podstawie `roomNo`.
 - Licznik ignoruje ponowne wejście do już oczyszczonego pokoju. Po 20 unikalnych oczyszczonych pokojach szansa wynosi 100%; gwarantowane wyjście z pokoju 30 pozostaje osobną regułą.
+
+
+## Trwałość wyjścia piętra — 2026-10-21
+- Po wylosowaniu zejścia lokalizacja jest stała przez całe piętro. Backtracking odtwarza to samo oznaczenie drzwi, a wejście do sklepu nie przenosi oznaczenia na drzwi powrotne.
+- Wyjście bossa i graniczne wyjścia pokoju 30 także są traktowane jako lokalizacje, a nie jednorazowy efekt rysowania pokoju.
