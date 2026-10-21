@@ -189,3 +189,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Wdrożono: własne sylwetki potworów fantasy w Canvas, bardziej czytelna mapa odkrywania, mocniejsze trade-offy stylów ruchu i łatwiejsze trafianie bronią.
 - Sterowanie zmiany ruchu przeniesione z `V` na `Q`; `M` pozostaje mapą.
 - Testy przeglądarkowe obejmują archetypy skórek i nowy mnożnik obrażeń Biegacza. Ręczny playtest nie jest deklarowany.
+
+
+## Dodatkowa iteracja wizualna pięter — 2026-10-21
+- Dodano pięć palet/motywów pięter z runicznymi detalami i światłem narożnych pochodni; dekoracje są deterministyczne dla pokoju.
+- Geometria przejść pozostaje bez zmian, a wizualne wzory nie wpływają na kolizje ani na testy ruchu.
