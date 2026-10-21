@@ -126,3 +126,10 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Dodano niewielką mapkę pokoju w prawym górnym rogu: gracz, przeciwnicy i drzwi są oznaczeni osobnymi punktami.
 - Ruch wrogów rozdzielono na sześć ról: bezpośredni pościg (chaser), krążenie (spitter), ciężki ruch z fazami przyspieszenia (brute), szarża (dasher), boczne manewry (hexer) i boss z krótkimi szarżami.
 - Testy Chromium sprawdzają przyciski wyboru w trakcie runu, obecność mapki, czytelność tekstu i odmienne role ruchu. Ręczny test rozgrywki nadal potrzebny do oceny odczuć i balansu.
+
+
+## Nagroda bossa, balans i czytelność — 2026-10-21
+- Gwarantowany losowy item po bossie (pula ruch/strzelanie/statystyki), bez monet i serc; jeden specjalny złoty exit prowadzi na kolejne piętro po wejściu w drzwi.
+- Poprawiono komunikat o kolejnym piętrze i celu bossa, wzmocniono różnice między stylami ruchu i strzelania.
+- Stalowe Obcasy zostawiają krótkotrwałe pola raniące wrogów; etykiety sklepu mają większy font.
+- Dodano testy kontraktów nagrody bossa, wyjścia piętra i przedmiotu zostawiającego szkodliwy ślad. Ręczny playtest odczuć ruchu i broni nadal wymagany.
