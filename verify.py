@@ -38,6 +38,7 @@ checks = {
     "active item consumes item": "player.items=player.items.filter(x=>x!==item)" in SOURCE,
     "pause and restart": "state='paused'" in SOURCE and "startRun()" in SOURCE,
     "connected 6x5 room grid and directional backtracking": "function buildFloorGrid()" in SOURCE and "function gridNeighbor(id,side)" in SOURCE and "nextRoom(door.type.tier,!!door.shop,door.side)" in SOURCE and "clearedRooms.add(floor+':'+roomNo)" in SOURCE,
+    "enemy-count progression follows grid depth": "function roomDepthBand(id)" in SOURCE and "2+floor+roomDepthBand(roomNo)" in SOURCE and "Math.floor(roomNo/5)" not in SOURCE,
     "full floor map on M": "function drawFullMap()" in SOURCE and "bigMapOpen=!bigMapOpen" in SOURCE and "MAPA KRYPTY" in SOURCE,
     "hazards have gameplay effects and visuals": all(x in SOURCE for x in ("type==='rock'","type==='pit'","type==='vent'","hazard.cooldown=90","player.x+=dx/d*2.1","Hazards are gameplay objects")),
     "in-game Polish guide explains mechanics": "Cel i zasady" in SOURCE and "Elementy terenu" in SOURCE and "Ekonomia i przedmioty" in SOURCE,
