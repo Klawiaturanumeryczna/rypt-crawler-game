@@ -271,3 +271,11 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - **Strzelanie — prototyp nowego balansu:** Precyzyjny 3,8 obrażeń co ok. 32 klatki; Klasyczny 1,0 co 17; Rozrzut 5 pocisków po 0,62 co ok. 19 klatek, mocny z bliska i słaby z daleka; Szybkostrzelny 0,24 co ok. 5 klatek; Salwa 5 pocisków po 1,05 co ok. 32 klatki; Przebijający 0,72, przebicie do 5 celów; Wybuchowy 1,5 obrażeń bezpośrednich plus istniejące obrażenia obszarowe, wolny pocisk i długi odstęp.
 - To celowo wyraźne trade-offy, a nie finalny balans. Testy automatyczne sprawdzają rzeczywiste parametry i zachowanie; ręczne granie nadal jest potrzebne, by ocenić, czy różnice są przyjemne, a nie frustrujące.
 - **Sterowanie:** M jest tylko mapą piętra. V otwiera wybór stylu ruchu; B pozostaje wyborem broni.
+
+
+## 2026-10-21 — czytelność grafiki i obsługi
+- Mapa piętra pokazuje graf wygenerowany przez `buildFloorGrid()`; pokoje nieodwiedzone są oznaczone `?`, a opis mapy wyjaśnia, że korytarze są faktycznymi połączeniami. Start i koniec mają osobne etykiety.
+- Zamiast prostych geometrycznych mobów wprowadzono autorskie rysowane w Canvas sylwetki: wilkołak, wiedźma, ogr, wampir, mumia, smok oraz rzadsze warianty krasnoluda i krowy. To warianty wizualne istniejących archetypów AI, nie kopie konkretnych postaci.
+- Klawisz zmiany ruchu: `Q`; mapa: `M`; ruch: `WASD`; strzelanie kierunkowe: strzałki; LPM nadal strzela do kursora.
+- Ułatwienie strzelania: większy promień kolizji pocisków, dłuższe życie pocisku oraz ciaśniejszy wachlarz Rozrzutu i Salwy.
+- Mocniejsze role ruchu: Biegacz otrzymuje 15% mniej obrażeń; Drifter 25% więcej; Rozpęd 15% więcej; Skoczek jest nietykalny podczas susów; Zwinny podczas 5-klatkowego zrywu; Taran nadal redukuje obrażenia o 65%. Wartości są prototypowe i podlegają dalszym testom.
