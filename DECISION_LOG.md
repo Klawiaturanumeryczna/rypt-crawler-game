@@ -168,3 +168,7 @@ Purpose: durable record of design decisions agreed in chat. This document record
 ## Progresja w siatce — 2026-10-21
 - ID pokoju identyfikuje pozycję, nie kolejność przejścia. Skalowanie liczby wrogów korzysta z pasma `floor((x+y)*5/9)`, które rośnie wraz z odległością od pokoju startowego.
 - Zachowujemy ogólny zakres progresji (0–5 pasm), ale usuwamy przypadkowe skoki wynikające z przejścia z ID 6 na 7 lub między wierszami.
+
+
+## Powrót do pokoju a poziom trudności — 2026-10-21
+- `roomTier` należy do stanu pokoju. Przywracanie migawki odtwarza jego poziom, co zachowuje spójność HUD-u i mnożnika łupu po wejściu do sklepu i powrocie.
