@@ -137,3 +137,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Log zachowuje informację o nowym piętrze i celu bossa, zamiast nadpisywać ją zwykłym opisem pokoju.
 - Style ruchu i strzelania otrzymały wyraźniejsze plusy/minusy. Stalowe Obcasy zostawiają krótko działające pola raniące przeciwników; rozmiar pocisku z itemu Pocisk Oblężniczy jest już obsługiwany.
 - Powiększono tekst ofert sklepu; wartości balansu pozostają prototypowe i wymagają ręcznego playtestu.
+
+
+## 2026-10-21 — eksploracja lochu
+- Każde piętro ma stałą siatkę 6×5. Położenie pokoju wyznacza jego ID; przejście przez drzwi prowadzi tylko do pola obok, a ruch wstecz prowadzi do wcześniej odwiedzonego pola.
+- M jest przypisane do pełnej mapy piętra; zmiana stylu ruchu odbywa się przyciskiem RUCH, a broń przyciskiem BROŃ lub klawiszem B.
+- Pokoje oczyszczone są oznaczane w bieżącej rozgrywce i pozostają bez wrogów przy powrocie.
+- Teren: kolizyjne kamienie, dziury z okresowym obrażeniem/spowolnieniem, okresowe podmuchy wentylatorów.
