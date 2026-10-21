@@ -171,3 +171,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 
 ## Aktualizacja 2026-10-21 — poziom trudności pokoju
 - Migawka stanu zachowuje `roomTier`, aby powrót do pokoju nie resetował poziomu trudności do średniego.
+
+
+## Aktualizacja 2026-10-21 — sklep bez ponownego losowania ofert
+- Po wyjściu ze sklepu fioletowe drzwi w pokoju macierzystym przestają być wejściem do sklepu. Nie da się wracać i losować nowego zestawu ofert w nieskończoność.
+- Dodano test Chromium sprawdzający odtworzenie pokoju po wykorzystaniu sklepu.
