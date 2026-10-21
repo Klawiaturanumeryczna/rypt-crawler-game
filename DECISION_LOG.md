@@ -163,3 +163,8 @@ Purpose: durable record of design decisions agreed in chat. This document record
 ## Stan pokoju podczas backtrackingu — 2026-10-21
 - Każdy pokój na piętrze ma migawkę pod kluczem `piętro:ID pokoju`, zapisywaną przy opuszczeniu. Obejmuje drzwi, dropy, teren, źródła ognia, przeszkody, przeciwników i ich pociski.
 - Sklep jest osobnym widokiem/obszarem i nie może zapisywać swojego stanu pod kluczem pokoju, z którego gracz do niego wszedł.
+
+
+## Progresja w siatce — 2026-10-21
+- ID pokoju identyfikuje pozycję, nie kolejność przejścia. Skalowanie liczby wrogów korzysta z pasma `floor((x+y)*5/9)`, które rośnie wraz z odległością od pokoju startowego.
+- Zachowujemy ogólny zakres progresji (0–5 pasm), ale usuwamy przypadkowe skoki wynikające z przejścia z ID 6 na 7 lub między wierszami.
