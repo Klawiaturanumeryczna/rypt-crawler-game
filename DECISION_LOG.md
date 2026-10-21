@@ -158,3 +158,8 @@ Purpose: durable record of design decisions agreed in chat. This document record
 
 ## Wyjście bossa — lokalizacja trwała (2026-10-21)
 - Pokonanie bossa zapisuje `floorExitRoomId` i `floorExitSide` wraz z oznaczeniem drzwi. Nie wystarcza samo jednorazowe `floorExit=true`, bo pokój jest rysowany/konfigurowany ponownie przy powrocie.
+
+
+## Stan pokoju podczas backtrackingu — 2026-10-21
+- Każdy pokój na piętrze ma migawkę pod kluczem `piętro:ID pokoju`, zapisywaną przy opuszczeniu. Obejmuje drzwi, dropy, teren, źródła ognia, przeszkody, przeciwników i ich pociski.
+- Sklep jest osobnym widokiem/obszarem i nie może zapisywać swojego stanu pod kluczem pokoju, z którego gracz do niego wszedł.
