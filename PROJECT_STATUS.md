@@ -142,3 +142,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Dodano kamienie blokujące ruch, dziury spowalniające i zadające okresowe obrażenia oraz wentylatory z okresowym podmuchem.
 - Instrukcja pod grą opisuje sterowanie, mapę, teren, ekonomię, przedmioty i bossów.
 - M jest mapą; styl ruchu nadal wybiera się przyciskiem RUCH.
+
+
+## Aktualizacja 2026-10-21 — progresja zejścia
+- Skorygowano szansę na zejście: zależy od liczby unikalnych oczyszczonych pokojów na piętrze, nie od ID pokoju w siatce 6×5.
+- Test regresyjny potwierdza, że wysokie ID nie podbija szansy, a 20 unikalnych oczyszczonych pokojów gwarantuje wynik losowania.
