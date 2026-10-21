@@ -147,3 +147,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Aktualizacja 2026-10-21 — progresja zejścia
 - Skorygowano szansę na zejście: zależy od liczby unikalnych oczyszczonych pokojów na piętrze, nie od ID pokoju w siatce 6×5.
 - Test regresyjny potwierdza, że wysokie ID nie podbija szansy, a 20 unikalnych oczyszczonych pokojów gwarantuje wynik losowania.
+
+
+## Aktualizacja 2026-10-21 — trwałość wyjścia
+- Zapamiętywana jest lokalizacja wyjścia na kolejne piętro (ID pokoju i strona drzwi); po powrocie do pokoju wyjście nie przeskakuje losowo.
+- Licznik oczekującego zejścia czeka na nowy pokój, zamiast zużywać się przy backtrackingu.
