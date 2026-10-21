@@ -200,3 +200,20 @@ Wdrożono prototypowe role ruchu: chaser ściga bezpośrednio; spitter krąży w
 - **Czytelność sklepu:** etykiety ofert powiększono do 16 px, opisy i koszt do 15 px; ramka dopasowuje wysokość do zawartości.
 
 Wartości są prototypem do dalszego testowania. Automatyczne testy kontrolują reguły i kontrakty; nadal potrzebny jest ręczny playtest, by ocenić odczucie ruchu i czytelność w trakcie walki.
+
+
+### Pomiar po wzmocnieniu ról broni — Chromium CI 2026-10-21
+
+Czas eliminacji (klatki; mniej = szybciej) dla pojedynczego celu, bez ruchu przeciwnika:
+
+| Broń | Blisko | Daleko |
+|---|---:|---:|
+| Precyzyjny | 55 | 72 |
+| Klasyczny | 70 | 89 |
+| Rozrzut | 80 | 256 |
+| Szybkostrzelny | 90 | 106 |
+| Salwa | 86 | 440 |
+| Przebijający | 152 | 169 |
+| Wybuchowy | 147 | 170 |
+
+Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każdemu z trzech bliskich celów; Salwa 5,76 celowi centralnemu i 1,92 każdemu z dwóch bocznych; Przebijający 5,25 każdemu z trzech celów w linii; Wybuchowy 5,4 celowi bezpośrednio trafionemu i 3,24 każdemu pobliskiemu celowi. To pomiar kontrolowany, nie ostateczny balans z ruchomymi przeciwnikami.
