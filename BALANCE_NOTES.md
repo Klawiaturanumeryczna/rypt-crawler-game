@@ -264,3 +264,10 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 ## 2026-10-21 — ekonomia sklepu: blokada przerzucania ofert
 - Sklep jest jednorazowy na piętro: po powrocie do pokoju wejściowego jego drzwi nie otwierają ponownie sklepu. Zapobiega to nieograniczonemu odświeżaniu losowych przedmiotów.
 - Nie zmieniono cen ani dropów; zmiana zamyka lukę w ekonomii.
+
+
+## 2026-10-21 — duże specjalizacje ruchu i strzelania
+- **Ruch — prototyp nowego balansu:** Biegacz 3,5 (precyzja i natychmiastowe zatrzymanie); Drifter 5,2 (bardzo szybki, bardzo długi poślizg); Skoczek 2,25 bazowo i 2,65× przez 8 klatek co 22 klatki; Rozpęd 6,2 z powolnym przyspieszaniem i szerokim łukiem; Zwinny 2,1 bazowo i 2,8× przez 5 klatek co 26 klatek; Taran 2,15 i redukcja obrażeń do 35% wartości bazowej (65% mniej), kosztem cięższego skrętu.
+- **Strzelanie — prototyp nowego balansu:** Precyzyjny 3,8 obrażeń co ok. 32 klatki; Klasyczny 1,0 co 17; Rozrzut 5 pocisków po 0,62 co ok. 19 klatek, mocny z bliska i słaby z daleka; Szybkostrzelny 0,24 co ok. 5 klatek; Salwa 5 pocisków po 1,05 co ok. 32 klatki; Przebijający 0,72, przebicie do 5 celów; Wybuchowy 1,5 obrażeń bezpośrednich plus istniejące obrażenia obszarowe, wolny pocisk i długi odstęp.
+- To celowo wyraźne trade-offy, a nie finalny balans. Testy automatyczne sprawdzają rzeczywiste parametry i zachowanie; ręczne granie nadal jest potrzebne, by ocenić, czy różnice są przyjemne, a nie frustrujące.
+- **Sterowanie:** M jest tylko mapą piętra. V otwiera wybór stylu ruchu; B pozostaje wyborem broni.
