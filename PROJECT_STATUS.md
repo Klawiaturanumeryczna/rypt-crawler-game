@@ -133,3 +133,12 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Poprawiono komunikat o kolejnym piętrze i celu bossa, wzmocniono różnice między stylami ruchu i strzelania.
 - Stalowe Obcasy zostawiają krótkotrwałe pola raniące wrogów; etykiety sklepu mają większy font.
 - Dodano testy kontraktów nagrody bossa, wyjścia piętra i przedmiotu zostawiającego szkodliwy ślad. Ręczny playtest odczuć ruchu i broni nadal wymagany.
+
+
+## Aktualizacja 2026-10-21 — siatka lochu i teren
+- Każde piętro ma połączoną siatkę 6×5 (30 pól). Drzwi prowadzą do konkretnego sąsiada zamiast losowo tworzyć kolejny pokój; przejście wstecz wraca do poprzedniego pola.
+- M pokazuje pełną mapę piętra; legenda rozróżnia bieżący pokój, odwiedzone i oczyszczone pola.
+- Oczyszczone pokoje nie odradzają automatycznie przeciwników po powrocie.
+- Dodano kamienie blokujące ruch, dziury spowalniające i zadające okresowe obrażenia oraz wentylatory z okresowym podmuchem.
+- Instrukcja pod grą opisuje sterowanie, mapę, teren, ekonomię, przedmioty i bossów.
+- M jest mapą; styl ruchu nadal wybiera się przyciskiem RUCH.
