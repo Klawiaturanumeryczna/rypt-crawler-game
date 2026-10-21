@@ -59,7 +59,7 @@ window.__testMovementPhysics=()=>{
 };
 window.__testItemPickup=()=>{const oldDrops=drops,oldX=player.x,oldY=player.y,oldItems=player.items;const item={id:'pickup-test',numer:1,kategoria:'active',typ:1,nazwa:'Test pickup',ikona:'❗',opis:'test'};const d={x:player.x+50,y:player.y,r:17,type:'item',item};drops=[d];keys.clear();update();const remainsNearby=drops.includes(d)&&!d.gone;player.x=d.x-player.r-d.r-2;player.y=d.y;update();const collected=d.gone&&player.items.includes(item);drops=oldDrops;player.x=oldX;player.y=oldY;player.items=oldItems;updateHud();return {remainsNearby,collected}};
 window.__testAllPassiveItems=()=>{
- const keys=['hp','maxHp','step','speed','speedBonus','movement','fireRate','invulnDuration','damage','shotSpeed','shotSize'];
+ const keys=['hp','maxHp','step','speed','speedBonus','movement','fireRate','invulnDuration','damage','shotSpeed','shotSize','trailDamage'];
  const saved=Object.fromEntries(keys.map(k=>[k,player[k]]));
  const baseSpeed=MOVEMENT_TYPES.runner.speed;
  const run=(category,n)=>{
@@ -91,6 +91,8 @@ window.__testAllActiveItems=()=>{
  player.hp=saved.hp;player.maxHp=saved.maxHp;coins=saved.coins;player.items=saved.items;player.activeItemIndex=saved.activeItemIndex;shots=saved.shots;enemyShots=saved.enemyShots;enemies=saved.enemies;kills=saved.kills;killChain=saved.killChain;killChainTimer=saved.killChainTimer;particles=saved.particles;updateHud();return result;
 };
 window.__testFullHealthHeart=()=>{const old={drops,x:player.x,y:player.y,hp:player.hp,invuln:player.invuln};const d=drops.find(d=>d.type==='heart'&&!d.gone);if(!d)return false;player.hp=player.maxHp;player.x=d.x;player.y=d.y;player.invuln=999;update();const result=drops.some(x=>x===d&&!x.gone);drops=old.drops;player.x=old.x;player.y=old.y;player.hp=old.hp;player.invuln=old.invuln;updateHud();return result};
+window.__testBossReward=()=>{const old={floor,roomNo,roomTier,coins,kills,killChain,killChainTimer,drops,doors,floorExitSpawned,particles,profileKills:metaProfile.lifetimeKills,random:Math.random};floor=2;roomNo=1;roomTier=2;coins=0;kills=0;killChain=4;killChainTimer=0;drops=[];particles=[];doors=[{shop:false},{shop:false},{shop:false}];floorExitSpawned=false;Math.random=()=>.99;const boss={type:'boss',x:120,y:120,hp:1};damageEnemy(boss,1);const result={drops:drops.map(d=>d.type),rewardCategory:drops.find(d=>d.type==='item')?.item?.kategoria,exitDoors:doors.filter(d=>d.floorExit).length,floorExitSpawned,log:$('log').textContent,coins,killChain};floor=old.floor;roomNo=old.roomNo;roomTier=old.roomTier;coins=old.coins;kills=old.kills;killChain=old.killChain;killChainTimer=old.killChainTimer;drops=old.drops;doors=old.doors;floorExitSpawned=old.floorExitSpawned;particles=old.particles;metaProfile.lifetimeKills=old.profileKills;Math.random=old.random;updateHud();return result};
+window.__testTrailItem=()=>{const old={trailDamage:player.trailDamage,damage:player.damage,items:player.items};player.trailDamage=false;player.damage=1;applyPassiveItem(DANE_GRY.przedmioty.nogi[6]);const result={enabled:player.trailDamage,damage:player.damage,description:OPISY_PRZEDMIOTOW.legs[6]};player.trailDamage=old.trailDamage;player.damage=old.damage;player.items=old.items;return result};
 """
 HTML = HTML.replace(needle, instrumentation, 1)
 
@@ -116,11 +118,11 @@ with sync_playwright() as p:
     assert page.locator("#fireChoices .choiceGlyph").count() == 7, "Every starter weapon should show a visual preview"
     assert page.locator("#fireChoices .weaponStats").count() == 7, "Every starter weapon should show damage and firing interval"
     selection = page.evaluate("window.__testWeaponSelection()")
-    expected_weapons = {"precision": (1.25, 21), "standard": (1.0, 17), "spread": (0.36, 23), "rapid": (0.62, 11), "burst": (0.22, 23), "pierce": (0.85, 23), "explosive": (0.8, 24)}
+    expected_weapons = {"precision": (2.1, 27), "standard": (1.0, 17), "spread": (0.5, 26), "rapid": (0.42, 8), "burst": (0.32, 28), "pierce": (0.75, 25), "explosive": (0.9, 29)}
     for key, (damage, interval) in expected_weapons.items():
         assert selection[key]["mode"] == key and abs(selection[key]["damage"] - damage) < 0.001 and selection[key]["fireRate"] == interval and selection[key]["state"] == "movementChoice", f"Selecting {key} must apply its real damage and cadence before movement choice: {selection}"
-    assert "Odstęp: 23 klatek" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate its slower firing interval"
-    assert "Obrażenia / pocisk: ×0.22" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate per-projectile damage"
+    assert "Odstęp: 28 klatek" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate its slower firing interval"
+    assert "Obrażenia / pocisk: ×0.32" in page.locator("#fireChoices .fire-burst").inner_text(), "Salwa should communicate per-projectile damage"
     page.locator("#fireChoices .moveChoice").nth(1).click()
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "Choosing a firing style should open movement-style selection"
     assert page.locator("#moveChoices .moveChoice").count() == 6, "Expected six movement-style choices"
@@ -251,7 +253,7 @@ with sync_playwright() as p:
     assert meta["bestFloor"] == 1 and meta["bestRoom"] == 1, f"Fresh profile should start with baseline record: {meta}"
 
     damage = page.evaluate("window.__testMovementDamage()")
-    assert abs(damage["runner"]-1)<0.001 and abs(damage["juggernaut"]-0.75)<0.001, f"Juggernaut should have a real 25% damage reduction with a speed tradeoff: {damage}"
+    assert abs(damage["runner"]-1)<0.001 and abs(damage["juggernaut"]-0.6)<0.001, f"Juggernaut should have a real 40% damage reduction with a strong speed tradeoff: {damage}"
 
     rescue = page.evaluate("window.__testRescueItem()")
     assert rescue["hp"] == 1 and rescue["state"] == "play" and not rescue["itemRemaining"] and rescue["deaths"] == 0, f"Rescue amulet should be consumed and leave player at 1 HP without ending run: {rescue}"
@@ -263,6 +265,12 @@ with sync_playwright() as p:
     pickup = page.evaluate("window.__testItemPickup()")
     assert pickup["remainsNearby"], f"Items should not auto-pick up from a distance: {pickup}"
     assert pickup["collected"], f"Walking into an item should collect it without pressing E: {pickup}"
+
+    boss_reward = page.evaluate("window.__testBossReward()")
+    assert boss_reward["drops"] == ["item"] and boss_reward["rewardCategory"] in ("legs", "shot"), f"Boss should guarantee one movement/shooting stat item and no coin/heart drops: {boss_reward}"
+    assert boss_reward["exitDoors"] == 1 and boss_reward["floorExitSpawned"] and "piętro 3" in boss_reward["log"].lower() and boss_reward["coins"] == 0 and boss_reward["killChain"] == 5, f"Boss should unlock one special exit and announce next floor: {boss_reward}"
+    trail_item = page.evaluate("window.__testTrailItem()")
+    assert trail_item["enabled"] and abs(trail_item["damage"]-1.25)<0.001 and "pola zadające obrażenia" in trail_item["description"], f"Stalowe Obcasy should increase damage and enable a damaging floor trail: {trail_item}"
 
     bossClear = page.evaluate("window.__testBossClear()")
     assert bossClear["doorOpen"], f"Clearing a room should open its doors: {bossClear}"
