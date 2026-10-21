@@ -157,3 +157,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Aktualizacja 2026-10-21 — wyjście bossa
 - Naprawiono zapis konkretnej lokalizacji złotych drzwi po pokonaniu bossa; powrót do pokoju zachowuje to samo wyjście.
 - Dodano test regresyjny rzeczywistej funkcji obrażeń i osobny niezmiennik źródła.
+
+
+## Aktualizacja 2026-10-21 — stan pokojów
+- Dodano migawki pokojów przy przejściu: zachowują układ drzwi, dropy, środowisko, zagrożenia oraz stan przeciwników i ich pocisków.
+- Powrót do pokoju odtwarza stan zamiast generować nowy układ; sklep nie nadpisuje migawki pokoju gospodarza.
