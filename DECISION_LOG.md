@@ -172,3 +172,7 @@ Purpose: durable record of design decisions agreed in chat. This document record
 
 ## Powrót do pokoju a poziom trudności — 2026-10-21
 - `roomTier` należy do stanu pokoju. Przywracanie migawki odtwarza jego poziom, co zachowuje spójność HUD-u i mnożnika łupu po wejściu do sklepu i powrocie.
+
+
+## Sklep jednorazowy na piętro — 2026-10-21
+- Po wykorzystaniu sklepu drzwi wejściowe zostają zwykłymi drzwiami przy każdym ponownym wejściu do pokoju. Nie można odświeżać ofert przez ponowne otwieranie sklepu.
