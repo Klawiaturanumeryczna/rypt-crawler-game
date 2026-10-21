@@ -185,3 +185,7 @@ To izolowana symulacja dropów, a nie pełny run: nie symuluje przemieszczania s
 
 ### Wyniki testu ekonomii (Chromium, 2026-10-20)
 10 000 prób na poziom trudności: łatwe — 5,67% monet i 2,09% serc; średnie — 7,75% monet i 2,57% serc; trudne — 12,07% monet i 3,75% serc. Premia za serię: 2000 monet na 10 000 kolejnych prób. To izolowany pomiar dropów, nie pełny run ani prognoza zakupów w pierwszym sklepie. Ceny pozostają bez zmian.
+
+
+## Przeciwnicy — rozróżnienie ruchu i czytelność sklepu (2026-10-21)
+Wdrożono prototypowe role ruchu: chaser ściga bezpośrednio; spitter krąży wokół gracza i próbuje utrzymywać dystans; brute porusza się ciężko, z cyklem wolnego marszu i przyspieszenia; dasher wykonuje szarże; hexer manewruje bokiem; boss porusza się zygzakiem i okresowo szarżuje. Różnice sprawdza automatyczny test pojedynczego kroku rzeczywistej pętli gry. To test techniczny rozróżnienia zachowania, nie dowód na końcowy balans.
