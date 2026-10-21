@@ -195,6 +195,8 @@ function enterRoom(difficultyTier=2,entryNotice='',shopRoom=false){recordBestPro
   doors[rerollIndex].type=pick(doorTypes.filter(type=>type.id!==doors[rerollIndex].type.id));
  }
  }
+ // Po wykorzystaniu sklepu jego drzwi w zapisanym pokoju macierzystym stają się zwykłymi drzwiami; nie można farmić nowych ofert przez ponowne wejścia.
+ if(!shopRoom&&shopUsedFloor)doors.forEach(door=>{door.shop=false});
  if(!savedRoomState&&roomNo===1&&floor===1&&!shopRoom&&!alreadyCleared){for(let i=0;i<3;i++)drops.push({x:W/2+(i-1)*34,y:H/2+108,r:8,type:'heart'});for(let i=0;i<2;i++)drops.push({x:W/2+(i-.5)*28,y:H/2+145,r:7,type:'coin'});log('POKÓJ STARTOWY — 3 serca i 2 monety. Nie ma tu ofert przedmiotów; styl strzelania i ruchu wybierasz przed rozpoczęciem walki.')}
  if(!savedRoomState&&floorExitPending&&roomNo>1&&roomNo<maxRoomsForFloor(floor)&&!shopRoom&&!wasVisited){floorExitPending=false;const exitDoor=pick(doors.filter(d=>!d.shop));if(exitDoor){floorExitRoomId=roomNo;floorExitSide=exitDoor.side;floorExitSpawned=true;exitDoor.floorExit=true;log('ZEJŚCIE ODKRYTE — w tym pokoju możesz zejść na następne piętro po oczyszczeniu go.')}}if(!shopRoom&&floorExitRoomId===roomNo&&floorExitSide){const exitDoor=doors.find(d=>d.side===floorExitSide&&!d.shop);if(exitDoor){exitDoor.floorExit=true;floorExitSpawned=true}}
  const bossRoom=floor>1&&roomNo===1;
