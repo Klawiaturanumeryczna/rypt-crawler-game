@@ -18,7 +18,7 @@ checks = {
     "boss starts floors 2+": "const bossRoom=floor>1&&roomNo===1;" in SOURCE,
     "boss room skips floor-exit roll": "if(!(floor>1&&roomNo===1))rollFloorExit();" in SOURCE,
     "floor-exit chance uses unique cleared rooms rather than grid ID": "function clearedRoomCountOnFloor()" in SOURCE and "const chance=Math.min(1,clearedCount*.05)" in SOURCE,
-    "room state persists on backtracking": "function saveCurrentRoomState()" in SOURCE and "roomStates.get(floor+':'+roomNo)" in SOURCE and "if(savedRoomState){/* enemies and enemy shots were restored with the room snapshot */}" in SOURCE,
+    "room state persists on backtracking": "function saveCurrentRoomState()" in SOURCE and "roomStates.get(floor+':'+roomNo)" in SOURCE and "roomTier,doors,drops,roomEnvironment" in SOURCE and "savedRoomState.roomTier" in SOURCE and "if(savedRoomState){/* enemies and enemy shots were restored with the room snapshot */}" in SOURCE,
     "floor exit location persists across room visits": "floorExitRoomId=null,floorExitSide=null" in SOURCE and "floorExitRoomId===roomNo&&floorExitSide" in SOURCE and "doorOpen=alreadyCleared;spawnTimer=0;" in SOURCE,
     "starting supplies only on first floor": "if(!savedRoomState&&roomNo===1&&floor===1&&!shopRoom&&!alreadyCleared)" in SOURCE,
     "starting pickups": "i<3;i++)drops.push" in SOURCE and "i<2;i++)drops.push" in SOURCE,
