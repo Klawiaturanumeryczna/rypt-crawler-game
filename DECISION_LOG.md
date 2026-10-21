@@ -191,3 +191,8 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - `M` służy wyłącznie do mapy; zmianę stylu ruchu przypisujemy do `Q`. `WASD` porusza postacią, strzałki strzelają kierunkowo, LPM strzela do kursora.
 - Ruch ma mocne kompromisy mechaniczne, nie tylko różnice prędkości. Strzelanie ma być bardziej wybaczające, dlatego poprawiamy wielkość hitboxa i czas życia pocisków oraz zmniejszamy nadmierny rozrzut.
 - Generowana mapa ma pokazywać rzeczywiste połączenia, a stan nieodwiedzonych pokoi powinien być wizualnie odróżniony od odwiedzonych.
+
+
+## Motywy proceduralnych pięter — 2026-10-21
+- Każde piętro cyklicznie używa innego autorskiego motywu wizualnego: zarośnięta krypta, grota grzybów, kuźnia popiołu, lodowa świątynia, krwawy księżyc.
+- Motyw zmienia paletę, detale płytek, runy i światło. Wzory są deterministyczne i czysto wizualne; nie mają wpływu na hitboxy ani topologię lochu.
