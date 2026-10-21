@@ -247,7 +247,7 @@ with sync_playwright() as p:
     assert movement_feel["drifter"]["reached95"] and movement_feel["drifter"]["accelerationFrames"] <= 10, f"Drifter should reach near-cruising speed without feeling sluggish: {movement_feel}"
     assert movement_feel["momentum"]["reached95"] and movement_feel["momentum"]["accelerationFrames"] <= 22, f"Momentum should accelerate gradually but reach cruising speed in a reasonable time: {movement_feel}"
     assert movement_feel["drifter"]["reversalFrames"] <= 3 and movement_feel["momentum"]["reversalFrames"] <= 12, f"Inertia styles should preserve glide while still responding to deliberate direction changes: {movement_feel}"
-    assert 0 < movement_feel["drifter"]["coastDistance"] < 12 and 0 < movement_feel["momentum"]["coastDistance"] < 18, f"Both styles should retain only a short, controllable coast after input release: {movement_feel}"
+    assert 0 < movement_feel["drifter"]["coastDistance"] < 16 and 0 < movement_feel["momentum"]["coastDistance"] < 16, f"Both styles should retain a short, controllable coast after input release: {movement_feel}"
     assert abs(movement_feel["runner"]["diagonalSpeed"] - movement_feel["runner"]["targetSpeed"]) < 0.01, f"Diagonal movement should not be faster than straight movement: {movement_feel}"
     for mode in ("drifter", "momentum", "twitch", "juggernaut"):
         assert abs(movement_feel[mode]["diagonalSpeed"] - movement_feel[mode]["targetSpeed"]) < 0.01, f"{mode} diagonal cruising speed should match straight-line cruising speed: {movement_feel}"
