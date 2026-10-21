@@ -225,3 +225,9 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - M otwiera/zamyka dużą mapę piętra. Mały minimap pokoju pozostaje widoczny.
 - Kamienie są kolizyjne, dziury ograniczają prędkość i zadają 0,5 obrażenia co 90 klatek, a wentylatory odpychają gracza przez 38 z każdych 180 klatek, gdy gracz jest blisko.
 - Ruch po pokoju oczyszczonym nie losuje ponownie przeciwników. Elementy specjalne piasek/lód/ogień pozostają osobną mechaniką.
+
+
+## 2026-10-21 — korekta losowania zejścia
+- Szansa na zejście rośnie o 5 punktów procentowych za każdy unikalny oczyszczony pokój na bieżącym piętrze, a nie za numer pola w siatce.
+- Powrót do wysokiego ID (np. pokój 25) nie daje już sztucznie wysokiej szansy, jeśli gracz oczyścił mało pokojów; ponowne czyszczenie odwiedzonego pokoju nie zwiększa licznika.
+- Testy Chromium obejmują rozbieżność między ID pokoju a liczbą unikalnych oczyszczonych pokojów.
