@@ -189,3 +189,14 @@ To izolowana symulacja dropów, a nie pełny run: nie symuluje przemieszczania s
 
 ## Przeciwnicy — rozróżnienie ruchu i czytelność sklepu (2026-10-21)
 Wdrożono prototypowe role ruchu: chaser ściga bezpośrednio; spitter krąży wokół gracza i próbuje utrzymywać dystans; brute porusza się ciężko, z cyklem wolnego marszu i przyspieszenia; dasher wykonuje szarże; hexer manewruje bokiem; boss porusza się zygzakiem i okresowo szarżuje. Różnice sprawdza automatyczny test pojedynczego kroku rzeczywistej pętli gry. To test techniczny rozróżnienia zachowania, nie dowód na końcowy balans.
+
+
+## Balans ruchu, broni i nagroda bossa — 2026-10-21
+
+- **Ruch:** Drifter i Rozpęd mają wyraźnie wyższy potencjał prędkości, ale zachowują bezwładność; Skoczek i Zwinny są wolni między automatycznymi zrywami; Taran porusza się wolno, lecz redukuje obrażenia o 40%. Biegacz pozostaje najbardziej przewidywalny i precyzyjny.
+- **Broń:** Precyzyjny ma mocne trafienie, ale długi odstęp; Szybkostrzelny ma słabe pociski i bardzo krótki odstęp; Rozrzut i Salwa zachowują ograniczenia DPS pojedynczego celu; Przebijający premiuje ustawienie w linii; Wybuchowy zyskuje obrażenia obszarowe kosztem prędkości i tempa.
+- **Nagroda bossa:** gwarantowany losowy przedmiot z puli nóg/strzelania, bez dropu monet i serc. Boss otwiera pojedyncze specjalne złote drzwi do następnego piętra; gracz musi do nich dojść. Informacja o nowym piętrze i celu bossa jest widoczna w logu.
+- **Przedmiot środowiskowy:** Stalowe Obcasy zwiększają obrażenia i pozostawiają krótkotrwałe pola zadające obrażenia przeciwnikom. Pocisk Oblężniczy nadal zwiększa rozmiar pocisku o 2 kosztem jego prędkości.
+- **Czytelność sklepu:** etykiety ofert powiększono do 16 px, opisy i koszt do 15 px; ramka dopasowuje wysokość do zawartości.
+
+Wartości są prototypem do dalszego testowania. Automatyczne testy kontrolują reguły i kontrakty; nadal potrzebny jest ręczny playtest, by ocenić odczucie ruchu i czytelność w trakcie walki.
