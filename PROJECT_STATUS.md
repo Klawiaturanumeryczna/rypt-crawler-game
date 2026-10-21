@@ -167,3 +167,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Aktualizacja 2026-10-21 — trudność według głębokości
 - Skalowanie liczby wrogów opiera się na głębokości pola na mapie, a nie na identyfikatorze wierszowym pokoju.
 - Dodano test regresyjny pasm głębokości dla startu, dalekich pól i pokoju 30.
+
+
+## Aktualizacja 2026-10-21 — poziom trudności pokoju
+- Migawka stanu zachowuje `roomTier`, aby powrót do pokoju nie resetował poziomu trudności do średniego.
