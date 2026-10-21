@@ -122,7 +122,7 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Sklep zawiera trzy oferty na podłodze: losowy przedmiot pasywny za 4 monety, losowy aktywny za 5 monet oraz serce za 2 monety (+2 HP). Ceny są wartościami prototypowymi do późniejszego testu ekonomii; wszystkie zakupy odbywają się przez kontakt z ofertą, bez myszy.
 
 ## Czytelność UI, mapa i zachowanie przeciwników — 2026-10-21
-- Dodano stałe przyciski **BROŃ: ... · ZMIEŃ** i **RUCH: ... · ZMIEŃ** poza planszą. W trakcie runu wybór broni wraca bezpośrednio do gry i nie wymusza ponownego wyboru ruchu; skrót **B** otwiera wybór broni, **M** pozostaje wyborem ruchu.
+- Dodano stałe przyciski **BROŃ: ... · ZMIEŃ** i **RUCH: ... · ZMIEŃ** poza planszą. W trakcie runu wybór broni wraca bezpośrednio do gry i nie wymusza ponownego wyboru ruchu; skrót **B** otwiera wybór broni, **M** otwiera mapę piętra, a **V** wybiera ruch.
 - Ekrany wyboru mają responsywny układ trzech kolumn na szerokim ekranie, przewijanie w obrębie overlayu i mniejsze odstępy, żeby karty nie wychodziły poza planszę.
 - Interfejs i arena dostały spokojniejszą, stonowaną paletę ziemi/kamienia, prostsze obramowania i bardziej klasyczny, oldschoolowy charakter RPG. To tymczasowy placeholder graficzny, nie finalne assety.
 - Opis przedmiotu/sklepu używa większej czcionki 13–14 px i dynamicznego łamania tekstu.
@@ -176,3 +176,11 @@ Purpose: durable record of design decisions agreed in chat. This document record
 
 ## Sklep jednorazowy na piętro — 2026-10-21
 - Po wykorzystaniu sklepu drzwi wejściowe zostają zwykłymi drzwiami przy każdym ponownym wejściu do pokoju. Nie można odświeżać ofert przez ponowne otwieranie sklepu.
+
+
+## Proceduralny układ lochu i mocniejsze specjalizacje — 2026-10-21
+- **Sterowanie:** M = mapa piętra, V = wybór ruchu, B = wybór broni. Nie przywracamy Shift jako uniku.
+- **Topologia:** każde piętro generuje połączony graf 30 pokojów na siatce 6×5. Losowe drzewo gwarantuje osiągalność każdego pokoju, a niewielka szansa na dodatkowe połączenia tworzy skróty/pętle. Drzwi fizyczne i linie mapy muszą używać dokładnie tego samego grafu.
+- **Pokój 30:** gwarantowane zejście pokazuje się tylko przy krawędziach planszy. Brak korytarza między dwoma sąsiadami nie może być pokazywany jako drzwi.
+- **Ruch:** mocne role (precyzyjny Biegacz, szybki i ślizgający Drifter, cykliczny Skoczek, bardzo szybki lecz bezwładny Rozpęd, wolny zrywający Zwinny, opancerzony lecz ciężki Taran). Wartości numeryczne pozostają prototypowe.
+- **Broń:** Precyzyjny = duży pojedynczy strzał i długa przerwa; Rozrzut = mocny z bliska, słaby z daleka; Szybkostrzelny = częste słabe trafienia; Salwa = duży potencjał wielopociskowy i długa przerwa; Przebijający = linie wrogów; Wybuchowy = mocny pocisk i obszar kosztem prędkości; Klasyczny = opcja stabilna bez specjalizacji.
