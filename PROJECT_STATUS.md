@@ -152,3 +152,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Aktualizacja 2026-10-21 — trwałość wyjścia
 - Zapamiętywana jest lokalizacja wyjścia na kolejne piętro (ID pokoju i strona drzwi); po powrocie do pokoju wyjście nie przeskakuje losowo.
 - Licznik oczekującego zejścia czeka na nowy pokój, zamiast zużywać się przy backtrackingu.
+
+
+## Aktualizacja 2026-10-21 — wyjście bossa
+- Naprawiono zapis konkretnej lokalizacji złotych drzwi po pokonaniu bossa; powrót do pokoju zachowuje to samo wyjście.
+- Dodano test regresyjny rzeczywistej funkcji obrażeń i osobny niezmiennik źródła.
