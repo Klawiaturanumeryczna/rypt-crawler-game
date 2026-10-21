@@ -319,6 +319,8 @@ with sync_playwright() as p:
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "The movement button should open movement selection"
     page.locator("#moveChoices .moveChoice").first.click()
     assert page.evaluate("window.__smoke()['state']") == "play", "Movement selection should return to gameplay"
+    page.evaluate("window.dispatchEvent(new KeyboardEvent('keydown',{key:'v',repeat:true,bubbles:true}))")
+    assert page.evaluate("window.__smoke()['state']") == "play", "Holding V must not reopen movement selection on repeated keydown events"
     page.keyboard.press("v")
     assert page.evaluate("window.__smoke()['state']") == "movementChoice", "V should open movement selection"
     page.keyboard.press("Escape")

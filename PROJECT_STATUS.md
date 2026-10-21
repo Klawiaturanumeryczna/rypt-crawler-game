@@ -221,3 +221,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Mapa pełnego piętra oznacza teraz pokoje bossów (B na piętrach 2+) i pokoje z dostępnym sklepem (S).
 - Marker sklepu korzysta z rzeczywistego stanu drzwi bieżącego lub zapisanego pokoju i znika po wykorzystaniu sklepu; nie tworzy dodatkowego wejścia ani nie zmienia ekonomii.
 - Legenda została rozbita na dwie linie, aby objaśnić markery bez ścisku. Dodano kontrole źródła i test Chromium dla bieżącego/zapisanego sklepu, bossa i zejścia.
+
+
+## Poprawka obsługi skrótu V — 2026-10-21
+- Powtarzane zdarzenia `keydown` dla V są ignorowane tak jak dla M/B/P, aby przy przytrzymaniu klawisza nie otwierać wielokrotnie wyboru ruchu.
+- Dodano regresyjny test Chromium dla powtarzanego zdarzenia V i kontrolę źródła. Nie zmienia to mapowania klawiszy ani mechaniki ruchu.

@@ -68,3 +68,8 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - W gałęzi `ux/map-room-markers-v2` dodano czytelne znaczniki `B` dla bossa (piętro 2+) oraz `S` dla dostępnego sklepu. Marker sklepu opiera się na rzeczywistym stanie drzwi i znika po użyciu sklepu.
 - Legenda mapy została rozdzielona na dwie linie. Test Chromium sprawdza marker aktualnego i zapisanego sklepu, bossa, zejścia i sklepu już wykorzystanego.
 - To zmiana wyłącznie informacyjna/UI; nie zmienia układu piętra, walki ani ekonomii. Wymagane zielone CI przed scaleniem.
+
+
+## MAX MARATON — powtarzany skrót ruchu (2026-10-21)
+- W gałęzi `fix/repeated-movement-hotkey` dodano V do strażnika powtarzanych zdarzeń klawiatury. Przytrzymanie V nie powinno wielokrotnie otwierać wyboru stylu ruchu.
+- Dodano asercję Chromium i kontrolę `verify.py`. Wymagane zielone CI, potem synchronizacja mirrora i Pages.

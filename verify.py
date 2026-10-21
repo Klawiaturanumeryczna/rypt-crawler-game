@@ -37,6 +37,7 @@ checks = {
     "Skoczek and Zwinny use different triggers": "player.hopTimer>=move.hopInterval" in SOURCE and "px*mx+py*my<.25" in SOURCE and "player.twitchTimer>=move.burstInterval" not in SOURCE and "player.movement==='twitch'?dmg*1.1" in SOURCE,
     "dodge feedback has no circular ring": "ctx.arc(0,0,player.r+5+Math.sin(frame)*2" not in SOURCE,
     "map and movement key bindings are unambiguous": "e.key.toLowerCase()==='m'&&state==='play'" in SOURCE and "e.key.toLowerCase()==='v'&&state==='play'" in SOURCE and "V — styl ruchu" in SOURCE,
+    "repeated V keydown is ignored": "e.repeat&&(" in SOURCE and "e.key.toLowerCase()==='v'" in SOURCE,
     "boss guarantees a stat item and special exit without coin/heart drops": "const defeatedBoss=e.type==='boss'" in SOURCE and "BOSS POKONANY" in SOURCE and "exitDoor.floorExit=true" in SOURCE and "if(!defeatedBoss&&killChain%5===0)" in SOURCE,
     "boss exit stores room and door side for backtracking": "floorExitRoomId=roomNo;floorExitSide=exitDoor.side;floorExitSpawned=true;exitDoor.floorExit=true" in SOURCE,
     "Stalowe Obcasy create damaging ground trails": "player.trailDamage&&frame%18===0" in SOURCE and "damageEnemy(e,.5,trail.x,trail.y)" in SOURCE and "trails=trails.filter(trail=>trail.life>0)" in SOURCE,
