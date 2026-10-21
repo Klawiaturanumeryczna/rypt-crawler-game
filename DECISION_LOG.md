@@ -154,3 +154,7 @@ Purpose: durable record of design decisions agreed in chat. This document record
 ## Trwałość wyjścia piętra — 2026-10-21
 - Po wylosowaniu zejścia lokalizacja jest stała przez całe piętro. Backtracking odtwarza to samo oznaczenie drzwi, a wejście do sklepu nie przenosi oznaczenia na drzwi powrotne.
 - Wyjście bossa i graniczne wyjścia pokoju 30 także są traktowane jako lokalizacje, a nie jednorazowy efekt rysowania pokoju.
+
+
+## Wyjście bossa — lokalizacja trwała (2026-10-21)
+- Pokonanie bossa zapisuje `floorExitRoomId` i `floorExitSide` wraz z oznaczeniem drzwi. Nie wystarcza samo jednorazowe `floorExit=true`, bo pokój jest rysowany/konfigurowany ponownie przy powrocie.
