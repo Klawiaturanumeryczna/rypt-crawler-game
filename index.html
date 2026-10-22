@@ -51,6 +51,7 @@ const FLOOR_THEMES=[
 
 const keys=new Set(); let interactPressed=false; let mouse={x:W/2+100,y:H/2,down:false};
 const HOTLINE_MIAMI_MODE=true;let noiseX=0,noiseY=0,noiseTimer=0;let state='title',player, enemies=[],shots=[],enemyShots=[],drops=[],particles=[],floor=1,roomNo=1,roomTier=2,kills=0,killChain=0,killChainTimer=0,coins=0,frame=0,shake=0,doorOpen=false,doors=[],roomSeed=1,spawnTimer=0,floorExitSpawned=false,floorExitPending=false,floorExitRoomId=null,floorExitSide=null,shopUsedFloor=false,floorBonusClaimed=false,roomEnvironment=null,environmentPatches=[],fireSources=[],trails=[],roomHazards=[],floorGrid=[],clearedRooms=new Set(),roomStates=new Map(),bigMapOpen=false,shopRoomActive=false,shopEntrySide='right',profileBtn=null;
+const HOTLINE_COVER_FORMATIONS_PER_ROOM=2;
 const HOTLINE_COVER_FORMATIONS=[
  {name:'U',offsets:[[-36,-36],[-36,0],[-36,36],[0,36],[36,-36],[36,0],[36,36]]},
  {name:'X',offsets:[[-30,-30],[0,0],[30,30],[-30,30],[30,-30]]},
@@ -251,15 +252,20 @@ function enterRoom(difficultyTier=2,entryNotice='',shopRoom=false){recordBestPro
  if(savedRoomState){/* enemies and enemy shots were restored with the room snapshot */}else if(bossRoom&&!alreadyCleared){enemies.push(createEnemy('boss',W/2,room.y+130));}else if(!shopRoom&&!alreadyCleared){for(let i=0;i<count;i++){let x,y,tries=0;do{x=rand(room.x+50,room.x+room.w-50);y=rand(room.y+50,room.y+room.h-50);tries++}while(Math.hypot(x-W/2,y-H/2)<150&&tries<40);enemies.push(createEnemy(pickEnemyType(),x,y));}}
  if(!savedRoomState&&!shopRoom&&!alreadyCleared){
   if(HOTLINE_MIAMI_MODE){
-   const formation=pick(HOTLINE_COVER_FORMATIONS);let placed=false;
-   for(let attempt=0;attempt<120&&!placed;attempt++){
-    const cx=rand(room.x+150,room.x+room.w-150),cy=rand(room.y+120,room.y+room.h-120);
-    const rocks=formation.offsets.map(([ox,oy])=>({type:'rock',x:cx+ox,y:cy+oy,r:18,cooldown:0,phase:Math.floor(Math.random()*180)}));
-    const valid=rocks.every(h=>h.x>=room.x+45&&h.x<=room.x+room.w-45&&h.y>=room.y+45&&h.y<=room.y+room.h-45&&Math.hypot(h.x-W/2,h.y-H/2)>=125&&doors.every(d=>Math.hypot(h.x-d.x,h.y-d.y)>=75)&&enemies.every(e=>Math.hypot(h.x-e.x,h.y-e.y)>=e.r+55)&&roomHazards.every(other=>Math.hypot(h.x-other.x,h.y-other.y)>=other.r+h.r+8));
-    if(valid){roomHazards.push(...rocks);placed=true}
+   const usedFormationNames=[];
+   for(let formationIndex=0;formationIndex<HOTLINE_COVER_FORMATIONS_PER_ROOM;formationIndex++){
+    const availableFormations=HOTLINE_COVER_FORMATIONS.filter(f=>!usedFormationNames.includes(f.name));
+    const formation=pick(availableFormations.length?availableFormations:HOTLINE_COVER_FORMATIONS);
+    usedFormationNames.push(formation.name);
+    let placed=false;
+    for(let attempt=0;attempt<120&&!placed;attempt++){
+     const cx=rand(room.x+150,room.x+room.w-150),cy=rand(room.y+120,room.y+room.h-120);
+     const rocks=formation.offsets.map(([ox,oy])=>({type:'rock',x:cx+ox,y:cy+oy,r:14,cooldown:0,phase:Math.floor(Math.random()*180)}));
+     const valid=rocks.every(h=>h.x>=room.x+45&&h.x<=room.x+room.w-45&&h.y>=room.y+45&&h.y<=room.y+room.h-45&&Math.hypot(h.x-W/2,h.y-H/2)>=125&&doors.every(d=>Math.hypot(h.x-d.x,h.y-d.y)>=80)&&enemies.every(e=>Math.hypot(h.x-e.x,h.y-e.y)>=e.r+50)&&roomHazards.every(other=>Math.hypot(h.x-other.x,h.y-other.y)>=other.r+h.r+6));
+     if(valid){roomHazards.push(...rocks);placed=true}
+    }
+    if(placed)log('OSŁONY — układ '+usedFormationNames.join(' + ')+'. Wykorzystaj kamienie, by zerwać linię strzału i obejść przeciwników.');
    }
-   if(!placed){const x=room.x+room.w*.25,y=room.y+room.h*.25;roomHazards.push({type:'rock',x,y,r:18,cooldown:0,phase:0},{type:'rock',x:x+34,y,r:18,cooldown:0,phase:0},{type:'rock',x:x+68,y,r:18,cooldown:0,phase:0},{type:'rock',x:x+68,y:y+34,r:18,cooldown:0,phase:0},{type:'rock',x:x+68,y:y+68,r:18,cooldown:0,phase:0})}
-   log('OSŁONY — układ '+formation.name+'. Wykorzystaj kamienie, by zerwać linię strzału i obejść przeciwników.');
   }else{
    const types=['rock','pit'],countHazards=1+Math.floor(Math.random()*3);
    for(let i=0;i<countHazards;i++){const type=types[Math.floor(Math.random()*types.length)];let x,y,tries=0;do{x=rand(room.x+100,room.x+room.w-100);y=rand(room.y+90,room.y+room.h-90);tries++}while((Math.hypot(x-W/2,y-H/2)<125||doors.some(d=>Math.hypot(x-d.x,y-d.y)<75)||roomHazards.some(h=>Math.hypot(x-h.x,y-h.y)<70)||enemies.some(e=>Math.hypot(x-e.x,y-e.y)<e.r+55))&&tries<40);roomHazards.push({type,x,y,r:type==='rock'?rand(14,22):rand(20,28),cooldown:0,phase:Math.floor(Math.random()*180)})}
