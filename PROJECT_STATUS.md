@@ -11,7 +11,8 @@ Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historyczn
 - **Broń (PR #64):** wybór gracza ograniczono do Precyzyjnego, Klasyka i Salwy. Bazowe odstępy to odpowiednio 48, 22 i 150 klatek; Klasyk ma 77 klatek życia pocisku zamiast 115. Browser smoke run `39838967501` przeszedł, w tym test przytrzymania strzału dla Salwy.
 - **Ruch gracza (PR #65):** wybór zawiera wyłącznie Driftera i Skoczka. Drifter ma subtelnie większą bezwładność; Skoczek wykonuje dłuższy, mocniejszy sus, a odstęp startów skoku losuje się w zakresie 20–26 klatek. Wymaga potwierdzenia przez CI i ręczny playtest.
 - **Klasy przeciwników (bieżący pakiet):** Drifter, Skoczek, Taran i Biegacz mają osobne role ruchu; Taran ma bazowe 7 HP (wcześniej 5, czyli dokładnie +2). Testy automatyczne sprawdzają role i HP. Ręczny playtest nadal potrzebny.
-- **Następne prace:** spawn przy drzwiach wejściowych i usunięcie odpychającego wentylu.
+- **Spawn i przeszkody (bieżący pakiet):** spawn jest związany z drzwiami wejściowymi i walidowany względem osłon, przeciwników oraz źródeł ognia; odpychający wentyl usunięto z generowania, zachowania i instrukcji. CI oraz ręczny playtest tego pakietu pozostają do potwierdzenia.
+- **Pozostałe:** ręczny playtest całej pętli, potwierdzenie publikacji GitHub Pages.
 - **Nowy pakiet napraw (PR #60 scalony; merge `97d0b289f92f8651f4da0a8423a3832e63135b96`):** oferty sklepu nie kupują się już samym dotknięciem — wymagają pojedynczego naciśnięcia `E`; prompt jasno pokazuje koszt i funkcję amuletu jednego trafienia. W trybie Hotline pokoje generują zwarte układy osłon `U`, `X`, `L`, `I`, `T` zamiast 2–4 losowo rozrzuconych kamieni. Dodano testy przeglądarkowe dla jawnej interakcji i różnorodności formacji. Browser smoke dla PR #60 przeszedł (run `39830353160`). Przed uznaniem za opublikowane sprawdź synchronizację mirrora i Pages.
 - **Walidacja kodu:** PR #56 (windup i zablokowany kierunek celowania) oraz PR #57 (regresja dwóch kamieni) scalone; CI dla kodu i ostatni main run były zielone. Backup `backup/pre-hotline-miami-2026-10-22` pozostaje nietknięty na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
 - **Mirror/Pages:** mirror ma zsynchronizowany kod, testy i dokumentację; Browser smoke run `39825057699` zielony. Synchronizacja mirrora została sprawdzona przez porównanie 12 plików współdzielonych (identyczna treść i blob SHA). Browser smoke `39827271918` oraz Pages deployment `39827270246` zakończyły się sukcesem dla zsynchronizowanego buildu; po każdej późniejszej synchronizacji sprawdź najnowszy workflow w Actions.
@@ -179,7 +180,7 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Każde piętro ma połączoną siatkę 6×5 (30 pól). Drzwi prowadzą do konkretnego sąsiada zamiast losowo tworzyć kolejny pokój; przejście wstecz wraca do poprzedniego pola.
 - M pokazuje pełną mapę piętra; legenda rozróżnia bieżący pokój, odwiedzone i oczyszczone pola.
 - Oczyszczone pokoje nie odradzają automatycznie przeciwników po powrocie.
-- Dodano kamienie blokujące ruch, dziury spowalniające i zadające okresowe obrażenia oraz wentylatory z okresowym podmuchem.
+- Dodano kamienie blokujące ruch i dziury spowalniające oraz zadające okresowe obrażenia; wcześniejszy wentyl odpychający gracza został później usunięty w PR #67.
 - Instrukcja pod grą opisuje sterowanie, mapę, teren, ekonomię, przedmioty i bossów.
 - M jest mapą; styl ruchu nadal wybiera się przyciskiem RUCH.
 
