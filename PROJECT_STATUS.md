@@ -323,9 +323,9 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - PR #57 (`a0c98e496b676429b9e04535a0d0ada6a86f2531`) dodaje deterministyczny test Chromium z dwoma kolejnymi kamieniami. CI run `39824808999` jest zielony: przeciwnik dochodzi do celu w 180 klatkach bez nakładania hitboxu na kamienie.
 - Test obejmuje jeden konkretny układ przeszkód, a nie pełną przestrzeń możliwych pokojów. Ręczny playtest wieloosłonowego pathfindingu nadal jest wymagany.
 
-## Current gameplay state after PR #69 — 2026-10-22
+## Current gameplay state after PR #70 — 2026-10-22
 
-- PR #61 (work protocol) and gameplay PRs #63–#69 are merged into `main`.
+- PR #61 (work protocol) and gameplay PRs #63–#70 are merged into `main`.
 - PR #63: two varied cover formations attempted per Hotline room; cover radius 14; unsafe fallback removed. Browser smoke run `39837922682` passed.
 - PR #64: player weapon selection is Precyzyjny/Klasyk/Salwa only; cooldowns 48/22/150 frames, Classic projectile life 77 frames. Browser smoke run `39838967501` passed.
 - PR #65: only Drifter and Skoczek selectable; Drifter inertia adjusted; Skoczek leap is 10 frames at 3× with randomized start interval 20–26 frames. Browser smoke run `39839665500` passed.
@@ -333,8 +333,11 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - PR #67: safe entry-side spawn and removal of the repelling vent. Browser smoke run `39841816581` passed.
 - PR #68: refreshed status/handoff. Browser smoke run `39842542681` passed.
 - PR #69: corrected in-game help from the retired 30-room/6×5 layout to the active 10-room/5×2 floor. Source browser smoke run `39843505951` passed.
-- GitHub Pages deployment run #337 succeeded for mirror commit `d360ceb58b1af826d45618226f6f99d273daf9dc`; the deployed URL is `https://klawiaturanumeryczna.github.io/rypt-crawler-game/`.
-- A mirror workflow and Playwright script check the published page after a push to `main`; the script retries for up to 180 seconds until the new floor-help marker appears, then tests the startup flow and uncaught JS errors. Initial deployment-triggered run is pending verification.
-- **Manual gameplay playtest has not been performed.** Automated checks do not establish subjective game feel, fairness, or balance.
+- PR #70: live Pages smoke script retries while Pages propagates a new deployment. Source CI run `39844176973` passed.
+- Mirror PR #1 synced the corrected help and added live smoke; PR #2 fixed the trigger to run on main pushes and on demand. Both mirror PRs passed browser smoke.
+- GitHub Pages deployment run `39844418787` succeeded for mirror commit `b46abc1767db7305a914c9cfd11e904ab8b804e3`.
+- **Published-page browser smoke passed:** run `39844419662` loaded `https://klawiaturanumeryczna.github.io/rypt-crawler-game/`, confirmed HTTP 200 and the new 10-room help marker, selected Precyzyjny and Drifter, entered gameplay at floor 1 / room 1, and reported no uncaught JavaScript errors.
+- The mirror now runs the published-page smoke automatically on pushes to `main`, waiting up to 180 seconds for the deployed build; it can also be run manually with `workflow_dispatch`.
+- **Manual gameplay playtest has not been performed.** Automated smoke verifies loading and startup only; it does not establish subjective game feel, fairness, enemy behavior under live play, or balance.
 - Backup `backup/pre-hotline-miami-2026-10-22` remains untouched.
-- Next: verify the live Pages smoke result for commit `aa13526b8e96ae65a87d6d2082f02d40abdf2e10`, then keep manual playtesting open rather than claiming it passed.
+- Next: human playtest using `MANUAL_PLAYTEST_CHECKLIST.md`; use observations to identify concrete fixes, not speculative new mechanics.
