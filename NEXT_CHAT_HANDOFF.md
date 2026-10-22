@@ -197,17 +197,18 @@ Najpierw pobierz aktualny HEAD main, stan PR/CI i status Pages; porównaj `index
 ## Zmiana sposobu pracy — 2026-10-22
 Po informacji zwrotnej użytkownika obowiązuje protokół z sekcji „4A. Protokół efektywnej pracy” w `NEXT_CHAT_PROMPT.md`. Priorytetem jest namacalny postęp gameplayowy. Ogranicz powtarzane odczyty GitHub/CI, grupuj powiązane zmiany, dobieraj testy do ryzyka i nie traktuj zielonego smoke testu jako dowodu dobrej rozgrywki. Ręczny playtest osłon/AI pozostaje niewykonany i nie wolno go raportować jako zaliczonego. Nie zmieniaj ani nie przesuwaj backupu.
 
-## Current gameplay state after PR #67 — 2026-10-22
+## Current gameplay state after PR #68 — 2026-10-22
 
-- PR #61 (work protocol) and gameplay PRs #63–#67 are merged into `main`.
+- PR #61 (work protocol) and gameplay PRs #63–#68 are merged into `main`.
 - PR #63: two varied cover formations attempted per Hotline room; cover radius 14; unsafe fallback removed. Browser smoke run `39837922682` passed.
 - PR #64: player weapon selection is Precyzyjny/Klasyk/Salwa only; cooldowns 48/22/150 frames, Classic projectile life 77 frames. Browser smoke run `39838967501` passed, including held-fire cooldown behavior.
 - PR #65: only Drifter and Skoczek selectable; Drifter inertia adjusted; Skoczek leap is 10 frames at 3× with randomized start interval 20–26 frames. Browser smoke run `39839665500` passed.
 - PR #66: enemy pool is Drifter, Skoczek, Taran, Biegacz plus separate boss; Taran base HP is 7 (previously 5, exactly +2). Browser smoke run `39840886624` passed.
 - PR #67: entry-side-aware safe spawn and removal of the repelling vent from generation, active behavior and guide. Browser smoke run `39841816581` passed.
-- Main merge commit after PR #67: `dbda40e9029ebca32eae390d8ac023d072dfaa64`.
-- Source files and documentation were synchronized to public mirror `Klawiaturanumeryczna/rypt-crawler-game`; content parity was checked for `index.html`, tests, `verify.py`, status/balance/decision docs and the manual playtest checklist.
-- **GitHub Pages deployment is not verified.** The available tool path could read mirror files but could not access the Pages/Actions deployment endpoint. Do not claim the site is updated until a deployment result or live page is verified.
-- **Manual gameplay playtest has not been performed.** Use `MANUAL_PLAYTEST_CHECKLIST.md` to test spawn from all door orientations, cover/pathfinding, the two player movement styles and three weapons. Automated smoke tests do not establish subjective game feel or balance.
+- PR #68: refreshed status and next-chat handoff. Browser smoke run `39842542681` passed.
+- GitHub Pages deployment run #337 completed successfully for mirror commit `d360ceb58b1af826d45618226f6f99d273daf9dc`; deploy job reported success and resolved the live URL `https://klawiaturanumeryczna.github.io/rypt-crawler-game/`.
+- Source files and documentation were synchronized to public mirror `Klawiaturanumeryczna/rypt-crawler-game`; content parity was checked for source, tests and documentation.
+- **New issue found during audit:** in-game help still described the retired 30-room/6×5 layout. This is being corrected to the current 10-room/5×2 layout, including the nine-room boss gate and post-boss exit.
+- **Manual gameplay playtest has not been performed.** Automated tests do not establish subjective game feel or balance. A published-page browser smoke check is being added to catch page-load/start-flow failures automatically, but it will not replace human playtesting.
 - Backup `backup/pre-hotline-miami-2026-10-22` remains untouched.
-- Next work: verify the mirror's GitHub Pages deployment using an accessible Actions/deployment view; then perform or collect the manual playtest. Fix only concrete issues found—do not add full A* or new obstacle mechanics without evidence.
+- Next work: finish the in-game help correction, add a live Pages smoke workflow that runs after successful deployments, verify its first result, and retain manual playtest as an explicitly open task.
