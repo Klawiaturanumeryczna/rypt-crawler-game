@@ -4,7 +4,7 @@
 
 **Zasada raportowania:** zaznaczaj wyłącznie faktycznie sprawdzone pozycje. Nie traktuj zielonego CI jako potwierdzenia przyjemności z gry. Nie oceniaj balansu na podstawie jednego podejścia.
 
-Gra: https://klawiaturanumeryczna.github.io/rypt-crawler/
+Gra: https://klawiaturanumeryczna.github.io/rypt-crawler-game/
 
 ## 1. Start i skróty
 
@@ -103,3 +103,7 @@ Dla każdej obserwacji zapisz:
 - [ ] Przejdź przez pokoje 1–9, odblokuj bossa w pokoju 10, pokonaj go i zejdź na następne piętro; stan pokojów i wyjścia musi przetrwać cofanie.
 - [ ] Zapisz każde nieoczekiwane trafienie jako krok/oczekiwane/rzeczywiste/powtarzalność/waga. Nie uznawaj samej wysokiej trudności za dowód dobrej walki.
 
+## Audyt CI i publikacji — 2026-10-22
+- [ ] Przed wydaniem kolejnej wersji sprawdź ponowiony job Chromium dla `a497bc64f85bc1eb593a069eb0cdc08b52ebca75`.
+- [ ] Przetestuj grę ręcznie na aktualnym Pages, nie tylko lokalny build; wpisz konkretną przeglądarkę i wyniki sekcji 8.
+- [ ] W trakcie testu porównaj zachowanie wersji na Pages z SSOT, ponieważ historia Pages może być starsza niż main nawet po zielonym workflow.
