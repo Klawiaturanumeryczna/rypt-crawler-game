@@ -22,6 +22,14 @@ Przeczytaj w tej kolejności:
 
 Nie zakładaj, że starsza historia czatu jest dokładna względem repo. Sprawdź faktyczny HEAD gałęzi, otwarte PR-y, ostatnie CI, różnice względem main i status deploymentu.
 
+## Najnowszy stan — 2026-10-22 (ma pierwszeństwo przed starszymi notatkami)
+- PR #60 scalony: https://github.com/Klawiaturanumeryczna/crypt-crawler/pull/60, merge `97d0b289f92f8651f4da0a8423a3832e63135b96`.
+- Sklep: kupno wymaga pojedynczego `E`, kontakt sam w sobie nie wydaje monet; zwykłe znajdźki nadal podnoszą się przez kontakt. Amulet za 2 monety blokuje jeden śmiertelny cios i zostawia 1 HP; nie leczy.
+- Hotline cover: pokoje losują zwarte formacje kamieni `U`, `X`, `L`, `I`, `T` zamiast kilku niezależnych kamieni. Testy sprawdzają formacje, zakupy, monety/HUD i główne regresje.
+- Browser smoke PR #60: run `39830353160` success. Main CI po merge: run `39830624819` success.
+- Mirror: 12 współdzielonych plików ma identyczne blob SHA z main; Pages build/deploy run `39830994140` success. Mirror browser-smoke job `39830994768` success (endpoint run może chwilowo pokazywać stan nieodświeżony mimo zakończonego joba).
+- Ręczny playtest nadal NIE został wykonany. Przed zmianą balansu sprawdź na żywo ekonomię sklepu i czy każda forma osłon daje bezpieczne, ale nie blokujące przejścia.
+
 ## 2. Backup — punkt powrotu, nie nadpisuj
 Przed eksperymentem zapisano punkt powrotu:
 - Branch: `backup/pre-hotline-miami-2026-10-22`
@@ -32,7 +40,7 @@ To wersja z 10 pokojami na piętro; pokoje 1–9 muszą zostać oczyszczone, pok
 ## 3. Aktywny eksperyment
 - Prototyp Hotline został scalony do main w PR #52, commit `21b828777bd42ecd344cd15b9700445651162ff3`; CI jest zielone dla dokładnego HEAD.
 - Gałąź robocza/historyczna: `experiment/hotline-miami-combat-v2`; PR #52: https://github.com/Klawiaturanumeryczna/crypt-crawler/pull/52.
-- Mirror i Pages wymagają synchronizacji. Ręczny playtest nie został wykonany, więc nie uznawaj balansu ani pathfindingu za potwierdzone.
+- Mirror i Pages były synchronizowane po ostatnich zmianach; przed kolejną publikacją ponownie sprawdź zgodność blob SHA i aktualny deployment. Ręczny playtest nie został wykonany, więc nie uznawaj balansu ani pathfindingu za potwierdzone.
 - Założenie: zachować własną tożsamość Crypt Crawlera, ale przebudować walkę na szybką i śmiertelną, inspirowaną zasadami HLM1/HLM2.
 - Prototyp implementuje jedno życie gracza, śmierć zwykłych przeciwników od dowolnego trafienia, wielotrafieniowego bossa, kamienie jako osłonę blokującą linię widzenia i pociski oraz przyciąganie pobliskich wrogów do miejsca strzału. Wrogowie dystansowi powinni strzelać tylko przy czystej linii widzenia.
 - Sprawdź bieżący stan branch/CI — status zapisany w plikach może być starszy niż najnowszy commit.
