@@ -28,12 +28,10 @@ Gra: https://klawiaturanumeryczna.github.io/rypt-crawler-game/
 
 Przetestuj każdy styl przez co najmniej 20–30 sekund w otwartej przestrzeni, a następnie w pobliżu ścian i pocisków.
 
-- [ ] Biegacz — natychmiastowa reakcja na zmianę kierunku.
-- [ ] Drifter — lekki poślizg, który nie utrudnia precyzyjnego omijania.
-- [ ] Rozpęd — wyraźniejsze przyspieszanie i bezwładność, ale hamowanie nadal pod kontrolą.
-- [ ] Skoczek — rytmiczny sus jest widoczny, ale nie myli się ze zwykłym ruchem.
-- [ ] Zwinny — zryw występuje po ostrym skręcie, nie podczas trzymania jednego kierunku; sprawdź, czy smugi są czytelne.
-- [ ] Taran — cięższy ruch i odporność są odczuwalne, bez utknięcia na przeszkodach.
+- [ ] **Drifter:** sprawdź, czy bezwładność jest wyczuwalna przy zmianie kierunku, ale pozwala nadal precyzyjnie omijać pociski i osłony.
+- [ ] **Skoczek:** sprawdź, czy sus jest wyraźny i rytmiczny, a jego okno uniku czytelne; między susami ruch powinien być kontrolowany.
+- [ ] Porównaj oba style w tej samej sytuacji: ciasny zakręt przy kamieniu, unik przed windupem strzelca i przejście przez drzwi.
+- Uwaga: Biegacz, Taran, Drifter i Skoczek występują też jako archetypy **przeciwników**. Nie są dodatkowymi wyborami ruchu gracza.
 - [ ] Ruch po przekątnej nie daje widocznej przewagi prędkości nad ruchem prostym.
 - [ ] Po puszczeniu klawiszy postać nie ślizga się niekontrolowanie i nie pozostaje w ruchu dłużej, niż sugeruje wybrany styl.
 
@@ -42,7 +40,7 @@ Przetestuj każdy styl przez co najmniej 20–30 sekund w otwartej przestrzeni, 
 - [ ] Strzałki kierunkowe działają bez myszy.
 - [ ] Mysz + LPM pozwala łatwo trafić w pojedynczego przeciwnika.
 - [ ] Przetestuj walkę z bliska i z daleka: pociski nie znikają zbyt wcześnie i trafienia są czytelne.
-- [ ] Przetestuj Rozrzut na bliskim dystansie oraz Salwę na średnim dystansie.
+- [ ] Przetestuj **Precyzyjny** z daleka, **Klasyk** na krótkim/średnim dystansie oraz **Salwę** na średnim dystansie.
 - [ ] Sprawdź, czy trafienie przeciwnika jest widoczne, a pociski przeciwników nie zlewają się z tłem.
 - [ ] Sprawdź, czy ruch i celowanie jednocześnie nie powodują niechcianego przełączania stanów gry.
 
@@ -100,7 +98,7 @@ Dla każdej obserwacji zapisz:
 ## 8. Hotline Miami — śmiertelna walka, osłona i szybki restart
 
 - [ ] Gracz ginie od jednego rzeczywistego trafienia; sprawdź także krótki unik Skoczka/Zwinnego i jednorazowy amulet ratunkowy.
-- [ ] Zwykły przeciwnik ginie od jednego trafienia każdą z siedmiu broni; boss pozostaje osobnym wyjątkiem wielotrafieniowym.
+- [ ] Zwykły przeciwnik ginie od jednego bezpośredniego trafienia każdą z trzech dostępnych broni gracza: Precyzyjny, Klasyk i Salwa; boss pozostaje osobnym wyjątkiem wielotrafieniowym.
 - [ ] Kamienie blokują ruch gracza, ruch wroga, pociski gracza, pociski wrogów i linię widzenia.
 - [ ] Wróg próbuje obejść kamień, nie zapętla się na jego krawędzi i nie zostaje na zawsze w miejscu.
 - [ ] Strzał przyciąga pobliskich wrogów do ostatniego miejsca hałasu; po utracie widoczności wróg nie strzela przez osłonę.
@@ -108,7 +106,7 @@ Dla każdej obserwacji zapisz:
 - [ ] Wciśnięcie R w trakcie gry i po śmierci od razu zaczyna nową próbę, zachowuje wybraną broń/ruch i nie pokazuje ponownie ekranów wyboru.
 - [ ] Pierwsze serce daje amulet ratunkowy, kolejne serca zamieniają się w monety; sklep sprzedaje amulet zamiast dodatkowego HP.
 - [ ] Amulet ratunkowy nie może być kupowany/podnoszony w nieskończoność bez ograniczenia; jego zużycie jest czytelne.
-- [ ] Wybór broni opisuje odstęp, prędkość i zachowanie pocisku; nie sugeruje, że DPS decyduje o zabiciu zwykłego wroga.
+- [ ] Wybór jednej z trzech broni (Precyzyjny, Klasyk, Salwa) opisuje odstęp, prędkość i zachowanie pocisku; nie sugeruje, że DPS decyduje o zabiciu zwykłego wroga.
 - [ ] Przejdź przez pokoje 1–9, odblokuj bossa w pokoju 10, pokonaj go i zejdź na następne piętro; stan pokojów i wyjścia musi przetrwać cofanie.
 - [ ] Zapisz każde nieoczekiwane trafienie jako krok/oczekiwane/rzeczywiste/powtarzalność/waga. Nie uznawaj samej wysokiej trudności za dowód dobrej walki.
 
