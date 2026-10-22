@@ -149,3 +149,13 @@ Dla każdej obserwacji zapisz:
 - [ ] Sprawdź, czy postać przesuwa się wzdłuż kamienia zamiast zatrzymywać się całkowicie.
 - [ ] Sprawdź, czy postać nigdy nie przenika przez kamień i czy zmiana kierunku pozwala natychmiast odejść od osłony.
 - Uwaga: automatyczny test regresyjny sprawdza jeden deterministyczny układ; nie zastępuje ręcznego odczucia sterowania.
+
+
+## Crypt Crawler — końcowy ręczny playtest po reworku
+
+- [ ] Wejdź do pokojów przez drzwi z góry, dołu, lewej i prawej strony; za każdym razem gracz pojawia się tuż przy wejściu.
+- [ ] Sprawdź, czy spawn nie nakłada się na kamień, dziurę, przeciwnika ani źródło ognia.
+- [ ] Przejdź do sklepu i wróć do pokoju macierzystego; spawn powinien być przy właściwych drzwiach po obu stronach.
+- [ ] Przejdź na kolejne piętro; spawn powinien być przy najbliższych właściwych drzwiach wejściowych.
+- [ ] Upewnij się, że w żadnym pokoju nie ma już odpychającego wentylu.
+- [ ] Przetestuj Driftera, Skoczka, Precyzyjny, Klasyk i Salwę w walce przy osłonach; automatyczne testy nie zastępują oceny responsywności i balansu.
