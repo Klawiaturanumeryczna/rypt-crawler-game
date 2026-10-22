@@ -187,4 +187,4 @@ Najpierw pobierz aktualny HEAD main, stan PR/CI i status Pages; porównaj `index
 ## MAX MARATON — użyteczność leczenia w one-hit (2026-10-22)
 - Audyt wykrył, że Mała/Wielka Apteczka i Nagolenniki Witalności/Nagolenniki Życia zachowywały leczenie/bonus HP mimo śmiertelności jednego trafienia.
 - Gałąź `fix/hotline-health-item-utility-2026-10-22` zmienia te cztery przedmioty w amulet ratunkowy, jeśli nie ma go w ekwipunku, lub monety w przypadku duplikatu. W trybie standardowym ich stare efekty pozostają bez zmian.
-- PR/CI trzeba zweryfikować przed scaleniem; test ręczny ekonomii nie został wykonany.
+- PR #59 scalono jako `05aa3c9e70da03d96d826493392e4ae45f7b109a`; CI main run `39826837619` jest zielony. Po synchronizacji mirror Browser smoke `39826896790` i Pages deployment `39826897083` również przeszły. Test ręczny ekonomii nie został wykonany.

@@ -8,15 +8,15 @@ Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historyczn
 - **Sterowanie:** WASD — ruch; strzałki — strzelanie kierunkowe; mysz + LPM — strzał do kursora; M — mapa; V — wybór ruchu; B — wybór strzelania; Spacja — aktywny przedmiot; P — pauza; R — restart.
 - **AI przy osłonach:** test Chromium dla pojedynczego kamienia i dwóch kolejnych kamieni przeszedł. To nie dowodzi ogólnej poprawności nawigacji dla wszystkich układów.
 - **Walidacja kodu:** PR #56 (windup i zablokowany kierunek celowania) oraz PR #57 (regresja dwóch kamieni) scalone; CI dla kodu i ostatni main run były zielone. Backup `backup/pre-hotline-miami-2026-10-22` pozostaje nietknięty na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
-- **Mirror/Pages:** mirror ma zsynchronizowany kod, testy i dokumentację; Browser smoke run `39825057699` zielony. Deployment Pages dla SHA `78b200c829edfc53dd1ad00f35f206d5c80ec758` był w kolejce przy ostatnim sprawdzeniu. Po scaleniu tego PR sprawdź nowy deployment.
+- **Mirror/Pages:** mirror ma zsynchronizowany kod, testy i dokumentację; Browser smoke run `39825057699` zielony. Najnowszy mirror HEAD `483a143483ea5c493cc6b127cb6614c37b31b837`: Browser smoke run `39826896790` i Pages deployment `39826897083` zakończyły się sukcesem. Wszystkie 12 sprawdzonych plików współdzielonych ma identyczną treść/blob SHA w SSOT i mirrorze.
 - **Ręczny playtest:** nie wykonano. Nie oznaczaj płynności, balansu ani sprawiedliwości walki jako zaakceptowanych.
 
 ---
 
 
-## Audyt użyteczności przedmiotów one-hit — w trakcie PR
-- Wykryto, że leczenie i zwiększanie maksymalnego HP były bezużyteczne w trybie Hotline, gdzie dowolne trafienie zeruje całe zdrowie. W gałęzi `fix/hotline-health-item-utility-2026-10-22` testowane jest przekształcenie czterech takich przedmiotów w amulet ratunkowy lub monety.
-- Nie traktować jako scalonego ani wdrożonego, dopóki PR i CI nie zakończą się sukcesem.
+## Audyt użyteczności przedmiotów one-hit — scalony
+- PR #59 scalony jako `05aa3c9e70da03d96d826493392e4ae45f7b109a`. Mała/Wielka Apteczka oraz Nagolenniki Witalności/Nagolenniki Życia dają amulet ratunkowy, jeśli gracz go nie ma; duplikat zamieniają w 2/3 monety. Poza trybem Hotline zachowano stare efekty.
+- CI main dla dokładnego SHA zakończyło się sukcesem: run `39826837619`. Mirror smoke `39826896790` i Pages deployment `39826897083` również zakończyły się sukcesem.
 
 # Crypt Crawler — PROJECT STATUS
 Updated: 2026-10-22
