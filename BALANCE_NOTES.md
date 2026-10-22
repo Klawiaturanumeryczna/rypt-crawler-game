@@ -357,3 +357,11 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - Mała/Wielka Apteczka oraz Nagolenniki Witalności/Nagolenniki Życia konwertują się teraz na jednorazowy amulet ratunkowy, jeśli gracz go nie ma. Jeśli amulet już jest w ekwipunku, przedmiot zamienia się w monety (2 dla małego wariantu, 3 dla dużego).
 - Opisy przedmiotów pokazują aktualny efekt trybu one-hit. W trybie poza Hotline zachowano dotychczasowe leczenie i wzrost maksymalnego HP.
 - To poprawka użyteczności i spójności systemu przedmiotów, nie zmiana reguły śmiertelności. Test Chromium sprawdza cztery przypadki i opisy; PR #59 scalono, a main CI run `39826837619` przeszedł. Mirror smoke `39826896790` i Pages deployment `39826897083` również przeszły. Ręczny playtest nadal musi ocenić ekonomię i tempo zdobywania ratunku.
+
+
+## 2026-10-22 — osłony, broń i ruch gracza
+
+- Osłony Hotline: generator próbuje umieścić dwie różne formacje na pokój, zmniejszając promień kolizji z 18 do 14. Formacje muszą pozostać poza strefą startową, drzwiami i przeciwnikami; usunięto niezweryfikowany fallback, który mógł naruszyć te odstępy. CI browser smoke PR #63: run `39837922682` — success. To nadal nie potwierdza ręcznie odczuwanej jakości nawigacji.
+- Broń: Precyzyjny 48 klatek między strzałami, Klasyk 22 klatki i życie pocisku 77 klatek (o 1/3 krótszy zasięg przy tej samej prędkości), Salwa minimalnie 150 klatek cooldownu (2,5 s przy 60 FPS). Test Chromium sprawdza rzeczywiste wartości, krótszy pocisk Klasyka oraz brak możliwości ominięcia cooldownu Salwy przez przytrzymanie strzału. CI PR #64: run `39838967501` — success.
+- Ruch: Drifter zachowuje pęd i trudniej skręca, ale pozostaje responsywny; Skoczek wykonuje sus przez 10 klatek przy 3× prędkości, a start kolejnego susu następuje po losowym odstępie 20–26 klatek. Wartości są pierwszą iteracją i wymagają ręcznego playtestu.
+- Nie wykonano ręcznego playtestu; wyniki automatyczne nie rozstrzygają, czy ruch i walka są przyjemne.
