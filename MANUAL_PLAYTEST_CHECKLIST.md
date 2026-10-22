@@ -143,3 +143,9 @@ Dla każdej obserwacji zapisz:
 - [ ] Podnieś Małą Apteczkę lub Nagolenniki Witalności bez amuletu: przedmiot powinien dać jednorazowy ratunek, a nie tylko nieistotne HP.
 - [ ] Z amuletem w ekwipunku podnieś/kup kolejny przedmiot zdrowia: powinien zamienić się w monety, bez stackowania ratunku.
 - [ ] Sprawdź opisy Małej/Wielkiej Apteczki i obu nagolenników przed podniesieniem, by jasno informowały o zachowaniu w trybie one-hit.
+
+## Osłony — ślizganie gracza (do ręcznego sprawdzenia)
+- [ ] Podejdź po przekątnej do krawędzi kamienia, trzymając kierunek wzdłuż jego boku.
+- [ ] Sprawdź, czy postać przesuwa się wzdłuż kamienia zamiast zatrzymywać się całkowicie.
+- [ ] Sprawdź, czy postać nigdy nie przenika przez kamień i czy zmiana kierunku pozwala natychmiast odejść od osłony.
+- Uwaga: automatyczny test regresyjny sprawdza jeden deterministyczny układ; nie zastępuje ręcznego odczucia sterowania.
