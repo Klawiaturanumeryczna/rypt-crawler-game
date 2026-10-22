@@ -138,3 +138,12 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Research został rozszerzony o dodatkowe recenzje i jakościowe dyskusje społecznościowe; plik `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md` jest dokumentem źródłowym dla wniosków.
 - Najważniejszy otwarty punkt: brak ręcznego playtestu. CI nie potwierdza, że AI umie obchodzić kamienie ani że śmierci są odczuwane jako sprawiedliwe. Użyj `MANUAL_PLAYTEST_CHECKLIST.md` i nie wymyślaj wyników.
 - Gotowy prompt dla nowego czatu: `NEXT_CHAT_PROMPT.md`. Przed dalszą pracą nowy czat ma przeczytać pliki, sprawdzić live HEAD/CI/mirror i kontynuować `OK, rob`.
+
+## Audyt nowej sesji — 2026-10-22 18:10 UTC+2
+- Live main HEAD: `a497bc64f85bc1eb593a069eb0cdc08b52ebca75` (merge PR #54 z research/handoff). Otwarte PR-y w głównym repo: brak.
+- Live backup potwierdzony: `backup/pre-hotline-miami-2026-10-22` → `b26b5d913fb06d0f124d92a9a17d24ae031df91c`; nie ruszać.
+- Dokładny HEAD `a497bc64...` miał run `39809523092` anulowany podczas kroku Chromium (krok statycznej weryfikacji przeszedł). Poprzedni kodowy commit `6ae4fb9630dfb90f43c260eaeb6743a8f703676b` ma zielone Chromium CI w runie `39808650676`. Ponowiono anulowany job dla bieżącego HEAD przez GitHub Actions; sprawdź rezultat przed jakimkolwiek merge.
+- Mirror main HEAD to `da343edaeedd6bb6c35ea8265ac6c8190bf580e0`. Pliki współdzielone sprawdzone blob SHA i tekstowo: `NEXT_CHAT_HANDOFF.md`, `PROJECT_STATUS.md`, `DECISION_LOG.md`, `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`, `BALANCE_NOTES.md`, `MANUAL_PLAYTEST_CHECKLIST.md`, `verify.py`, `tests/browser_smoke.py` — każdy ma identyczny SHA po obu stronach. Mirror Browser smoke oraz Pages build/deployment mają zielone runy na mirror HEAD `da343eda...` (`39809737282`, `39809736901`).
+- Uwaga: tytuł gry w checkliście ma historyczny URL `https://klawiaturanumeryczna.github.io/rypt-crawler/`, natomiast właściwy Pages URL wskazany w repo to `https://klawiaturanumeryczna.github.io/rypt-crawler-game/`. Sprawdź/ujednolić w osobnej poprawce dokumentacyjnej.
+- Ręczny playtest nadal niewykonany. CI potwierdza tylko kontrole statyczne/Chromium; zachowanie AI przy osłonach, czytelność zagrożeń i sprawiedliwość zgonów pozostają niezweryfikowane.
+- Następny ruch: sprawdź wynik ponowionego joba dla `a497bc64...`; potem wykonaj kolejny pakiet autonomiczny z priorytetem na poprawność/checklistę, ale żadnej oceny grywalności bez człowieka. Nie zmieniaj reguł projektu ani backupu.
