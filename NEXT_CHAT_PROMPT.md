@@ -124,12 +124,17 @@ Ten blok zastępuje wcześniejsze statusy w sekcji 7, jeśli są sprzeczne.
 - Mirror workflow zakończony sukcesem: https://github.com/Klawiaturanumeryczna/rypt-crawler-game/actions/runs/39806755919. To potwierdza wdrożenie Pages dla aktualnego mirrora; sprawdź ponownie na żywo przed kolejnym deployem.
 - Ręczny playtest nie został wykonany. Największe otwarte ryzyko: proste omijanie kamieni przez AI może powodować blokowanie wrogów. Użyj `MANUAL_PLAYTEST_CHECKLIST.md` i zapisuj wyłącznie rzeczywiście zaobserwowane wyniki.
 
-## Najnowsza aktualizacja — 2026-10-22, po PR #62 (ma pierwszeństwo przed wcześniejszymi statusami)
-- PR #61 wprowadził protokół efektywnej pracy gameplay-first; jest scalony.
-- PR #62 scalony do main: https://github.com/Klawiaturanumeryczna/crypt-crawler/pull/62, merge SHA `614775c7d237b5b30a85c203619d7287366f0081`.
-- Naprawiono ruch gracza przy osłonach: wcześniej diagonalne wejście w kamień cofało obie osie, nawet gdy ruch wzdłuż jednej osi był bezpieczny. Nowa funkcja `resolvePlayerCoverMovement` zachowuje bezpieczną składową ruchu i tłumi tylko prędkość osi zablokowanej.
-- Browser smoke PR #62: run `39833470578` — success. Main CI po merge: run `39833751188` — success.
-- Zmiany zsynchronizowano do mirror `Klawiaturanumeryczna/rypt-crawler-game`; browser smoke i Pages deployment są sprawdzane. Nie ogłaszaj publikacji jako zakończonej, dopóki workflow Pages nie zakończy się sukcesem.
-- Test obejmuje deterministyczny przypadek diagonalnego kontaktu z kamieniem; nie dowodzi jeszcze subiektywnej poprawy sterowania. Ręczny playtest nadal otwarty: sprawdzić ślizganie wzdłuż osłon, brak przenikania przez kamienie i zachowanie przeciwników wokół wielu osłon.
-- Backup `backup/pre-hotline-miami-2026-10-22` pozostaje punktem powrotu i nie wolno go modyfikować.
-- Kontynuuj od problemu gameplayowego o największym wpływie; unikaj powtarzanych odczytów GitHub/CI i nie twórz kolejnych zmian dokumentacji bez konkretnej potrzeby.
+## Current gameplay state after PR #67 — 2026-10-22
+
+- PR #61 (work protocol) and gameplay PRs #63–#67 are merged into `main`.
+- PR #63: two varied cover formations attempted per Hotline room; cover radius 14; unsafe fallback removed. Browser smoke run `39837922682` passed.
+- PR #64: player weapon selection is Precyzyjny/Klasyk/Salwa only; cooldowns 48/22/150 frames, Classic projectile life 77 frames. Browser smoke run `39838967501` passed, including held-fire cooldown behavior.
+- PR #65: only Drifter and Skoczek selectable; Drifter inertia adjusted; Skoczek leap is 10 frames at 3× with randomized start interval 20–26 frames. Browser smoke run `39839665500` passed.
+- PR #66: enemy pool is Drifter, Skoczek, Taran, Biegacz plus separate boss; Taran base HP is 7 (previously 5, exactly +2). Browser smoke run `39840886624` passed.
+- PR #67: entry-side-aware safe spawn and removal of the repelling vent from generation, active behavior and guide. Browser smoke run `39841816581` passed.
+- Main merge commit after PR #67: `dbda40e9029ebca32eae390d8ac023d072dfaa64`.
+- Source files and documentation were synchronized to public mirror `Klawiaturanumeryczna/rypt-crawler-game`; content parity was checked for `index.html`, tests, `verify.py`, status/balance/decision docs and the manual playtest checklist.
+- **GitHub Pages deployment is not verified.** The available tool path could read mirror files but could not access the Pages/Actions deployment endpoint. Do not claim the site is updated until a deployment result or live page is verified.
+- **Manual gameplay playtest has not been performed.** Use `MANUAL_PLAYTEST_CHECKLIST.md` to test spawn from all door orientations, cover/pathfinding, the two player movement styles and three weapons. Automated smoke tests do not establish subjective game feel or balance.
+- Backup `backup/pre-hotline-miami-2026-10-22` remains untouched.
+- Next work: verify the mirror's GitHub Pages deployment using an accessible Actions/deployment view; then perform or collect the manual playtest. Fix only concrete issues found—do not add full A* or new obstacle mechanics without evidence.
