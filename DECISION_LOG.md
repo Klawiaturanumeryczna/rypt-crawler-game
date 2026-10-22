@@ -233,3 +233,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Źródła i konkretne zasady implementacji znajdują się w `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
 - Walidacja automatyczna dla main HEAD `6ae4fb9630dfb90f43c260eaeb6743a8f703676b` jest zielona (run 39808650676); mirror deployment jest zielony (run 39806755919), a backup pozostaje na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
 - Ręczny playtest nie został wykonany. Nie uznawać ścieżkowania AI ani fairness za potwierdzone bez obserwacji.
+
+## 2026-10-22 — live audit eksperymentu Hotline
+- Ponowny audyt potwierdził najnowszy dokumentacyjny HEAD `a497bc64f85bc1eb593a069eb0cdc08b52ebca75` oraz niezmieniony backup `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
+- Run Chromium dla dokładnego HEAD został anulowany; job ponowiono. Dopóki wynik ponowienia nie będzie sukcesem, nie twierdzić, że najnowszy HEAD ma pełne zielone CI. Kodowy poprzednik `6ae4fb9630dfb90f43c260eaeb6743a8f703676b` ma zielony run `39808650676`.
+- Zweryfikowano zgodność SHA i treści ośmiu plików SSOT/mirror. Pages deployment oraz mirror browser smoke zielone na mirror HEAD `da343edaeedd6bb6c35ea8265ac6c8190bf580e0`.
+- Brak ręcznego playtestu pozostaje jawnym ograniczeniem. Nie wprowadzać balansowych wniosków o pathfindingu/fairness bez testu człowieka.
