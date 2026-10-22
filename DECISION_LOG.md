@@ -251,3 +251,11 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Zwiększyć okno ostrzeżenia z 10/16 do 18/24 klatek (zwykły strzelec/boss) jako hipotezę do testu, nie jako finalny balans.
 - Linia ostrzegawcza musi odpowiadać miejscu/kierunkowi, do którego faktycznie poleci pocisk. Nie śledzić gracza bez końca podczas windup, bo wtedy strafe nie daje czytelnej możliwości uniknięcia ataku.
 - Jeśli linia do zapisanej pozycji jest zasłonięta kamieniem, anuluj windup. Nie zmieniaj reguły one-hit ani obrażeń pocisku.
+
+
+## 2026-10-22 — wynik walidacji windup
+- PR #56 scalono po zielonym CI dla dokładnego SHA `2b3aadfa41fa5a197a0319534430f298fbc92038`; main run `39824282975` również zakończył się sukcesem.
+- Test Chromium potwierdził windup 18 klatek, jeden pocisk po windup oraz zablokowany kierunek po sidestepie. To potwierdza implementację, nie subiektywną uczciwość walki.
+- W workflow testowym usunięto `--with-deps`, ponieważ logi wykazały bardzo wolne pobieranie pakietów APT na runnerze. Instalacja Chromium bez ponownej instalacji zależności systemowych pozwoliła zakończyć pełny test.
+- Mirror został zsynchronizowany, wszystkie 9 współdzielonych plików ma identyczny blob SHA/treść. Mirror browser smoke jest zielony; deployment Pages trzeba potwierdzić osobno.
+- Ręczny playtest pozostaje niewykonany.
