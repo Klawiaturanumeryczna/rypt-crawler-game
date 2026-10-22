@@ -143,7 +143,7 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Każde piętro ma stałą siatkę 6×5. Położenie pokoju wyznacza jego ID; przejście przez drzwi prowadzi tylko do pola obok, a ruch wstecz prowadzi do wcześniej odwiedzonego pola.
 - M jest przypisane do pełnej mapy piętra; zmiana stylu ruchu odbywa się przyciskiem RUCH, a broń przyciskiem BROŃ lub klawiszem B.
 - Pokoje oczyszczone są oznaczane w bieżącej rozgrywce i pozostają bez wrogów przy powrocie.
-- Teren: kolizyjne kamienie, dziury z okresowym obrażeniem/spowolnieniem, okresowe podmuchy wentylatorów.
+- Teren: kolizyjne kamienie i dziury z okresowym obrażeniem/spowolnieniem; odpychające wentylatory zostały wycofane w pakiecie spawn/vent.
 
 
 ## Korekta progresji zejścia — 2026-10-21
