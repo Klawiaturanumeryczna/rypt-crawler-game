@@ -147,3 +147,9 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Uwaga: tytuł gry w checkliście ma historyczny URL `https://klawiaturanumeryczna.github.io/rypt-crawler/`, natomiast właściwy Pages URL wskazany w repo to `https://klawiaturanumeryczna.github.io/rypt-crawler-game/`. Sprawdź/ujednolić w osobnej poprawce dokumentacyjnej.
 - Ręczny playtest nadal niewykonany. CI potwierdza tylko kontrole statyczne/Chromium; zachowanie AI przy osłonach, czytelność zagrożeń i sprawiedliwość zgonów pozostają niezweryfikowane.
 - Następny ruch: sprawdź wynik ponowionego joba dla `a497bc64...`; potem wykonaj kolejny pakiet autonomiczny z priorytetem na poprawność/checklistę, ale żadnej oceny grywalności bez człowieka. Nie zmieniaj reguł projektu ani backupu.
+
+## Audyt publikacji — synchronizacja dokumentacji, 2026-10-22 18:12 UTC+2
+- Po ostatniej aktualizacji dokumentów synchronizowano do mirrora `PROJECT_STATUS.md`, `DECISION_LOG.md`, `MANUAL_PLAYTEST_CHECKLIST.md` i `NEXT_CHAT_HANDOFF.md`; ich blob SHA jest identyczne z głównym repo.
+- Aktualny main HEAD zmienia się na skutek oddzielnych commitów dokumentacji. Sprawdź ponownie CI i mirror po zakończeniu bieżących workflow; nie opieraj się na wcześniejszym SHA sprzed aktualizacji.
+- Wcześniejszy błąd URL w checklistcie został poprawiony: prawidłowy publiczny Pages URL to https://klawiaturanumeryczna.github.io/rypt-crawler-game/.
+- Nie wykonano ręcznego playtestu. Kolejny czat ma nadal wymagać rzeczywistej sesji przed uznaniem AI/pathfindingu/fairness za zatwierdzone.
