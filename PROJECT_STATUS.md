@@ -262,3 +262,10 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Pliki kodu/testów/dokumentacji mają zgodne SHA między main i mirrorem; ostatni mirror workflow zakończył się sukcesem: https://github.com/Klawiaturanumeryczna/rypt-crawler-game/actions/runs/39806755919.
 - Research rozbudowano w `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`; prompt nowego czatu jest w `NEXT_CHAT_PROMPT.md`.
 - Nadal otwarte: ręczny playtest osłon, zachowania AI przy przeszkodach, czytelności zagrożeń i sprawiedliwości śmierci. Zielone CI nie jest dowodem na jakość walki.
+
+## Hotline Miami — live audit 2026-10-22 18:10 UTC+2
+- Aktualny HEAD po audycie: `a497bc64f85bc1eb593a069eb0cdc08b52ebca75`; run dla dokładnego HEAD `39809523092` został anulowany podczas kroku Chromium, mimo że `Verify source invariants` przeszedł. Job Chromium ponowiono; rezultat jest do sprawdzenia przed kolejnym merge.
+- Poprzedni kodowy commit `6ae4fb9630dfb90f43c260eaeb6743a8f703676b` ma zielone CI (run `39808650676`). Nie utożsamiać tego z walidacją najnowszego dokumentacyjnego HEAD.
+- Backup potwierdzony bez zmian: `backup/pre-hotline-miami-2026-10-22` → `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
+- Mirror HEAD: `da343edaeedd6bb6c35ea8265ac6c8190bf580e0`. Osiem współdzielonych plików (handoff, status, decisions, research, balance, checklist, verify.py, browser_smoke.py) ma identyczne blob SHA i treść w main/mirror. Mirror smoke i Pages workflow są zielone dla tego SHA (runs `39809737282` i `39809736901`).
+- Ręczny playtest nie został wykonany; AI wokół osłon i sprawiedliwość śmierci nadal wymagają rzeczywistej obserwacji. Nie uznawać ich za zatwierdzone na podstawie testów syntetycznych.
