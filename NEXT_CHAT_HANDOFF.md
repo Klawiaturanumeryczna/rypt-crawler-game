@@ -93,3 +93,27 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Skoczek: usunięto kreski zawsze rysowane z lewej strony postaci podczas susa.
 - Zaktualizowano testy generatora, mapy, głębokości pokojów i zejścia. Po zielonym CI należy scalić, zsynchronizować mirror i Pages, a następnie utworzyć branch backupowy (np. `backup/pre-new-idea-2026-10-22`) wskazujący dokładnie zatwierdzony commit.
 - Ważne: to celowo tymczasowa wersja do eksperymentu. Nie wdrażać późniejszego dużego pomysłu bez zachowania tego punktu powrotu.
+
+
+## MAX MARATON — eksperyment Hotline Miami (2026-10-22)
+### Punkt powrotu (nie ruszać)
+- Gałąź: `backup/pre-hotline-miami-2026-10-22`
+- Commit: `b26b5d913fb06d0f124d92a9a17d24ae031df91c`
+- To jest zatwierdzona wersja przed eksperymentem: 10 pokojów, pokoje 1–9 do oczyszczenia, boss w pokoju 10, zejście dopiero po bossie; Zwinny ma wyraźny zryw, Skoczek nie ma lewych smug.
+- Repo główne: https://github.com/Klawiaturanumeryczna/crypt-crawler
+- Mirror: https://github.com/Klawiaturanumeryczna/rypt-crawler-game
+- Public Pages: https://klawiaturanumeryczna.github.io/rypt-crawler-game/
+
+### Stan po merge
+- PR #52 scalony do main; commit: `21b828777bd42ecd344cd15b9700445651162ff3`.
+- Zielone CI dla dokładnego HEAD: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39805719924 oraz https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39805761699.
+- Mirror/Pages nie są jeszcze zsynchronizowane z wersją Hotline; to następny krok.
+- Research/spec: `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md` — zawiera źródła i ograniczenia; społecznościowe posty są jakościowymi anegdotami, nie reprezentatywną ankietą.
+- Wprowadzono tryb śmiertelny: jedno życie gracza; zwykły wróg ginie od dowolnego trafienia; boss jest wyjątkiem; kamienie blokują pociski i LOS; strzały przyciągają wrogów w pobliżu; wrogowie dystansowi strzelają tylko przy widoczności.
+- Zaktualizowano testy ruchu, aby nie wpadały na losowo wygenerowaną osłonę. Nowe testy sprawdzają one-hit, LOS/osłonę i hałas.
+- Następny krok: zsynchronizuj main do mirrora, sprawdź CI mirrora i Pages deployment. Potem wykonaj ręczny playtest: czy wrogowie obchodzą kamienie, czy pociski zatrzymują się na osłonie, czy hałas przyciąga ich zrozumiale, czy R jest natychmiastowy i czy śmierć jest sprawiedliwa.
+- Jeśli prototyp jest gorszy, wróć do backupu przez PR z gałęzi `backup/pre-hotline-miami-2026-10-22`; nie przepisuj go ręcznie i nie nadpisuj backupu.
+- Nie deklaruj, że wykonano ręczny playtest — dotąd go nie wykonano.
+
+- W aktualnej wersji działa szybki restart R z zachowaniem broni/ruchu oraz ekonomia jednego życia: pierwszy pickup serca daje amulet ratunkowy, kolejne monety, sklep sprzedaje ratunek zamiast +HP. Ręczny playtest nadal nie został wykonany.
+- Gotowy prompt dla kolejnego czatu znajduje się w `NEXT_CHAT_PROMPT.md`; nie wystarczy sam prompt — nowy czat ma najpierw przeczytać handoff/status/research w repo.

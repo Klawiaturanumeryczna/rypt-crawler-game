@@ -87,3 +87,19 @@ Dla każdej obserwacji zapisz:
 - [ ] Po pokonaniu bossa pojawia się jedno działające zejście; wejście w nie przenosi na kolejne piętro, ponownie do pokoju 1.
 - [ ] Po powrocie do oczyszczonego pokoju bossa zejście nadal jest dostępne.
 
+
+## 8. Hotline Miami — śmiertelna walka, osłona i szybki restart
+
+- [ ] Gracz ginie od jednego rzeczywistego trafienia; sprawdź także krótki unik Skoczka/Zwinnego i jednorazowy amulet ratunkowy.
+- [ ] Zwykły przeciwnik ginie od jednego trafienia każdą z siedmiu broni; boss pozostaje osobnym wyjątkiem wielotrafieniowym.
+- [ ] Kamienie blokują ruch gracza, ruch wroga, pociski gracza, pociski wrogów i linię widzenia.
+- [ ] Wróg próbuje obejść kamień, nie zapętla się na jego krawędzi i nie zostaje na zawsze w miejscu.
+- [ ] Strzał przyciąga pobliskich wrogów do ostatniego miejsca hałasu; po utracie widoczności wróg nie strzela przez osłonę.
+- [ ] Wróg nie zabija z nieczytelnej pozycji ani z drugiego końca pokoju bez ostrzeżenia.
+- [ ] Wciśnięcie R w trakcie gry i po śmierci od razu zaczyna nową próbę, zachowuje wybraną broń/ruch i nie pokazuje ponownie ekranów wyboru.
+- [ ] Pierwsze serce daje amulet ratunkowy, kolejne serca zamieniają się w monety; sklep sprzedaje amulet zamiast dodatkowego HP.
+- [ ] Amulet ratunkowy nie może być kupowany/podnoszony w nieskończoność bez ograniczenia; jego zużycie jest czytelne.
+- [ ] Wybór broni opisuje odstęp, prędkość i zachowanie pocisku; nie sugeruje, że DPS decyduje o zabiciu zwykłego wroga.
+- [ ] Przejdź przez pokoje 1–9, odblokuj bossa w pokoju 10, pokonaj go i zejdź na następne piętro; stan pokojów i wyjścia musi przetrwać cofanie.
+- [ ] Zapisz każde nieoczekiwane trafienie jako krok/oczekiwane/rzeczywiste/powtarzalność/waga. Nie uznawaj samej wysokiej trudności za dowód dobrej walki.
+

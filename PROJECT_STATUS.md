@@ -244,3 +244,13 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Zwinny ma mocniejszy, łatwiej odczuwalny zryw po ostrym skręcie (3× prędkości przez 5 klatek, 5 klatek ochrony, 18 klatek odnowienia) oraz +15% otrzymywanych obrażeń. Biegacz pozostaje natychmiastowo sterowany, bez zrywu.
 - Usunięto kreski rysowane zawsze po lewej stronie Skoczka podczas susa.
 - Wszystkie zmiany muszą przejść verify.py i test Chromium. Po scaleniu utworzyć osobną gałąź backupową dokładnie tego stanu przed większym eksperymentem.
+
+
+## Eksperyment Hotline Miami — 2026-10-22
+- Punkt powrotu przed eksperymentem: `backup/pre-hotline-miami-2026-10-22` (commit `b26b5d913fb06d0f124d92a9a17d24ae031df91c`). To zatwierdzona baza z 10 pokojami na piętro, bossem w pokoju 10 po oczyszczeniu pokojów 1–9 oraz poprawkami Zwinnego/Skoczka.
+- PR #52 scalony do main w commit `21b828777bd42ecd344cd15b9700445651162ff3`; zielone Chromium CI: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39805719924 oraz https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39805761699. Mirror i Pages wymagają jeszcze synchronizacji z tą wersją. Gałąź robocza/historia eksperymentu: `experiment/hotline-miami-combat-v2`.
+- Wstępna implementacja: gracz ma jedno życie; zwykli przeciwnicy giną od dowolnego bezpośredniego trafienia; boss pozostaje wielotrafieniowy; kamienie są osłoną blokującą widoczność i pociski; strzał tworzy źródło hałasu, które przyciąga pobliskich wrogów; ogień dystansowy wroga wymaga linii widzenia.
+- Testy Chromium zaktualizowane o zasady one-hit, osłonę i hałas; wymagane jest zielone CI przed PR/merge. Brak ręcznego playtestu.
+- Szczegółowe wnioski i źródła: `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
+- Dodatkowa poprawka prototypu: klawisz R w trakcie gry lub po śmierci robi natychmiastowy restart z zachowaniem wybranego stylu broni/ruchu, bez ponownego ekranu wyboru.
+- Serca w trybie one-hit są zamienione na jednorazowy amulet ratunkowy (pierwsze) lub monety (kolejne); sklep sprzedaje amulet zamiast bezużytecznego dodatkowego HP.

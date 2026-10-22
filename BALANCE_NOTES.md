@@ -311,3 +311,13 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - Zwinny dostał mocniejszy, wyraźniejszy zryw po ostrym skręcie, aby jego zachowanie nie zlewało się z Biegaczem. Koszt: niższa prędkość bazowa i +15% otrzymywanych obrażeń.
 - Skoczek nie ma już poziomych smug zakotwiczonych po lewej stronie. Nie zmieniono rytmu susa ani jego ochrony.
 - To wersja eksperymentalna; ocenić po ręcznym playteście, nie tylko po CI.
+
+
+## Hotline combat prototype — 2026-10-22
+- Gracz startuje z jednym życiem; każde trafienie jest śmiertelne. Istniejący jednorazowy amulet ratunkowy nadal może zablokować jeden śmiertelny cios.
+- Normalni wrogowie giną od dowolnego bezpośredniego trafienia; boss zachowuje wielotrafieniowość.
+- Broń ma nadal różne wzorce, odstępy i prędkości pocisków. Ekran wyboru broni wyświetla zasady trybu śmiertelnego zamiast mylącego DPS jako głównego wyznacznika.
+- Kamienie w pokojach są osłoną: zatrzymują gracza i wrogów oraz blokują strzały i linię widzenia. Strzał zapisuje ostatnią pozycję hałasu i pobliscy przeciwnicy ją sprawdzają.
+- Ryzyko: proste unikanie kamieni przez wrogów nie zastępuje pełnego pathfindingu. Trzeba sprawdzić ręcznie, czy AI nie blokuje się i czy śmierci są czytelne.
+- Szybki restart R ma zachowywać aktualny styl broni/ruchu i wracać prosto do walki, bez ponownego klikania dwóch ekranów wyboru.
+- W trybie one-hit zwykłe serca nie mogą zwiększać HP. Pierwsze daje amulet ratunkowy, kolejne zamieniają się w monety; sklep oferuje amulet ratunkowy zamiast +2 HP.

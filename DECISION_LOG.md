@@ -217,3 +217,12 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Decyzja użytkownika: na czas kolejnego eksperymentu zmniejszyć liczbę pokojów piętra z 30 do 10; po dziewięciu pokojach kolejnym obowiązkowym pokojem jest boss, a zejście na niższe piętro odblokowuje się po jego pokonaniu.
 - Implementacja: proceduralna siatka 5×2 z 10 węzłami; boss w pokoju 10 na każdym piętrze; brak losowych zejść przed bossem.
 - Wymóg: po weryfikacji zachować osobną gałąź backupową tej dokładnej wersji przed rozpoczęciem dużego eksperymentu. To zmiana tymczasowa, nie nowa nieodwracalna reguła produktu.
+
+
+## 2026-10-22 — eksperymentalna walka w stylu Hotline Miami
+- Użytkownik wybrał duży eksperyment: Crypt Crawler ma zachować własną tożsamość i progresję 10-pokojową, ale walka ma być szybka i śmiertelna, z osłoną, pogonią i reagowaniem na hałas.
+- Backup przed eksperymentem: `backup/pre-hotline-miami-2026-10-22`, commit `b26b5d913fb06d0f124d92a9a17d24ae031df91c`. Nie nadpisywać tej gałęzi eksperymentem.
+- Prototyp: jedno życie gracza; zwykli przeciwnicy giną od jednego trafienia; boss jest wyjątkiem wielotrafieniowym; kamienie blokują LOS/pociski i kolidują z ruchem; strzały tworzą krótkotrwały hałas; wróg strzela tylko przy czystej linii widzenia.
+- Wnioski: adaptować szybki restart, czytelne reguły i swobodę rozwiązywania starć z HLM1 oraz różnorodność przeciwników/układów z HLM2; unikać strzałów spoza ekranu i niespójnego AI.
+- Źródła i acceptance criteria w `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
+- Doprecyzowanie eksperymentu: R w czasie gry/po śmierci natychmiast rozpoczyna nową próbę z zachowaną bronią i ruchem. Serca w trybie jednego życia dają pierwszy amulet ratunkowy, kolejne zamieniają się w monety; sklep sprzedaje amulet zamiast dodatkowego HP.
