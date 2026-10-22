@@ -11,7 +11,7 @@ checks = {
     "normal enemies die on any direct hit": "e.hp-=HOTLINE_MIAMI_MODE&&e.type!=='boss'?e.hp:amount" in SOURCE,
     "rock cover blocks sight and both projectile types": "function segmentBlockedByCover(" in SOURCE and "function hasClearSight(" in SOURCE and "segmentBlockedByCover(oldSX,oldSY,s.x,s.y)" in SOURCE,
     "gunfire attracts nearby enemies without wallhack vision": "noiseTimer=150" in SOURCE and "noiseTimer>0&&Math.hypot(e.x-noiseX,e.y-noiseY)<620" in SOURCE and "visible&&d<500" in SOURCE and "if(e.cooldown<=0)" in SOURCE and "else{e.aimFrames=0;e.aimX=null;e.aimY=null}" in SOURCE,
-    "combat rooms generate tactical rock cover": "HOTLINE_COVER_FORMATIONS" in SOURCE and all("name:'"+shape+"'" in SOURCE for shape in ("U","X","L","I","T")) and "roomHazards.push(...rocks)" in SOURCE,
+    "combat rooms generate two varied, thinner tactical cover formations": "HOTLINE_COVER_FORMATIONS_PER_ROOM=2" in SOURCE and "formationIndex<HOTLINE_COVER_FORMATIONS_PER_ROOM" in SOURCE and "r:14,cooldown:0,phase:Math.floor(Math.random()*180)" in SOURCE and all("name:'"+shape+"'" in SOURCE for shape in ("U","X","L","I","T")) and "roomHazards.push(...rocks)" in SOURCE and "if(!placed){const x=room.x+room.w*.25" not in SOURCE,
     "shooting via arrows and mouse": "keys.has('arrowright')" in SOURCE and "mouse.down" in SOURCE,
     "enemy archetypes": all(f"{name}:" in SOURCE for name in ("chaser", "spitter", "brute", "dasher", "hexer", "boss")),
     "fixed 10-room maximum": "function maxRoomsForFloor(f){return 10}" in SOURCE,
