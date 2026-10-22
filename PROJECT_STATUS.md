@@ -17,6 +17,7 @@ Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historyczn
 - **Walidacja kodu:** PR #56 (windup i zablokowany kierunek celowania) oraz PR #57 (regresja dwóch kamieni) scalone; CI dla kodu i ostatni main run były zielone. Backup `backup/pre-hotline-miami-2026-10-22` pozostaje nietknięty na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
 - **Mirror/Pages:** mirror ma zsynchronizowany kod, testy i dokumentację; Browser smoke run `39825057699` zielony. Synchronizacja mirrora została sprawdzona przez porównanie 12 plików współdzielonych (identyczna treść i blob SHA). Browser smoke `39827271918` oraz Pages deployment `39827270246` zakończyły się sukcesem dla zsynchronizowanego buildu; po każdej późniejszej synchronizacji sprawdź najnowszy workflow w Actions.
 - **Ręczny playtest:** nie wykonano. Nie oznaczaj płynności, balansu ani sprawiedliwości walki jako zaakceptowanych.
+- **Audyt checklisty (2026-10-22):** wybory ruchu gracza to wyłącznie Drifter i Skoczek, a wybory strzelania to Precyzyjny, Klasyk i Salwa. `MANUAL_PLAYTEST_CHECKLIST.md` poprawiono tak, by nie traktowała dawnych archetypów ruchu i broni jako opcji dostępnych graczowi.
 
 ---
 

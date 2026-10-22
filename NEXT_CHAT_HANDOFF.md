@@ -213,5 +213,6 @@ Po informacji zwrotnej użytkownika obowiązuje protokół z sekcji „4A. Proto
 - **Published-page browser smoke passed:** run `39844419662` loaded `https://klawiaturanumeryczna.github.io/rypt-crawler-game/`, confirmed HTTP 200 and the new 10-room help marker, selected Precyzyjny and Drifter, entered gameplay at floor 1 / room 1, and reported no uncaught JavaScript errors.
 - The mirror now runs the published-page smoke automatically on pushes to `main`, waiting up to 180 seconds for the deployed build; it can also be run manually with `workflow_dispatch`.
 - **Manual gameplay playtest has not been performed.** Automated smoke verifies loading and startup only; it does not establish subjective game feel, fairness, enemy behavior under live play, or balance.
+- **Checklist audit (2026-10-22):** player movement choices are only Drifter and Skoczek; player firing choices are Precyzyjny, Klasyk and Salwa. Updated `MANUAL_PLAYTEST_CHECKLIST.md` to avoid treating legacy movement/weapon archetypes as selectable player options.
 - Backup `backup/pre-hotline-miami-2026-10-22` remains untouched.
 - Next: human playtest using `MANUAL_PLAYTEST_CHECKLIST.md`; use observations to identify concrete fixes, not speculative new mechanics.
