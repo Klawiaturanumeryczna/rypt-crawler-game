@@ -279,3 +279,11 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Dodano regresję Chromium dla obu rodzajów przedmiotów, przypadku bez amuletu i duplikatu oraz czytelności opisów. To chroni użyteczność mechaniki, ale nie zatwierdza balansu ekonomii.
 
 - Wynik walidacji: PR #59 scalony jako `05aa3c9e70da03d96d826493392e4ae45f7b109a`; CI main run `39826837619` zielony. Mirror smoke `39826896790` i Pages deployment `39826897083` zielone.
+
+
+## Czytelność sklepu i osłon — 2026-10-22
+- **Zgłoszenie użytkownika:** waluta wydawała się niesprawna, oferta sklepu znikała bez jasnej intencji zakupu, a kamienie były losowo rozrzucone i nie tworzyły użytecznych miejsc do ukrycia.
+- **Decyzja UX:** dotknięcie oferty sklepu nie może wydawać monet. Zakup sklepowego przedmiotu lub amuletu wymaga pojedynczego naciśnięcia `E`, a etykieta pokazuje koszt. Zwykłe znajdźki nadal podnoszą się przez kontakt, żeby nie zmieniać ogólnego rytmu zbierania łupów.
+- **Wyjaśnienie amuletu:** amulet ratunkowy automatycznie blokuje jeden śmiertelny cios i pozostawia 1 HP; zużywa się po aktywacji. W trybie jednego trafienia oferta za 2 monety kupuje tę ochronę, nie leczenie HP.
+- **Decyzja level design:** zamiast kilku niezależnych, przypadkowych kamieni, pokoje Hotline używają skupionych formacji `U`, `X`, `L`, `I`, `T`. Formacje mają dawać zarówno osłonę przed linią strzału, jak i przestrzeń do obejścia; ich jakość nadal wymaga ręcznego playtestu.
+- **Status:** PR #60 scalony do `main` jako `97d0b289f92f8651f4da0a8423a3832e63135b96`; browser smoke run `39830353160` zakończył się sukcesem. Ręczny playtest nadal otwarty.
