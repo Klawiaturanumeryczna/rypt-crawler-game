@@ -239,3 +239,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Run Chromium dla dokładnego HEAD został anulowany; job ponowiono. Dopóki wynik ponowienia nie będzie sukcesem, nie twierdzić, że najnowszy HEAD ma pełne zielone CI. Kodowy poprzednik `6ae4fb9630dfb90f43c260eaeb6743a8f703676b` ma zielony run `39808650676`.
 - Zweryfikowano zgodność SHA i treści ośmiu plików SSOT/mirror. Pages deployment oraz mirror browser smoke zielone na mirror HEAD `da343edaeedd6bb6c35ea8265ac6c8190bf580e0`.
 - Brak ręcznego playtestu pozostaje jawnym ograniczeniem. Nie wprowadzać balansowych wniosków o pathfindingu/fairness bez testu człowieka.
+
+## 2026-10-22 — iteracja czytelności walki
+- Mapa piętra musi być wyśrodkowana i jasno odróżniona od mini-podglądu aktualnego pokoju; M pozostaje skrótem do pełnej mapy, V do stylu ruchu, B do broni.
+- Wrogowie dystansowi w trybie śmiertelnym mają ujawniać linię strzału przez krótki windup przed wystrzałem. To ma poprawić czytelność zagrożenia, a nie osłabiać pocisków ani zmieniać zasad one-hit.
+- Gdy kamień blokuje bezpośrednią trasę, przeciwnik powinien próbować obejścia przez punkt styczny. Implementacja jest heurystyczna; jeśli testy ręczne pokażą oscylowanie lub utknięcia przy kilku kamieniach, kolejnym krokiem będzie prosty lokalny pathfinding, nie podbijanie statystyk wrogów.
+- Wszystkie trzy zachowania wymagają zielonego CI i ręcznej oceny; automatyczne testy są tylko regresyjnymi kontraktami.

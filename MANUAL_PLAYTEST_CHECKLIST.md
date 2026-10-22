@@ -107,3 +107,11 @@ Dla każdej obserwacji zapisz:
 - [ ] Przed wydaniem kolejnej wersji sprawdź ponowiony job Chromium dla `a497bc64f85bc1eb593a069eb0cdc08b52ebca75`.
 - [ ] Przetestuj grę ręcznie na aktualnym Pages, nie tylko lokalny build; wpisz konkretną przeglądarkę i wyniki sekcji 8.
 - [ ] W trakcie testu porównaj zachowanie wersji na Pages z SSOT, ponieważ historia Pages może być starsza niż main nawet po zielonym workflow.
+
+## Nowa runda testów — omijanie osłon i czytelność strzałów (2026-10-22)
+- [ ] W pokoju z kamieniem stań po przeciwnej stronie i oddaj strzał, aby wywołać hałas. Sprawdź, czy wróg obchodzi kamień zamiast napierać w niego lub drgać w miejscu.
+- [ ] Powtórz z wrogiem dystansowym: sprawdź, czy omija kamień i nie strzela, dopóki linia widzenia nie jest czysta.
+- [ ] Po wejściu w linię wzroku strzelca obserwuj ostrzegawczą linię. Sprawdź, czy widzisz ją przed pociskiem i możesz zareagować, a nie dopiero po wystrzale.
+- [ ] Zasłoń linię kamieniem w trakcie starcia. Ostrzeżenie i strzał nie mogą przechodzić przez kamień; przy utracie widoczności windup powinien się anulować.
+- [ ] Otwórz M: graf 5×2 powinien być wyśrodkowany, korytarze łączyć rzeczywiście połączone pokoje, a podpisy jasno rozróżniać START/BOSS/? oraz znaczniki sklepu/zejścia.
+- [ ] Zapisz przeglądarkę, rozdzielczość, pokój, archetyp wroga i obserwację. Zgłoś osobno: „działa”, „nie działa”, „nie wiem”.

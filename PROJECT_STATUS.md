@@ -269,3 +269,10 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Backup potwierdzony bez zmian: `backup/pre-hotline-miami-2026-10-22` → `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
 - Mirror HEAD: `da343edaeedd6bb6c35ea8265ac6c8190bf580e0`. Osiem współdzielonych plików (handoff, status, decisions, research, balance, checklist, verify.py, browser_smoke.py) ma identyczne blob SHA i treść w main/mirror. Mirror smoke i Pages workflow są zielone dla tego SHA (runs `39809737282` i `39809736901`).
 - Ręczny playtest nie został wykonany; AI wokół osłon i sprawiedliwość śmierci nadal wymagają rzeczywistej obserwacji. Nie uznawać ich za zatwierdzone na podstawie testów syntetycznych.
+
+## Iteracja testowa — czytelność mapy i walki (2026-10-22)
+- Pełna mapa piętra została wyśrodkowana dla siatki 5×2; podpis podglądu pokoju nie sugeruje już, że M otwiera mapę pokoju — M otwiera mapę całego piętra.
+- Dodano kierowanie przeciwników wokół kamieni, gdy bezpośrednia trasa do ostatniej pozycji hałasu/patrolu jest zablokowana. To heurystyka omijania pojedynczych przeszkód, nie pełny A*; zachowanie w zatłoczonych pokojach nadal wymaga testu.
+- Wrogowie dystansowi i boss otrzymali krótkie, widoczne ostrzeżenie linii strzału przed wystrzeleniem śmiertelnego pocisku (10 klatek, boss 16). Strzał nadal wymaga widoczności i nie powinien przechodzić przez kamień.
+- Dodano testy Chromium na omijanie osłony i czas przygotowania strzału oraz statyczne asercje dla mapy/telegraphu. Nie zmieniono reguł piętra, ekonomii ani wartości obrażeń.
+- Ręczny playtest nie został wykonany; te zmiany są kandydatem do sprawdzenia przez użytkownika, a nie potwierdzeniem poprawy odczucia gry.

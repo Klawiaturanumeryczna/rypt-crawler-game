@@ -330,3 +330,8 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - Priorytetem jest HLM1-owa swoboda podejść oraz szybki restart; nie kopiować problematycznych HLM2-owych długich linii ostrzału i wymuszonych walk z niewidocznymi przeciwnikami.
 - Automat nie oceni frajdy. Ręcznie sprawdzić pathfinding przy kamieniach, czas reakcji, czytelność strzałów i sensowność ryzyka przed strojeniem statystyk.
 - Szczegółowe źródła i caveaty: `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
+
+## Czytelność śmiertelnych ataków — 2026-10-22
+- Atak dystansowy widocznego wroga rozpoczyna windup 10 klatek; boss 16 klatek. W tym czasie na ekranie pojawia się linia celowania, a pocisk nie jest jeszcze tworzony.
+- To zmiana telegraphu i czasu reakcji, nie zmiana obrażeń: gracz nadal ginie od rzeczywistego trafienia, z wyjątkiem istniejącego jednorazowego amuletu ratunkowego.
+- Wartości są tymczasowe. Ręcznie sprawdzić, czy ostrzeżenie jest zauważalne, daje czas na unik i nie czyni strzelców bezradnymi; nie uznawać ich za finalny balans bez obserwacji.

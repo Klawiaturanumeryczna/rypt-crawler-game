@@ -153,3 +153,13 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Aktualny main HEAD zmienia się na skutek oddzielnych commitów dokumentacji. Sprawdź ponownie CI i mirror po zakończeniu bieżących workflow; nie opieraj się na wcześniejszym SHA sprzed aktualizacji.
 - Wcześniejszy błąd URL w checklistcie został poprawiony: prawidłowy publiczny Pages URL to https://klawiaturanumeryczna.github.io/rypt-crawler-game/.
 - Nie wykonano ręcznego playtestu. Kolejny czat ma nadal wymagać rzeczywistej sesji przed uznaniem AI/pathfindingu/fairness za zatwierdzone.
+
+## MAX MARATON — pakiet mapy i czytelności walki (2026-10-22)
+- Gałąź robocza: `marathon/map-ai-readability-2026-10-22` (na bazie live main `c84b6f977386d8d1c0c4ca313ecd87a6079ebcae`).
+- Runda 1: wyśrodkowano pełną mapę piętra i poprawiono podpis minimapy, aby M nie sugerowało błędnie mapy aktualnego pokoju.
+- Runda 2: dodano heurystyczne omijanie kamieni dla wrogów, gdy bezpośrednia trasa do celu jest zablokowana. To nie jest pełny pathfinding i wymaga ręcznej oceny przy wielu osłonach.
+- Runda 3: strzelcy dystansowi/boss pokazują linię celowania i odczekują 10/16 klatek przed strzałem; windup anuluje się, gdy cel traci czystą linię widzenia.
+- Dodano regresje Chromium dla ruchu wokół kamienia i opóźnionego strzału oraz kontrole źródła. Przed merge sprawdź CI dla najnowszego SHA gałęzi i popraw wszelkie czerwone wyniki. Nie scalaj przy czerwonym/pending.
+- Zmienione pliki: `index.html`, `tests/browser_smoke.py`, `verify.py`, `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md`, `MANUAL_PLAYTEST_CHECKLIST.md`, ten handoff.
+- Po zielonym CI: review diffu, otwórz PR; nie scalaj samodzielnie, dopóki wszystkie workflowy nie będą zielone. Po merge synchronizuj dokładnie zmienione pliki do mirrora, sprawdź zgodność SHA, Browser smoke i Pages deployment.
+- Użytkownik ma później wykonać playtest. Do tego czasu pathfinding i fairness ataków są niepotwierdzone; nie twierdzić, że ręcznie sprawdzono grę.
