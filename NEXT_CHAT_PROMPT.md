@@ -65,6 +65,21 @@ To wersja z 10 pokojami na piętro; pokoje 1–9 muszą zostać oczyszczone, pok
 - Dokumentacja po polsku; nazwy techniczne/keywords mogą pozostać po angielsku.
 - W odpowiedziach zaznaczaj 🔴 tylko wtedy, gdy naprawdę potrzebujesz mojej decyzji.
 
+## 4A. Protokół efektywnej pracy — obowiązuje od 2026-10-22
+
+Celem jest **postęp w grywalności**, nie liczba wywołań narzędzi, testów ani aktualizacji dokumentów.
+
+1. **Jedno krótkie rozpoznanie na start:** sprawdź aktualny HEAD, otwarte PR-y istotne dla main i najnowszy CI/deployment. Nie odczytuj ponownie tych samych statusów bez nowego powodu.
+2. **Wybierz jeden problem o największym wpływie na rozgrywkę** i określ kryterium sukcesu przed edycją. Preferuj błąd odtwarzalny lub mechanikę, którą da się zmierzyć.
+3. **Pracuj w pakietach:** odczytaj potrzebne pliki razem, wprowadź powiązane poprawki na jednej gałęzi i aktualizuj testy tylko tam, gdzie chronią zachowanie lub wykryły regresję. Nie twórz dodatkowych commitów wyłącznie po to, by odświeżyć status w dokumentacji.
+4. **Testuj proporcjonalnie do ryzyka:** podczas iteracji uruchom najwęższy test, który szybko rozstrzyga problem; przed PR wykonaj pełne lokalne kontrole dostępne w środowisku; przed merge wymagaj zielonego CI na dokładnym SHA. Nie uruchamiaj ponownie identycznego testu, jeśli kod się nie zmienił i wynik jest wiarygodny.
+5. **Nie myl automatyzacji z graniem:** testy źródła/Chromium mogą potwierdzić konkretne asercje, ale nie potwierdzają frajdy, czytelności ani balansu. Jeśli nie ma możliwości ręcznego sterowania grą w dostępnych narzędziach, przygotuj scenariusz i jasno oznacz go jako niewykonany — nie zastępuj go serią kolejnych testów technicznych.
+6. **GitHub bez krążenia:** używaj zbiorczych odczytów i pojedynczego sprawdzenia końcowego. Nie odpytuj wielokrotnie tego samego workflow; pobierz joby/logi tylko przy błędzie, niejasnym stanie lub wymaganej weryfikacji.
+7. **Dokumentacja jest częścią pakietu, nie osobnym maratonem:** aktualizuj handoff/status/decision log tylko w zakresie, który rzeczywiście zmienił się w zadaniu. Usuwaj sprzeczne instrukcje historyczne, gdy jest to bezpieczne, zamiast dokładać kolejne bloki statusu.
+8. **Brak pozornej produktywności:** nie zmieniaj testów tylko po to, by dopasować je do nowego kodu; sprawdź, czy oczekiwanie testu nadal jest poprawne. Nie deklaruj poprawy gameplayu bez dowodu.
+9. **Kryterium zakończenia zadania:** konkretna zmiana lub potwierdzony reprodukowalny wynik, adekwatne testy, zielone CI, właściwa dokumentacja i — jeśli zmieniono kod gry — synchronizacja mirrora/Pages. Po zamknięciu zadania od razu przejdź do następnego istotnego problemu, bez pytania „co dalej?”.
+10. **Krótkie raportowanie:** w odpowiedzi podaj tylko problem, zmianę, dowód/testy, stan publikacji oraz jedno najważniejsze ograniczenie. Nie wyliczaj wszystkich operacji GitHub.
+
 ## 5. Cele testowania eksperymentu HLM
 Najpierw sprawdź:
 1. Czy gracz ginie od jednego rzeczywistego trafienia, bez przypadkowego damage reduction, poza celowo istniejącym jednorazowym ratunkiem i wyraźnymi oknami uniku.
