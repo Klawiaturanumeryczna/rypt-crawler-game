@@ -299,3 +299,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Decyzja:** Precyzyjny ma wolniejsze, świadome strzelanie; Klasyk ma mniejszą szybkostrzelność i zasięg; Salwa ma twardy minimalny cooldown 150 klatek, także przy ciągłym przytrzymaniu przycisku.
 - **Decyzja:** wybór ruchu gracza zawiera wyłącznie Driftera i Skoczka. Drifter ma kontrolowaną bezwładność; Skoczek ma wyraźniejszy skok z ograniczoną losowością cooldownu. Pozostałe definicje wewnętrzne nie są automatycznie usuwane, jeśli inne mechaniki nadal z nich korzystają.
 - **Status testów:** osłony PR #63 i broń PR #64 przeszły browser smoke; ręczny playtest pozostaje otwarty.
+
+
+## 2026-10-22 — cztery klasy przeciwników
+
+- **Decyzja:** normalna pula przeciwników ma cztery czytelne role: Drifter (bezwładność), Skoczek (zryw z losowym, ograniczonym odstępem), Taran (ciężki, wytrzymały) i Biegacz (agresywny zryw). Boss pozostaje osobnym archetypem.
+- **Decyzja:** Taran otrzymuje dokładnie +2 HP względem poprzedniej wartości bazowej 5, czyli bazowo 7 HP. Nie zwiększamy równocześnie jego prędkości ani obrażeń.
+- **Ograniczenie trybu:** jednouderzeniowa eliminacja zwykłych przeciwników w Hotline pozostaje osobną regułą; wartość HP Tarana nadal jest poprawnie zdefiniowana i skalowana w systemie.
