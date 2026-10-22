@@ -231,7 +231,7 @@ Test grupowy przez 180 klatek potwierdza role: Rozrzut zadał 3,5 obrażeń każ
 - Zmieniono przechodzenie między pokojami na kierunkowe przejścia po stałej siatce 6×5. Każde pole ma sąsiadów zgodnych z położeniem; nie ma losowego teleportowania między niepowiązanymi pokojami.
 - Pokój 30 znajduje się w prawym dolnym rogu siatki; gwarantowane zejście znajduje się na jej zewnętrznej krawędzi.
 - M otwiera/zamyka dużą mapę piętra. Mały minimap pokoju pozostaje widoczny.
-- Kamienie są kolizyjne, dziury ograniczają prędkość i zadają 0,5 obrażenia co 90 klatek, a wentylatory odpychają gracza przez 38 z każdych 180 klatek, gdy gracz jest blisko.
+- Kamienie są kolizyjne, dziury ograniczają prędkość i zadają 0,5 obrażenia co 90 klatek. Odpychające wentylatory usunięto z generowania i aktywnej mechaniki w pakiecie spawn/vent.
 - Ruch po pokoju oczyszczonym nie losuje ponownie przeciwników. Elementy specjalne piasek/lód/ogień pozostają osobną mechaniką.
 
 
