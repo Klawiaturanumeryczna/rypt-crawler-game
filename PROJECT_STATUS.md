@@ -231,3 +231,16 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Czytelność monet — 2026-10-21
 - Monety w lochu są teraz rysowane jako okrągłe, złote żetony z wewnętrznym tłoczeniem, zamiast rombu podobnego do zwykłego dropu.
 - Dodano test Chromium sprawdzający kontrakt rysowania oraz kontrolę źródła. Ekonomia i wartości dropów pozostają bez zmian.
+
+
+## Przygotowanie ręcznego playtestu — 2026-10-21
+- Dodano `MANUAL_PLAYTEST_CHECKLIST.md` z krótkimi scenariuszami sprawdzającymi sterowanie, strzelanie, mapę, sklep i czytelność dropów.
+- Lista jest procedurą do przyszłego testu, a nie raportem z wykonanego grania. Ręczny playtest nadal pozostaje niewykonany.
+
+
+## Tymczasowy build 10-pokojowy — 2026-10-22
+- Każde piętro ma teraz 10 połączonych pokojów w siatce 5×2. Pokój 10 jest pokojem bossa na każdym piętrze.
+- Nie losujemy wcześniejszych zejść: wejście do pokoju 10 samo nie odblokowuje wyjścia; dopiero pokonanie bossa oznacza drzwi zejścia na następne piętro.
+- Zwinny ma mocniejszy, łatwiej odczuwalny zryw po ostrym skręcie (3× prędkości przez 5 klatek, 5 klatek ochrony, 18 klatek odnowienia) oraz +15% otrzymywanych obrażeń. Biegacz pozostaje natychmiastowo sterowany, bez zrywu.
+- Usunięto kreski rysowane zawsze po lewej stronie Skoczka podczas susa.
+- Wszystkie zmiany muszą przejść verify.py i test Chromium. Po scaleniu utworzyć osobną gałąź backupową dokładnie tego stanu przed większym eksperymentem.

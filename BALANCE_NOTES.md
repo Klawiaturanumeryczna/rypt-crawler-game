@@ -304,3 +304,10 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - **Zwinny:** nie wykonuje już automatycznego zrywu co 26 klatek. Ma prędkość bazową 3,3 i odpala 4-klatkowy zryw 2,2× oraz ochronę po ostrym skręcie (zmiana kierunku, iloczyn skalarny <0,25); odnowienie 24 klatki. Otrzymuje +10% obrażeń. To styl oparty na aktywnym prowadzeniu kierunku.
 - Usunięto okrągły obrys podczas obu uników. Zamiast niego Skoczek pokazuje krótkie kreski ruchu, a Zwinny wąskie smugi zrywu.
 - To wartości prototypowe. Test Chromium potwierdza wyzwalacze i parametry; ocena przyjemności wymaga ręcznego playtestu.
+
+
+## Tymczasowy test 10-pokojowego piętra — 2026-10-22
+- Celem jest skrócenie pętli testowej: pokoje 1–9, boss w pokoju 10, zejście dopiero po bossie.
+- Zwinny dostał mocniejszy, wyraźniejszy zryw po ostrym skręcie, aby jego zachowanie nie zlewało się z Biegaczem. Koszt: niższa prędkość bazowa i +15% otrzymywanych obrażeń.
+- Skoczek nie ma już poziomych smug zakotwiczonych po lewej stronie. Nie zmieniono rytmu susa ani jego ochrony.
+- To wersja eksperymentalna; ocenić po ręcznym playteście, nie tylko po CI.

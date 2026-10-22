@@ -79,3 +79,17 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Gałąź `ui/coin-drop-visual` dodaje `drawCoinDrop`: okrągły złoty żeton z obwódką, wewnętrznym pierścieniem i centralnym znakiem.
 - Test Chromium sprawdza dwa łuki, wypełnienie, trzy obrysy i centralny znak. Zmiana jest wizualna; nie rusza ekonomii.
 - Przed scaleniem wymagane zielone CI, po scaleniu synchronizacja mirrora i deployment.
+
+
+## MAX MARATON — checklista ręcznego playtestu (2026-10-21)
+- Dodano `MANUAL_PLAYTEST_CHECKLIST.md` — scenariusze do sprawdzenia ruchu, strzelania, skrótów, mapy, sklepu, dropów i przeszkód oraz format raportowania obserwacji.
+- To instrukcja na przyszłość, nie dowód wykonania ręcznego playtestu. Po zebraniu obserwacji użyj ich do kolejnej iteracji; nie zgaduj balansu bez danych.
+
+
+## MAX MARATON — poprawki przed nowym pomysłem (2026-10-22)
+- Gałąź `gameplay/ten-room-boss-floor-and-movement-fixes` zmniejsza piętro z 30 do 10 pokojów, siatka ma 5×2 węzły, a pokój 10 jest bossem na każdym piętrze.
+- Losowe wcześniejsze zejścia są wyłączone. Pokój 10 nie ma aktywnego zejścia przed pokonaniem bossa; pokonanie bossa ustawia trwałe drzwi przejścia.
+- Zwinny: wyraźny zryw po ostrym skręcie 3×/5 klatek, 5 klatek ochrony, cooldown 18 klatek, +15% obrażeń otrzymywanych. Biegacz bez zrywu.
+- Skoczek: usunięto kreski zawsze rysowane z lewej strony postaci podczas susa.
+- Zaktualizowano testy generatora, mapy, głębokości pokojów i zejścia. Po zielonym CI należy scalić, zsynchronizować mirror i Pages, a następnie utworzyć branch backupowy (np. `backup/pre-new-idea-2026-10-22`) wskazujący dokładnie zatwierdzony commit.
+- Ważne: to celowo tymczasowa wersja do eksperymentu. Nie wdrażać późniejszego dużego pomysłu bez zachowania tego punktu powrotu.

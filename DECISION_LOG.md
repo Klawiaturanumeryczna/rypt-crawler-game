@@ -211,3 +211,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Usunięto okrągły ring przy zrywie, który wyglądał jak przypadkowe kółka. Feedback jest kreskowy i kierunkowy, nie kołowy.
 - Nie dodawać osobnego klawisza Shift do uniku bez uzgodnienia; to nie jest wymagane do rozdzielenia tych archetypów.
 - Research: w dyskusjach graczy ETG często powtarza się, że zwykłe omijanie pocisków jest ważniejsze niż spamowanie rollem, a roll powinien być narzędziem sytuacyjnym; część graczy wskazuje też na trade-off: mysz daje precyzję celowania, pad daje wygodę kierunków ruchu. Źródła: https://www.reddit.com/r/EnterTheGungeon/comments/1t4crf0/dificuldade_em_desviar/ ; https://www.reddit.com/r/EnterTheGungeon/comments/1dc0fgy/ ; https://enterthegungeon.wiki.gg/wiki/Dodge_Roll_%28Move%29 . W Isaac gracze wprost opisują bezwładność po puszczeniu klawisza jako coś, co część osób lubi, a innych frustruje: https://www.reddit.com/r/bindingofisaac/comments/18om7ee . To jakościowe przykłady opinii, nie reprezentatywna ankieta.
+
+
+## 2026-10-22 — tymczasowy limit piętra i boss
+- Decyzja użytkownika: na czas kolejnego eksperymentu zmniejszyć liczbę pokojów piętra z 30 do 10; po dziewięciu pokojach kolejnym obowiązkowym pokojem jest boss, a zejście na niższe piętro odblokowuje się po jego pokonaniu.
+- Implementacja: proceduralna siatka 5×2 z 10 węzłami; boss w pokoju 10 na każdym piętrze; brak losowych zejść przed bossem.
+- Wymóg: po weryfikacji zachować osobną gałąź backupową tej dokładnej wersji przed rozpoczęciem dużego eksperymentu. To zmiana tymczasowa, nie nowa nieodwracalna reguła produktu.
