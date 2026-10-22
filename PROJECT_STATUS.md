@@ -8,7 +8,7 @@ Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historyczn
 - **Sterowanie:** WASD — ruch; strzałki — strzelanie kierunkowe; mysz + LPM — strzał do kursora; M — mapa; V — wybór ruchu; B — wybór strzelania; Spacja — aktywny przedmiot; P — pauza; R — restart.
 - **AI przy osłonach:** test Chromium dla pojedynczego kamienia i dwóch kolejnych kamieni przeszedł. To nie dowodzi ogólnej poprawności nawigacji dla wszystkich układów.
 - **Walidacja kodu:** PR #56 (windup i zablokowany kierunek celowania) oraz PR #57 (regresja dwóch kamieni) scalone; CI dla kodu i ostatni main run były zielone. Backup `backup/pre-hotline-miami-2026-10-22` pozostaje nietknięty na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
-- **Mirror/Pages:** mirror ma zsynchronizowany kod, testy i dokumentację; Browser smoke run `39825057699` zielony. Najnowszy mirror HEAD `483a143483ea5c493cc6b127cb6614c37b31b837`: Browser smoke run `39826896790` i Pages deployment `39826897083` zakończyły się sukcesem. Wszystkie 12 sprawdzonych plików współdzielonych ma identyczną treść/blob SHA w SSOT i mirrorze.
+- **Mirror/Pages:** mirror ma zsynchronizowany kod, testy i dokumentację; Browser smoke run `39825057699` zielony. Synchronizacja mirrora została sprawdzona przez porównanie 12 plików współdzielonych (identyczna treść i blob SHA). Browser smoke `39827271918` oraz Pages deployment `39827270246` zakończyły się sukcesem dla zsynchronizowanego buildu; po każdej późniejszej synchronizacji sprawdź najnowszy workflow w Actions.
 - **Ręczny playtest:** nie wykonano. Nie oznaczaj płynności, balansu ani sprawiedliwości walki jako zaakceptowanych.
 
 ---
