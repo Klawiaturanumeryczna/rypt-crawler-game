@@ -290,3 +290,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Wrogowie dystansowi i boss otrzymali krótkie, widoczne ostrzeżenie linii strzału przed wystrzeleniem śmiertelnego pocisku (10 klatek, boss 16). Strzał nadal wymaga widoczności i nie powinien przechodzić przez kamień.
 - Dodano testy Chromium na omijanie osłony i czas przygotowania strzału oraz statyczne asercje dla mapy/telegraphu. Nie zmieniono reguł piętra, ekonomii ani wartości obrażeń.
 - Ręczny playtest nie został wykonany; te zmiany są kandydatem do sprawdzenia przez użytkownika, a nie potwierdzeniem poprawy odczucia gry.
+
+
+## Dodatkowa regresja AI — 2026-10-22
+- PR #57 (`a0c98e496b676429b9e04535a0d0ada6a86f2531`) dodaje deterministyczny test Chromium z dwoma kolejnymi kamieniami. CI run `39824808999` jest zielony: przeciwnik dochodzi do celu w 180 klatkach bez nakładania hitboxu na kamienie.
+- Test obejmuje jeden konkretny układ przeszkód, a nie pełną przestrzeń możliwych pokojów. Ręczny playtest wieloosłonowego pathfindingu nadal jest wymagany.

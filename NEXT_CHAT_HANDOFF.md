@@ -173,3 +173,10 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Dla uniknięcia powolnego pobierania pakietów APT w CI zmieniono `.github/workflows/browser-smoke.yml` z `playwright install --with-deps chromium` na `playwright install chromium`; na GitHub-hosted runnerze test przechodzi bez ponownego instalowania systemowych zależności. Główny CI run `39824282975` dla main zakończył się sukcesem.
 - Mirror zsynchronizowano w commicie `783814e3caa553dea01e121628cf86644ca53a86`; wszystkie 9 współdzielonych plików ma identyczny blob SHA i treść w SSOT/mirror. Mirror browser smoke `39824422931` jest zielony. Pages build/deploy dla SHA `783814e...` wymaga jeszcze potwierdzenia zakończenia.
 - Brak ręcznego playtestu. Nie zmieniać gałęzi backupowej.
+
+
+## MAX MARATON — test dwóch kolejnych osłon (2026-10-22)
+- PR #57 scalono jako `a0c98e496b676429b9e04535a0d0ada6a86f2531`; run Chromium `39824808999` dla SHA `2971632cc3669e88578f1a42cbe3a50d15a6a494` jest zielony.
+- Rozszerzono `window.__testEnemyCoverNavigation()` o dwa kamienie na bezpośredniej trasie. Po 180 klatkach wróg osiągnął cel (dystans 1,79 px), odszedł od linii środkowej o 51,56 px i nie nachodził na żadną skałę (odległości 168,40 i 98,40 px przy wymaganych 42 px).
+- To potwierdza wyłącznie deterministyczny scenariusz dwóch ustawionych w linii kamieni; nie dowodzi, że AI zawsze znajdzie drogę w ciasnych pokojach lub przy losowych układach.
+- Kolejny krok: po synchronizacji mirrora i potwierdzeniu Pages użytkownik ma wykonać ręczny playtest. Nie dodawaj pełnego A* bez dowodu z testu, że obecna heurystyka zawodzi.

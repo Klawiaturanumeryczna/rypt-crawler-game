@@ -123,3 +123,8 @@ Dla każdej obserwacji zapisz:
 - [ ] Sprawdź, czy okno reakcji jest zauważalne i nie pozwala przeciwnikowi bezkarnie strzelać z bardzo bliska.
 - [ ] W trakcie ostrzeżenia przesuń się za kamień. Windup powinien zostać anulowany, a pocisk nie może przejść przez kamień.
 - [ ] Powtórz przeciw bossowi: trzy pociski wachlarza muszą zachować kierunek oparty na zapisanym celowaniu.
+
+
+## Dodatkowa uwaga po teście automatycznym — dwie osłony (2026-10-22)
+- [ ] W normalnej grze ustaw się tak, by dwa kamienie blokowały najkrótszą trasę przeciwnika. Sprawdź, czy wróg wybiera wiarygodne obejście, nie drga i nie zostaje w pętli.
+- [ ] Powtórz z przeciwnikiem dystansowym, strzelającym i kilkoma wrogami naraz. Test Chromium potwierdza tylko jeden deterministyczny scenariusz z dwoma kamieniami.

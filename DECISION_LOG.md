@@ -259,3 +259,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - W workflow testowym usunięto `--with-deps`, ponieważ logi wykazały bardzo wolne pobieranie pakietów APT na runnerze. Instalacja Chromium bez ponownej instalacji zależności systemowych pozwoliła zakończyć pełny test.
 - Mirror został zsynchronizowany, wszystkie 9 współdzielonych plików ma identyczny blob SHA/treść. Mirror browser smoke jest zielony; deployment Pages trzeba potwierdzić osobno.
 - Ręczny playtest pozostaje niewykonany.
+
+
+## 2026-10-22 — regresja dwóch osłon
+- Zamiast od razu przepisywać heurystykę na A*, dodano test rzeczywistej pętli gry dla dwóch kolejnych kamieni blokujących prostą trasę.
+- Test przechodzi: dystans do celu spada do 1,79 px w 180 klatkach, a przeciwnik zachowuje wymagany odstęp od obu skał. To ograniczony test regresyjny, nie dowód ogólnej poprawności AI.
+- Jeśli ręczny playtest lub dalsze scenariusze pokażą utknięcia, następnym krokiem będzie lokalny pathfinding uwzględniający kilka przeszkód.
