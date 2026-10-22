@@ -365,3 +365,12 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - Broń: Precyzyjny 48 klatek między strzałami, Klasyk 22 klatki i życie pocisku 77 klatek (o 1/3 krótszy zasięg przy tej samej prędkości), Salwa minimalnie 150 klatek cooldownu (2,5 s przy 60 FPS). Test Chromium sprawdza rzeczywiste wartości, krótszy pocisk Klasyka oraz brak możliwości ominięcia cooldownu Salwy przez przytrzymanie strzału. CI PR #64: run `39838967501` — success.
 - Ruch: Drifter zachowuje pęd i trudniej skręca, ale pozostaje responsywny; Skoczek wykonuje sus przez 10 klatek przy 3× prędkości, a start kolejnego susu następuje po losowym odstępie 20–26 klatek. Wartości są pierwszą iteracją i wymagają ręcznego playtestu.
 - Nie wykonano ręcznego playtestu; wyniki automatyczne nie rozstrzygają, czy ruch i walka są przyjemne.
+
+
+## 2026-10-22 — role przeciwników
+
+- **Drifter:** płynne pościgowe poruszanie z bezwładnością; zmiana kierunku stopniowo wpływa na prędkość.
+- **Skoczek:** szybki, 10-klatkowy zryw ×3; odstęp startów skoku losuje się w zakresie 20–26 klatek. Nie teleportuje się.
+- **Taran:** ciężki ruch z cyklem zwolnienia i przyspieszenia. Bazowe HP ustawiono z 5 na 7 (+2 dokładnie); w trybie Hotline pozostaje aktywna osobna zasada eliminacji zwykłego przeciwnika jednym trafieniem.
+- **Biegacz:** szybki przeciwnik z agresywnym zrywem; po zrywie zwalnia, więc nie jest najlepszy pod każdym względem.
+- W puli generowania pozostały cztery klasy oraz osobny boss. Automatyczne testy sprawdzają rozdzielność ról, HP Tarana, skalowanie HP i unikalne sylwetki. Nie wykonano ręcznego playtestu.
