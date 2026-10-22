@@ -1,55 +1,65 @@
-# Crypt Crawler — prototyp 0.4.0
+# Crypt Crawler — prototyp Hotline Miami
 
-Crypt Crawler to przeglądarkowy roguelike z widokiem z góry. Gra korzysta z Canvas i jednego pliku `index.html`; nie wymaga instalowania silnika ani zewnętrznych grafik.
+Crypt Crawler to przeglądarkowy top-down roguelike w jednym pliku `index.html`, renderowany przez Canvas. Aktualny build eksperymentuje z szybką, śmiertelną walką inspirowaną Hotline Miami. To nadal prototyp; zielone testy automatyczne nie zastępują ręcznego playtestu.
 
 ## Uruchomienie
 
-Otwórz `index.html` w nowoczesnej przeglądarce i kliknij **ROZPOCZNIJ RUN**.
+Otwórz `index.html` w nowoczesnej przeglądarce albo zagraj w [publiczny build GitHub Pages](https://klawiaturanumeryczna.github.io/rypt-crawler-game/).
 
 ## Sterowanie
 
 - **WASD** — ruch.
-- **Strzałki** — strzelanie w ośmiu kierunkach.
-- **Mysz + przytrzymany LPM** — strzelanie w stronę kursora.
-- **Wejście w przedmiot** — automatyczne podniesienie po fizycznym kontakcie; nie trzeba naciskać E.
-- **M** — otwiera wybór stylu ruchu podczas runu.
-- **Spacja** — użycie aktywnego przedmiotu; aktywny przedmiot zostaje zużyty.
+- **Strzałki** — strzelanie kierunkowe; można łączyć osie.
+- **Mysz + LPM** — strzał w kierunku kursora.
+- **M** — mapa całego piętra; ponowne M zamyka mapę.
+- **V** — wybór stylu ruchu.
+- **B** — wybór stylu strzelania.
+- **Spacja** — użycie aktywnego przedmiotu.
 - **P** — pauza / powrót do gry.
-- **R** — rozpoczęcie nowego runu.
-- **Shift** — sus w stylu „Skoczek” albo krótki unik w stylu „Zwinny”.
-- Style ruchu różnią się prowadzeniem i wyglądem postaci: poślizg, rozpęd, uniki, sus i ciężka sylwetka są widoczne podczas gry.
+- **R** — natychmiastowy restart runu, zachowujący wybrany styl ruchu i strzelania.
+
+Style ruchu i strzelania wybiera się na początku runu. W aktualnym prototypie style ruchu różnią się szybkością, bezwładnością, sposobem skręcania lub krótkim oknem uniku. Nie używaj starszych instrukcji mówiących, że M zmienia ruch albo Shift jest ogólnym przyciskiem uniku — nie opisują bieżącego mapowania.
 
 ## Pętla rozgrywki
 
-Każde piętro ma maksymalnie **30 pokoi**. Na piętrze 1 nie ma bossa; od piętra 2 boss pojawia się na początku piętra, w pokoju 1. Po pokonaniu bossa przechodzisz do pokoju 2 tego samego piętra. Po oczyszczeniu zwykłego pokoju losowana jest szansa zejścia: 5% w pokoju 1, 10% w pokoju 2 i tak dalej. Jeśli los się powiedzie, przejście pojawia się w następnym pokoju, który trzeba oczyścić przed zejściem. Po oczyszczeniu pokoju 20 szansa wynosi 100%, więc zejście pojawi się w pokoju 21; można z niego skorzystać albo kontynuować eksplorację. W pokoju 30 przejście jest gwarantowane i pojawia się bonusowy przedmiot.
+- Każde piętro ma **10 pokojów** na siatce **5×2**. Pokój 10 jest bossem.
+- Aby otworzyć drogę do bossa, trzeba oczyścić wszystkie dziewięć pozostałych pokojów. Samo wejście do pokoju bossa nie kończy piętra.
+- Po pokonaniu bossa otwiera się przejście na kolejne piętro.
+- Graf połączeń jest generowany dla każdego piętra. Drzwi i mapa muszą opierać się na tym samym grafie, a powrót do odwiedzonego pokoju ma zachowywać jego stan.
+- Sklep jest dostępny najwyżej raz na piętro; powrót nie powinien losować od nowa wykorzystanych ofert.
 
-Tylko w pierwszym pokoju pierwszego piętra pojawiają się 3 serca i 2 monety. Nie ma tam ofert ani pickupów przedmiotów. Kolejne piętra nie przyznają ponownie zestawu startowego. Serca i monety zbiera się przez kontakt; przedmioty również podnoszą się automatycznie po wejściu w ich obszar.
+## Zasady walki — bieżący eksperyment
 
-## Style ruchu i przedmioty
+- **Gracz ginie od jednego rzeczywistego trafienia.** Krótkie okna uniku oraz istniejący jednorazowy amulet ratunkowy są wyjątkami wynikającymi z mechaniki, nie dodatkowym standardowym HP.
+- **Zwykli przeciwnicy giną od jednego bezpośredniego trafienia.** Boss jest wyjątkiem i wymaga wielu trafień.
+- Kamienie pełnią funkcję osłony: blokują ruch, pociski i linię widzenia. Strzał gracza tworzy krótkotrwałe źródło hałasu, które przyciąga pobliskich wrogów do ostatniej znanej pozycji.
+- Strzelec musi mieć czystą linię widzenia. Przed strzałem pokazuje linię ostrzegawczą; obecny eksperyment używa 18 klatek przygotowania dla zwykłego strzelca i 24 dla bossa. Kierunek celowania jest blokowany na początku ostrzeżenia.
+- Przeciwnicy próbują obchodzić kamienie. Testy automatyczne obejmują pojedynczą osłonę i jeden scenariusz z dwoma kamieniami, ale nie dowodzą poprawnego zachowania w każdym układzie.
+- Ręczny test nadal musi ocenić czytelność ostrzeżeń, uczciwość śmierci, płynność ruchu i ogólną frajdę.
 
-Dostępnych jest sześć stylów ruchu: Podstawowe bieganie (natychmiastowe sterowanie), Szybki ślizg (bezwładność), Skoczek (mocny sus na Shift), Rozpęd (płynne przyspieszenie), Zwinny (krótki, częsty unik na Shift) i Ciężki krok (opancerzona sylwetka). Każdy ma inny kolor/kształt postaci. Cztery style strzelania również są widoczne od razu: Precyzyjny (duży złoty pocisk), Klasyczny, Rozrzut (wachlarz trzech różowych pocisków) i Szybkostrzelny (małe, szybkie turkusowe pociski).
+## Przedmioty i trwałe dane
 
-Przedmioty aktywne są używane Spacją. Przedmioty na nogi i do strzelania modyfikują statystyki przy podniesieniu. Nie ma obecnie systemu synergii. Aktywne efekty zadają obrażenia przez wspólną ścieżkę obrażeń przeciwnika, więc mogą również zadać cios kończący. Balans i czytelność tych efektów nadal wymagają testów.
+Przedmioty aktywne używa się Spacją. Pasywne mogą zmieniać ruch, strzelanie, statystyki lub zapewniać jednorazowy ratunek. Odkrycia i rekordy profilu są zapisywane lokalnie w przeglądarce; ekwipunek i waluta bieżącego runu nie przechodzą do następnego.
 
-## Drzwi, zagrożenie i sklep
+## Testy deweloperskie
 
-- **Szare drzwi — łatwe:** liczba wrogów ×0,75; szybkość ×0,92; szansa na łup ×0,75.
-- **Złote drzwi — średnie:** mnożniki ×1,00.
-- **Czerwone drzwi — trudne:** liczba wrogów ×1,25 (z limitem pokoju); szybkość ×1,08; szansa na łup ×1,50.
-- Trudne drzwi zwiększają także udział cięższych archetypów w puli przeciwników.
-- Fioletowe drzwi prowadzą do sklepu. Sklep jest gwarantowany w pokoju 2, o ile gracz wybierze dalszą drogę zamiast wcześniejszego przejścia na kolejne piętro. Można go odwiedzić raz na piętro.
-- Serce w sklepie kosztuje **2 monety** i przywraca **2 HP**. Zakup jest wyłączony przy pełnym zdrowiu lub braku monet.
-- Moneta wypada z bazową szansą 8%, serce z bazową szansą 2,5% za pokonanego wroga, przed mnożnikiem trudności drzwi. Serce na ziemi nie znika przy pełnym zdrowiu.
-- Każde 5 zabójstw w serii podtrzymywanej przez kolejne zabójstwo w ciągu 3 sekund daje dodatkową monetę.
-- Przejście na piętro leczy do 2 HP.
+Wymagane środowisko: Python, zależności testowe z plików projektu oraz Playwright Chromium.
 
-## Wrogowie i boss
+```bash
+python verify.py
+python -m pytest tests/browser_smoke.py -q
+```
 
-Pula przeciwników zmienia się wraz z piętrem. Zwykłe HP rośnie o 14% na piętro, szybkość o 3,5% na piętro z limitem premii 30%. Boss pojawia się na początku każdego piętra od piętra 2 i ma `45 + 12 × numer piętra` HP; strzela wachlarzem trzech pocisków. Szczegóły znajdują się w [ENEMY_PROGRESSION.md](ENEMY_PROGRESSION.md) oraz [BALANCE_NOTES.md](BALANCE_NOTES.md).
+Testy sprawdzają kontrakty źródła i wybrane scenariusze w prawdziwej pętli gry. Nie są automatycznym dowodem balansu ani jakości ręcznego sterowania.
 
-## Znane ograniczenia i testy
+## Źródło prawdy i dokumentacja
 
-- To nadal prototyp: brakuje zapisu postępu między runami, trwałych odblokowań, rozbudowanego grafu pokoi i pełnego systemu synergii.
-- Parametry balansu wymagają testów rozgrywki; testy automatyczne nie zastępują wielokrotnego przejścia piętra.
-- `python verify.py` — statyczne sprawdzenie źródła.
-- `python tests/browser_smoke.py` — test dymny Playwright; wymaga pakietu Playwright i przeglądarki Chromium.
+- Główne repozytorium (SSOT): https://github.com/Klawiaturanumeryczna/crypt-crawler
+- Publiczny mirror: https://github.com/Klawiaturanumeryczna/rypt-crawler-game
+- Aktualny status: `PROJECT_STATUS.md`
+- Decyzje: `DECISION_LOG.md`
+- Hipotezy balansu: `BALANCE_NOTES.md`
+- Research: `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`
+- Scenariusze ręcznego testu: `MANUAL_PLAYTEST_CHECKLIST.md`
+
+Starsze sekcje dokumentacji mogą opisywać poprzednie warianty prototypu. Gdy dokumentacja przeczy bieżącemu kodowi `index.html`, sprawdź kod i aktualne testy, a następnie popraw rozbieżność — nie zakładaj, że historyczny opis jest aktualny.

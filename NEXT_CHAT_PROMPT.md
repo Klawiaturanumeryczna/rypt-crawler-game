@@ -37,6 +37,14 @@ To wersja z 10 pokojami na piętro; pokoje 1–9 muszą zostać oczyszczone, pok
 - Prototyp implementuje jedno życie gracza, śmierć zwykłych przeciwników od dowolnego trafienia, wielotrafieniowego bossa, kamienie jako osłonę blokującą linię widzenia i pociski oraz przyciąganie pobliskich wrogów do miejsca strzału. Wrogowie dystansowi powinni strzelać tylko przy czystej linii widzenia.
 - Sprawdź bieżący stan branch/CI — status zapisany w plikach może być starszy niż najnowszy commit.
 
+### Stan bieżący — 2026-10-22 (ma pierwszeństwo przed historycznymi informacjami wyżej)
+
+- Kod obecnie ma **10 pokojów na piętrze w siatce 5×2**, nie 30 pokojów/6×5. Pokój 10 jest bossem; trzeba oczyścić pozostałe dziewięć.
+- Aktualne skróty: WASD ruch, strzałki strzelanie kierunkowe, mysz + LPM strzał do kursora, M mapa, V wybór ruchu, B wybór broni/strzelania, Spacja przedmiot aktywny, P pauza, R restart. Starsze instrukcje o M do zmiany ruchu lub Shift do uniku są nieaktualne.
+- PR #56 i #57 scalone: windup 18/24 klatek z zablokowanym kierunkiem celowania oraz test nawigacji wokół dwóch kamieni. CI dla tych zmian przeszło.
+- Publiczny mirror został zsynchronizowany. Przy ostatnim sprawdzeniu Browser smoke mirrora był zielony, a Pages deployment dla ostatniego SHA wciąż oczekiwał na wykonanie. Sprawdź status na żywo.
+- Ręczny playtest nadal nie został wykonany. Nie wnioskuj o frajdzie/balansie z samego CI.
+
 ## 4. Tryb pracy — ważne
 - `OK, rob`: audytuj aktualny stan, wybierz największy realny problem, wprowadź poprawkę, dodaj/aktualizuj testy, uruchom weryfikację, sprawdź wyniki i dokumentację, a potem przejdź do następnego zadania bez pytania „co dalej?”, jeśli można sensownie kontynuować.
 - `START`: pełny autonomiczny maraton tak długo, jak istnieje sensowna praca bez decyzji użytkownika.

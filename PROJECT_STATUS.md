@@ -1,3 +1,18 @@
+# STATUS AKTUALNY — sprawdź ten blok przed starszymi wpisami
+
+Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historycznymi opisami poniżej.
+
+- **Aktualna struktura:** 10 pokojów na piętro, siatka 5×2, boss w pokoju 10; trzeba oczyścić pozostałe dziewięć pokojów przed wejściem do bossa. Wzmianki o 30 pokojach/6×5 są nieaktualne dla bieżącego kodu.
+- **Tryb walki:** gracz ginie od jednego rzeczywistego trafienia (poza jednorazowym ratunkiem i wyraźnymi oknami uniku); zwykli wrogowie giną od jednego bezpośredniego trafienia; boss wymaga wielu trafień.
+- **Ostrzeżenie strzału:** zwykły strzelec 18 klatek, boss 24; kierunek celowania blokowany na początku ostrzeżenia.
+- **Sterowanie:** WASD — ruch; strzałki — strzelanie kierunkowe; mysz + LPM — strzał do kursora; M — mapa; V — wybór ruchu; B — wybór strzelania; Spacja — aktywny przedmiot; P — pauza; R — restart.
+- **AI przy osłonach:** test Chromium dla pojedynczego kamienia i dwóch kolejnych kamieni przeszedł. To nie dowodzi ogólnej poprawności nawigacji dla wszystkich układów.
+- **Walidacja kodu:** PR #56 (windup i zablokowany kierunek celowania) oraz PR #57 (regresja dwóch kamieni) scalone; CI dla kodu i ostatni main run były zielone. Backup `backup/pre-hotline-miami-2026-10-22` pozostaje nietknięty na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
+- **Mirror/Pages:** mirror ma zsynchronizowany kod, testy i dokumentację; Browser smoke run `39825057699` zielony. Deployment Pages dla SHA `78b200c829edfc53dd1ad00f35f206d5c80ec758` był w kolejce przy ostatnim sprawdzeniu. Po scaleniu tego PR sprawdź nowy deployment.
+- **Ręczny playtest:** nie wykonano. Nie oznaczaj płynności, balansu ani sprawiedliwości walki jako zaakceptowanych.
+
+---
+
 # Crypt Crawler — PROJECT STATUS
 Updated: 2026-10-22
 

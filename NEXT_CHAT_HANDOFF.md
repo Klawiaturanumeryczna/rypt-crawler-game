@@ -19,7 +19,7 @@
 
 ## Obecna gra i ważne decyzje
 - Gra to przeglądarkowy top-down dungeon crawler, obecnie w jednym głównym `index.html`, z testami w `tests/browser_smoke.py` i kontrolami źródła w `verify.py`.
-- Piętro ma 30 pokojów na siatce 6×5. Generowany graf najpierw tworzy połączone drzewo, potem dodaje niewiele pętli. Drzwi i mapa muszą korzystać z dokładnie tego samego grafu.
+- **Aktualny kod ma 10 pokojów na siatce 5×2**, a pokój 10 jest bossem. Wszystkie dziewięć pozostałych pokojów trzeba oczyścić przed wejściem do bossa. Starsze zapisy o 30 pokojach/siatce 6×5 dotyczą wcześniejszej wersji i są nieaktualne dla bieżącego `index.html`.
 - Pokój ma stan zachowywany przy powrocie: drzwi, dropy, teren, wrogów i pociski. Oczyszczone pokoje nie powinny resetować się losowo.
 - Mapa piętra jest pod `M`. Zmiana stylu ruchu jest pod `V`, wybór broni pod `B`; ruch `WASD`, strzałki strzelają kierunkowo, LPM strzela do kursora. Sprawdź rzeczywisty kod i instrukcje przed zmianą mapowania; nie przywracaj `Shift` jako uniku.
 - Wyjście na następne piętro zależy od liczby unikalnych oczyszczonych pokojów, a nie numeru ID. Wylosowane wyjście ma stałą lokalizację podczas backtrackingu; wyjście bossa i graniczne wyjścia pokoju 30 również mają być trwałe.
@@ -27,20 +27,22 @@
 - Dodano przeszkody terenowe (kamienie, doły, okresowe podmuchy), kilka autorskich motywów pięter i autorskie sylwetki fantasy rysowane w Canvas. Grafika jest nadal prototypowa.
 - Testy automatyczne nie zastępują ręcznego testu płynności i przyjemności rozgrywki.
 
-## Najważniejszy aktywny zakres pracy
-Użytkownik zlecił „mikro rewolucję graficzną” i zgłosił, że ruch/strzelanie nadal są słabe, a generowanie i prezentacja mapy nie są czytelne. Kolejna sesja ma zacząć od audytu aktualnego kodu, a potem realizować poprawki etapami:
+## Najważniejszy aktywny zakres pracy — stan na 2026-10-22
 
-1. **Grafika gry:** znacznie bardziej przypominająca ukończoną grę RPG/top-down niż proste kształty. Inspiracje ogólne: estetyka klasycznych RPG typu Margonem oraz użycie map, potworów i itemów w stylu RPG Maker — tylko jako kierunek gatunkowy. Wszystkie grafiki muszą być autorskie, bez kopiowania konkretnych postaci, sprite'ów, map, ikon czy assetów chronionych prawem autorskim.
-2. **Autorskie potwory/easter eggi:** magiczne, czytelne sylwetki i rozpoznawalne animowane/rysowane archetypy: wampir, wilkołak, wiedźma, mumia, ogr, smok, krasnolud i komiczna krowa oraz inne własne stworki. Nie zmieniaj mechanicznych archetypów AI przypadkiem — najpierw powiąż nową oprawę z istniejącymi typami wrogów i testami.
-3. **Mapa i generowanie:** użytkownik uważa, że generowanie poziomów nadal jest „z pizdy” i mapa nie pokazuje się dobrze. Zbadaj rzeczywisty generator, graf połączeń, pozycjonowanie drzwi, rysowanie minimapy i pełnej mapy, legendę, kamerę/układ pomieszczeń oraz czy pokazane korytarze odpowiadają przejściom. Dodaj testy topologii i czytelności/kontraktów mapy. Nie zmieniaj reguły 30 pokojów bez zgody.
-4. **Sterowanie ruchem:** `M` ma być mapą i nie może być jednocześnie zmianą ruchu. Zachowaj osobny, wolny klawisz dla zmiany stylu ruchu (aktualne mapowanie to `V`; sprawdź i ujednolić kod, HUD i instrukcję). Nie psuj obsługi strzałek jako strzelania kierunkowego.
-5. **Ruch i strzelanie:** opinia graczy: broń jest zbyt trudna w użyciu; ogólnie ruch i strzelanie nadal są „chujowe”. Nie ograniczaj się do kosmetycznych zmian liczb. Zmierz i popraw sterowanie: responsywność, przyspieszanie/hamowanie, skręcanie, kolizje, celowanie, prędkość i żywotność pocisków, hitboxy, rozrzut oraz feedback trafień. Każdy styl ruchu i każda broń powinny mieć **wyraźnie większą zaletę i większą wadę**, ale podstawowe trafianie ma być wybaczające i satysfakcjonujące. Zrób macierz parametrów oraz testy TTK/obrażeń na bliskim i dalekim dystansie, grupie i linii celów. Nie twierdź, że „przyjemnie się gra”, dopóki nie ma ręcznego playtestu.
-6. **Wizualny polish:** itemy i dropy powinny być rozpoznawalnymi ikonami/obiektami, a nie samymi kolorowymi plamami; podłoże i przeszkody muszą odróżniać się od dekoracji i mieć spójne kontrasty. Zadbaj o czytelność w trakcie walki.
-7. **Testy i publikacja:** najpierw prywatne SSOT, testy (w tym Chromium jeśli dostępne), review diffu i CI; dopiero potem merge. Następnie zsynchronizuj publiczny mirror i zweryfikuj Pages. Na końcu podaj link do gry, PR, co się zmieniło, wyniki testów oraz co pozostaje niezweryfikowane.
+Bieżącym celem jest prototyp walki inspirowany Hotline Miami. Nie traktuj dawnych notatek o 30 pokojach, skrótach M/Shift ani wcześniejszych parametrach ruchu jako aktualnych; kod `index.html` i testy są źródłem prawdy.
+
+1. **Pętla piętra:** 10 pokojów w siatce 5×2, boss w pokoju 10, wymagane oczyszczenie pokojów 1–9. Nie zmieniaj tego flow bez zgody.
+2. **Śmiertelność:** gracz ginie od jednego rzeczywistego trafienia, z wyjątkiem istniejącego jednorazowego ratunku i wyraźnych okien uniku. Zwykły wróg ginie od jednego trafienia; boss jest wielotrafieniowy.
+3. **Osłony i AI:** kamienie blokują ruch, pociski i widoczność. AI ma obchodzić osłony; istnieją deterministyczne testy pojedynczego kamienia oraz dwóch kolejnych kamieni, ale nie obejmują wszystkich geometrii.
+4. **Czytelność strzałów:** zwykły strzelec ma 18 klatek windup, boss 24; kierunek zostaje zablokowany na początku ostrzeżenia. Ręcznie oceń, czy gracz widzi telegraph i może zareagować.
+5. **Sterowanie:** WASD = ruch, strzałki = strzelanie kierunkowe, mysz + LPM = strzał do kursora, M = mapa, V = wybór ruchu, B = wybór strzelania, Spacja = aktywny przedmiot, P = pauza, R = restart.
+6. **Następny priorytet techniczny:** naprawiaj wykazane błędy w generatorze, mapie, kolizjach, strzelaniu lub czytelności. Przed dużą zmianą mechaniki dodaj test regresyjny i najpierw ustal rzeczywisty stan kodu. Nie przepisuj AI na A* bez reprodukowalnego przypadku, w którym aktualna heurystyka zawodzi.
+7. **Oprawa wizualna:** pozostaje długoterminowym celem — własne, czytelne sylwetki potworów, itemy i podłoże — ale nie może maskować błędów w walce i nawigacji.
+8. **Publikacja:** po każdej zmianie sprawdź CI na dokładnym SHA, scalaj wyłącznie przy zielonym CI, synchronizuj mirror, porównuj treści plików i sprawdzaj deployment Pages. Ręcznego playtestu nie deklaruj, jeśli go nie wykonano.
 
 ## Następny ruch dla nowego czatu
-Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybierz spójny pierwszy pakiet: **mapa/generowanie + kontrole sterowania**, a następnie osobny pakiet grafiki i osobny pakiet balansu ruchu/broni, chyba że audyt ujawni krytyczny błąd blokujący. Przed kodowaniem przejrzyj dokładnie aktualny `index.html` i testy. Każda zmiana ma mieć test regresyjny i aktualizację dokumentacji.
 
+Najpierw pobierz aktualny HEAD main, stan PR/CI i status Pages; porównaj `index.html`, README, handoff, status, checklistę i testy. Dokumentacja historyczna zawiera wcześniejsze warianty (w tym 30 pokojów i starsze skróty), więc aktualizuj ją przy rozbieżnościach. Następnie kontynuuj od największego konkretnego problemu możliwego do odtworzenia. Nie pytaj użytkownika „co dalej?”, jeśli można bezpiecznie wykonać kolejny test lub bugfix.
 
 ## Dopisane po audycie 2026-10-21 — sterowanie i strzelanie
 - Aktualny skrót zmiany ruchu: **V** (M = mapa, B = broń). Starsze notatki z Q są historyczne i nie mogą nadpisywać aktualnego kodu.

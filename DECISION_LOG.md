@@ -265,3 +265,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Zamiast od razu przepisywać heurystykę na A*, dodano test rzeczywistej pętli gry dla dwóch kolejnych kamieni blokujących prostą trasę.
 - Test przechodzi: dystans do celu spada do 1,79 px w 180 klatkach, a przeciwnik zachowuje wymagany odstęp od obu skał. To ograniczony test regresyjny, nie dowód ogólnej poprawności AI.
 - Jeśli ręczny playtest lub dalsze scenariusze pokażą utknięcia, następnym krokiem będzie lokalny pathfinding uwzględniający kilka przeszkód.
+
+
+## 2026-10-22 — uzgodnienie dokumentacji z bieżącym kodem
+- Audyt wykazał, że README i część sekcji handoff/prompt opisywały poprzedni wariant (30 pokojów, 6×5 oraz starsze skróty). Bieżący `index.html` ma 10 pokojów w siatce 5×2, bossa w pokoju 10, M=mapa, V=ruch, B=strzelanie i śmiertelność jednego trafienia.
+- Zaktualizowano README, handoff i prompt kolejnej sesji; historyczne notatki pozostają jako historia, lecz nowy blok statusu wyraźnie wskazuje aktualny stan.
+- Nie zmieniono mechaniki gry w tej iteracji — tylko dokumentację, aby ograniczyć ryzyko podejmowania kolejnych prac na podstawie sprzecznych założeń.
