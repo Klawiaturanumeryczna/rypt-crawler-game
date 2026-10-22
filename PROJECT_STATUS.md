@@ -316,3 +316,8 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 ## Dodatkowa regresja AI — 2026-10-22
 - PR #57 (`a0c98e496b676429b9e04535a0d0ada6a86f2531`) dodaje deterministyczny test Chromium z dwoma kolejnymi kamieniami. CI run `39824808999` jest zielony: przeciwnik dochodzi do celu w 180 klatkach bez nakładania hitboxu na kamienie.
 - Test obejmuje jeden konkretny układ przeszkód, a nie pełną przestrzeń możliwych pokojów. Ręczny playtest wieloosłonowego pathfindingu nadal jest wymagany.
+
+## Gameplay fix in progress — player movement at cover (2026-10-22)
+- Confirmed code-level issue: player collision against a rock reverted both X and Y movement even when one axis was clear, making diagonal movement sticky at cover edges.
+- Candidate fix separates safe movement axes via `resolvePlayerCoverMovement`; browser smoke adds a deterministic diagonal-collision regression case. This branch is not merged/published yet; await CI.
+- This automated case verifies movement/collision behavior only; manual feel test remains open.
