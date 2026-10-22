@@ -123,3 +123,13 @@ Ten blok zastępuje wcześniejsze statusy w sekcji 7, jeśli są sprzeczne.
 - Zweryfikowano zgodność SHA plików: `index.html`, `verify.py`, `tests/browser_smoke.py`, `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`, `NEXT_CHAT_PROMPT.md`, `NEXT_CHAT_HANDOFF.md`, `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md`, `MANUAL_PLAYTEST_CHECKLIST.md` są identyczne między main i publicznym mirrorem.
 - Mirror workflow zakończony sukcesem: https://github.com/Klawiaturanumeryczna/rypt-crawler-game/actions/runs/39806755919. To potwierdza wdrożenie Pages dla aktualnego mirrora; sprawdź ponownie na żywo przed kolejnym deployem.
 - Ręczny playtest nie został wykonany. Największe otwarte ryzyko: proste omijanie kamieni przez AI może powodować blokowanie wrogów. Użyj `MANUAL_PLAYTEST_CHECKLIST.md` i zapisuj wyłącznie rzeczywiście zaobserwowane wyniki.
+
+## Najnowsza aktualizacja — 2026-10-22, po PR #62 (ma pierwszeństwo przed wcześniejszymi statusami)
+- PR #61 wprowadził protokół efektywnej pracy gameplay-first; jest scalony.
+- PR #62 scalony do main: https://github.com/Klawiaturanumeryczna/crypt-crawler/pull/62, merge SHA `614775c7d237b5b30a85c203619d7287366f0081`.
+- Naprawiono ruch gracza przy osłonach: wcześniej diagonalne wejście w kamień cofało obie osie, nawet gdy ruch wzdłuż jednej osi był bezpieczny. Nowa funkcja `resolvePlayerCoverMovement` zachowuje bezpieczną składową ruchu i tłumi tylko prędkość osi zablokowanej.
+- Browser smoke PR #62: run `39833470578` — success. Main CI po merge: run `39833751188` — success.
+- Zmiany zsynchronizowano do mirror `Klawiaturanumeryczna/rypt-crawler-game`; browser smoke i Pages deployment są sprawdzane. Nie ogłaszaj publikacji jako zakończonej, dopóki workflow Pages nie zakończy się sukcesem.
+- Test obejmuje deterministyczny przypadek diagonalnego kontaktu z kamieniem; nie dowodzi jeszcze subiektywnej poprawy sterowania. Ręczny playtest nadal otwarty: sprawdzić ślizganie wzdłuż osłon, brak przenikania przez kamienie i zachowanie przeciwników wokół wielu osłon.
+- Backup `backup/pre-hotline-miami-2026-10-22` pozostaje punktem powrotu i nie wolno go modyfikować.
+- Kontynuuj od problemu gameplayowego o największym wpływie; unikaj powtarzanych odczytów GitHub/CI i nie twórz kolejnych zmian dokumentacji bez konkretnej potrzeby.
