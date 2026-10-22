@@ -69,3 +69,26 @@ Research to hipotezy projektowe, nie dowód, że prototyp już jest przyjemny. S
 Nie kończ na opisie pomysłów. Zmień kod, dodaj testy, zweryfikuj CI, zapisz decyzje i aktualizuj ten handoff. Jeśli eksperyment jest gorszy, przygotuj bezpieczny powrót do gałęzi backupowej zamiast nadpisywać ją kolejnymi zmianami.
 
 Na start wykonaj audyt bieżącego HEAD, PR-ów i CI w repo, potem kontynuuj w trybie `OK, rob`.
+
+
+## 7. Świeży stan sprawdzony 2026-10-22 — przeczytaj, zanim ruszysz
+- Aktualny main HEAD przy ostatniej weryfikacji: `6ae4fb9630dfb90f43c260eaeb6743a8f703676b`. Zawsze sprawdź ponownie live HEAD przed zmianami.
+- PR #52 został scalony; kodowy commit HLM `21b828777bd42ecd344cd15b9700445651162ff3` ma zielony run push: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39805994523.
+- CI dla obecnego main HEAD `6ae4fb9630dfb90f43c260eaeb6743a8f703676b` jest zielone: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39808650676. `Verify source invariants` i `Test game in Chromium` przeszły.
+- Backup `backup/pre-hotline-miami-2026-10-22` istnieje i wskazuje na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`. Potwierdź SHA przed użyciem; nigdy nie przesuwaj tej gałęzi.
+- Zweryfikowano zgodne SHA 10 kluczowych plików main/mirror; mirror workflow zakończony sukcesem: https://github.com/Klawiaturanumeryczna/rypt-crawler-game/actions/runs/39806755919. Przed kolejną zmianą ponownie sprawdź live status.
+- PR #45 z wcześniejszą próbą 10-pokojową został zamknięty bez merge. Nie traktuj go jako bieżącego źródła prawdy; stan 10-pokojowy zachowuje backup wymieniony wyżej.
+- Najważniejsza niezweryfikowana rzecz: ręczny playtest nie został wykonany. Po sprawdzeniu CI kontynuuj w trybie `OK, rob` — priorytetem jest synchronizacja mirror/Pages, potem rzeczywisty playtest i poprawki wynikające z obserwacji.
+
+
+## 8. Aktualizacja stanu — sprawdzone 2026-10-22 17:48 UTC+2
+
+Ten blok zastępuje wcześniejsze statusy w sekcji 7, jeśli są sprzeczne.
+
+- Aktualny main HEAD: `6ae4fb9630dfb90f43c260eaeb6743a8f703676b`.
+- Dokładny HEAD ma zielony browser-smoke CI: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39808650676. Kroki `Verify source invariants` i `Test game in Chromium` zakończyły się sukcesem.
+- PR #52 z prototypem Hotline jest scalony. PR #53 z dokumentacją/checklistą jest scalony.
+- Backup jest potwierdzony: `backup/pre-hotline-miami-2026-10-22` → `b26b5d913fb06d0f124d92a9a17d24ae031df91c`. Nie ruszaj tej gałęzi.
+- Zweryfikowano zgodność SHA plików: `index.html`, `verify.py`, `tests/browser_smoke.py`, `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`, `NEXT_CHAT_PROMPT.md`, `NEXT_CHAT_HANDOFF.md`, `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md`, `MANUAL_PLAYTEST_CHECKLIST.md` są identyczne między main i publicznym mirrorem.
+- Mirror workflow zakończony sukcesem: https://github.com/Klawiaturanumeryczna/rypt-crawler-game/actions/runs/39806755919. To potwierdza wdrożenie Pages dla aktualnego mirrora; sprawdź ponownie na żywo przed kolejnym deployem.
+- Ręczny playtest nie został wykonany. Największe otwarte ryzyko: proste omijanie kamieni przez AI może powodować blokowanie wrogów. Użyj `MANUAL_PLAYTEST_CHECKLIST.md` i zapisuj wyłącznie rzeczywiście zaobserwowane wyniki.

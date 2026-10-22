@@ -254,3 +254,11 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - Szczegółowe wnioski i źródła: `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
 - Dodatkowa poprawka prototypu: klawisz R w trakcie gry lub po śmierci robi natychmiastowy restart z zachowaniem wybranego stylu broni/ruchu, bez ponownego ekranu wyboru.
 - Serca w trybie one-hit są zamienione na jednorazowy amulet ratunkowy (pierwsze) lub monety (kolejne); sklep sprzedaje amulet zamiast bezużytecznego dodatkowego HP.
+
+
+## Hotline Miami prototype — stan zweryfikowany 2026-10-22 17:48 UTC+2
+- Aktualny main HEAD w momencie audytu: `6ae4fb9630dfb90f43c260eaeb6743a8f703676b`; CI green: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39808650676.
+- PR #52 i #53 scalone. Backup pre-Hotline istnieje: `backup/pre-hotline-miami-2026-10-22` → `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
+- Pliki kodu/testów/dokumentacji mają zgodne SHA między main i mirrorem; ostatni mirror workflow zakończył się sukcesem: https://github.com/Klawiaturanumeryczna/rypt-crawler-game/actions/runs/39806755919.
+- Research rozbudowano w `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`; prompt nowego czatu jest w `NEXT_CHAT_PROMPT.md`.
+- Nadal otwarte: ręczny playtest osłon, zachowania AI przy przeszkodach, czytelności zagrożeń i sprawiedliwości śmierci. Zielone CI nie jest dowodem na jakość walki.

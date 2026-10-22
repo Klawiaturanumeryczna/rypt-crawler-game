@@ -226,3 +226,10 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Wnioski: adaptować szybki restart, czytelne reguły i swobodę rozwiązywania starć z HLM1 oraz różnorodność przeciwników/układów z HLM2; unikać strzałów spoza ekranu i niespójnego AI.
 - Źródła i acceptance criteria w `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
 - Doprecyzowanie eksperymentu: R w czasie gry/po śmierci natychmiast rozpoczyna nową próbę z zachowaną bronią i ruchem. Serca w trybie jednego życia dają pierwszy amulet ratunkowy, kolejne zamieniają się w monety; sklep sprzedaje amulet zamiast dodatkowego HP.
+
+
+## 2026-10-22 — doprecyzowanie zasad prototypu Hotline
+- Research rozszerzony o recenzje GameSpot, PC Gamer, GamesRadar, Pocket Gamer oraz jakościowe dyskusje Reddit. Powtarzające się motywy: one-hit lethality, szybki restart, hałas jako trade-off, użyteczna geometria i swoboda rozwiązań; ostrzeżenia: strzały spoza czytelnego pola widzenia i niespójne AI.
+- Źródła i konkretne zasady implementacji znajdują się w `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
+- Walidacja automatyczna dla main HEAD `6ae4fb9630dfb90f43c260eaeb6743a8f703676b` jest zielona (run 39808650676); mirror deployment jest zielony (run 39806755919), a backup pozostaje na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
+- Ręczny playtest nie został wykonany. Nie uznawać ścieżkowania AI ani fairness za potwierdzone bez obserwacji.

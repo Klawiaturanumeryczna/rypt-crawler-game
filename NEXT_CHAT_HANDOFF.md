@@ -1,5 +1,5 @@
 # Crypt Crawler — handoff dla kolejnego czatu
-**Aktualizacja:** 2026-10-21  
+**Aktualizacja:** 2026-10-22  
 **Ten plik jest punktem startowym dla nowej sesji.** Najpierw przeczytaj go, następnie `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md` oraz `verify.py` i `tests/browser_smoke.py`. Nie opieraj się wyłącznie na podsumowaniu rozmowy — sprawdź bieżący stan repozytorium.
 
 ## Linki i architektura repo
@@ -117,3 +117,24 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 
 - W aktualnej wersji działa szybki restart R z zachowaniem broni/ruchu oraz ekonomia jednego życia: pierwszy pickup serca daje amulet ratunkowy, kolejne monety, sklep sprzedaje ratunek zamiast +HP. Ręczny playtest nadal nie został wykonany.
 - Gotowy prompt dla kolejnego czatu znajduje się w `NEXT_CHAT_PROMPT.md`; nie wystarczy sam prompt — nowy czat ma najpierw przeczytać handoff/status/research w repo.
+
+
+## Stan przekazania — sprawdzone ponownie 2026-10-22 17:50
+- Aktualny HEAD w chwili aktualizacji: `a7058f1cce32185d9f99e3a511c7e65770b1c8ea` (commit dokumentacyjny po merge Hotline). Sprawdź ponownie przed dalszą pracą, bo HEAD może się zmienić.
+- PR #52 scalony. Kodowy commit `21b828777bd42ecd344cd15b9700445651162ff3` ma zielony CI: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39805994523.
+- Najnowszy run dla dokumentacyjnego HEAD jest anulowany: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39806564672. Nie traktuj tego jako testu kodu, ale zweryfikuj aktualny CI i nie twierdź, że dokładny HEAD jest zielony, dopóki nie sprawdzisz.
+- Backup nadal istnieje: `backup/pre-hotline-miami-2026-10-22` → `b26b5d913fb06d0f124d92a9a17d24ae031df91c`. To punkt powrotu do wersji 10-pokojowej przed HLM. Nie zmieniaj jego refa.
+- Mirror/Pages w poprzednim odczycie nie były zsynchronizowane z Hotline. Zweryfikuj teraz na żywo; synchronizuj pliki z main, porównaj SHA, sprawdź CI mirrora i deployment Pages.
+- PR #45 (wcześniejsza próba implementacji 10 pokojów) został zamknięty bez merge. Nie bazuj na jego gałęzi. Kod HLM w main to obecny eksperyment; 10-pokojowa wersja jest zachowana w backupie.
+- Brak ręcznego playtestu. Po synchronizacji mirror/Pages wykonaj testy z `MANUAL_PLAYTEST_CHECKLIST.md` i zapisz tylko obserwacje faktycznie sprawdzone.
+- Gotowy prompt do wklejenia w nowym czacie: `NEXT_CHAT_PROMPT.md`. Prompt instruuje nowy czat, by przeczytał dokumenty, sprawdził aktualny stan repo/CI i kontynuował `OK, rob` bez pytania „co dalej?”.
+
+
+## MAX MARATON — Hotline research and live-state verification (2026-10-22 17:48 UTC+2)
+- Main HEAD zweryfikowany: `6ae4fb9630dfb90f43c260eaeb6743a8f703676b`. Dokładny HEAD ma zielone CI: https://github.com/Klawiaturanumeryczna/crypt-crawler/actions/runs/39808650676 — zarówno `Verify source invariants`, jak i `Test game in Chromium` zakończone sukcesem.
+- PR #52 (prototyp walki Hotline) i PR #53 (handoff/checklista) są scalone.
+- Backup sprawdzony na żywo: `backup/pre-hotline-miami-2026-10-22` → `b26b5d913fb06d0f124d92a9a17d24ae031df91c`. Nie przesuwać ani nie nadpisywać.
+- SHA wszystkich kluczowych plików — kod, testy, research, prompt, handoff, status, decyzje, balans i checklista — są identyczne między main i publicznym mirrorem. Mirror workflow zakończony sukcesem: https://github.com/Klawiaturanumeryczna/rypt-crawler-game/actions/runs/39806755919.
+- Research został rozszerzony o dodatkowe recenzje i jakościowe dyskusje społecznościowe; plik `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md` jest dokumentem źródłowym dla wniosków.
+- Najważniejszy otwarty punkt: brak ręcznego playtestu. CI nie potwierdza, że AI umie obchodzić kamienie ani że śmierci są odczuwane jako sprawiedliwe. Użyj `MANUAL_PLAYTEST_CHECKLIST.md` i nie wymyślaj wyników.
+- Gotowy prompt dla nowego czatu: `NEXT_CHAT_PROMPT.md`. Przed dalszą pracą nowy czat ma przeczytać pliki, sprawdzić live HEAD/CI/mirror i kontynuować `OK, rob`.

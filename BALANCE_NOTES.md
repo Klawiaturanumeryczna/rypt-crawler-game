@@ -321,3 +321,12 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - Ryzyko: proste unikanie kamieni przez wrogów nie zastępuje pełnego pathfindingu. Trzeba sprawdzić ręcznie, czy AI nie blokuje się i czy śmierci są czytelne.
 - Szybki restart R ma zachowywać aktualny styl broni/ruchu i wracać prosto do walki, bez ponownego klikania dwóch ekranów wyboru.
 - W trybie one-hit zwykłe serca nie mogą zwiększać HP. Pierwsze daje amulet ratunkowy, kolejne zamieniają się w monety; sklep oferuje amulet ratunkowy zamiast +2 HP.
+
+
+## Hotline Miami — wnioski z recenzji i społeczności (2026-10-22)
+- Zachowaj jedno trafienie jako czytelną regułę, nie zwiększaj trudności zwykłych przeciwników przez gąbki HP.
+- Strzały mają koszt taktyczny: krótkotrwały hałas ściąga pobliskich przeciwników do ostatniej znanej pozycji, nie teleportuje całej mapy.
+- Osłona musi spójnie blokować ruch, pociski i linię widzenia. Każdy przypadek strzału przez kamień lub niewidocznego strzelca to regresja.
+- Priorytetem jest HLM1-owa swoboda podejść oraz szybki restart; nie kopiować problematycznych HLM2-owych długich linii ostrzału i wymuszonych walk z niewidocznymi przeciwnikami.
+- Automat nie oceni frajdy. Ręcznie sprawdzić pathfinding przy kamieniach, czas reakcji, czytelność strzałów i sensowność ryzyka przed strojeniem statystyk.
+- Szczegółowe źródła i caveaty: `HOTLINE_MIAMI_RESEARCH_AND_DESIGN.md`.
