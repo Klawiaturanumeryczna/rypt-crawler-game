@@ -6,6 +6,15 @@
 
 Gra: https://klawiaturanumeryczna.github.io/rypt-crawler-game/
 
+## 0. Ekonomia sklepu i osłony (nowe)
+
+- [ ] Podejdź do oferty sklepu bez naciskania `E`: przedmiot ma pozostać na miejscu, a monety nie mogą się zmienić.
+- [ ] Naciśnij `E` przy ofercie, na którą stać gracza: oferta znika dopiero po zakupie, saldo spada dokładnie o wyświetloną cenę, przedmiot trafia do ekwipunku.
+- [ ] Spróbuj podejść do oferty bez wystarczającej liczby monet: oferta pozostaje, saldo nie zmienia się.
+- [ ] Wejdź do sklepu z amuletem już w ekwipunku: sprawdź, czy oferta nie obiecuje leczenia ani nie pobiera pieniędzy za efekt, którego nie otrzymasz.
+- [ ] Sprawdź, że zwykłe monety nadal zbierają się przez kontakt i że licznik HUD od razu pokazuje nowe saldo.
+- [ ] W kilku pokojach Hotline sprawdź formacje `U`, `X`, `L`, `I`, `T`: kamienie powinny zasłaniać pociski, zostawiać przejścia dla gracza i przeciwników oraz nie blokować wyjść.
+
 ## 1. Start i skróty
 
 - [ ] Rozpocznij nowy run i wybierz styl strzelania, a następnie styl ruchu.
