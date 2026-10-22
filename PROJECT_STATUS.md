@@ -13,6 +13,11 @@ Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historyczn
 
 ---
 
+
+## Audyt użyteczności przedmiotów one-hit — w trakcie PR
+- Wykryto, że leczenie i zwiększanie maksymalnego HP były bezużyteczne w trybie Hotline, gdzie dowolne trafienie zeruje całe zdrowie. W gałęzi `fix/hotline-health-item-utility-2026-10-22` testowane jest przekształcenie czterech takich przedmiotów w amulet ratunkowy lub monety.
+- Nie traktować jako scalonego ani wdrożonego, dopóki PR i CI nie zakończą się sukcesem.
+
 # Crypt Crawler — PROJECT STATUS
 Updated: 2026-10-22
 

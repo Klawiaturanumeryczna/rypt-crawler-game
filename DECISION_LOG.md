@@ -271,3 +271,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Audyt wykazał, że README i część sekcji handoff/prompt opisywały poprzedni wariant (30 pokojów, 6×5 oraz starsze skróty). Bieżący `index.html` ma 10 pokojów w siatce 5×2, bossa w pokoju 10, M=mapa, V=ruch, B=strzelanie i śmiertelność jednego trafienia.
 - Zaktualizowano README, handoff i prompt kolejnej sesji; historyczne notatki pozostają jako historia, lecz nowy blok statusu wyraźnie wskazuje aktualny stan.
 - Nie zmieniono mechaniki gry w tej iteracji — tylko dokumentację, aby ograniczyć ryzyko podejmowania kolejnych prac na podstawie sprzecznych założeń.
+
+
+## 2026-10-22 — brak bezużytecznego leczenia w trybie one-hit
+- Audyt wykazał, że Mała/Wielka Apteczka oraz dwa przedmioty zwiększające HP zachowywały stare efekty leczenia, mimo że w Hotline mode dowolne trafienie zeruje całe zdrowie. Były więc funkcjonalnie bezużyteczne.
+- W trybie one-hit te cztery przedmioty dają amulet ratunkowy, jeśli gracz go nie ma; duplikat zamieniają w 2/3 monety. W trybie standardowym zachowują dotychczasowe działanie.
+- Dodano regresję Chromium dla obu rodzajów przedmiotów, przypadku bez amuletu i duplikatu oraz czytelności opisów. To chroni użyteczność mechaniki, ale nie zatwierdza balansu ekonomii.

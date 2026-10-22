@@ -342,3 +342,10 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - W nowej gałęzi eksperymentalnej windup wynosi 18 klatek dla zwykłego strzelca i 24 dla bossa (ok. 0,30/0,40 s przy 60 FPS). Kierunek zostaje zablokowany w chwili rozpoczęcia ostrzeżenia; strafe po tej chwili może ominąć pocisk.
 - Utrata linii widzenia do gracza albo zasłonięcie zapisanej linii przez kamień kasuje ostrzeżenie. Pociski nadal są blokowane przez kamienie.
 - To hipoteza poprawiająca czytelność, nie zatwierdzony balans. Test Chromium ma sprawdzić czas i blokadę kierunku; ręczny playtest nadal potrzebny do oceny reakcji i presji.
+
+
+## 2026-10-22 — przedmioty zdrowia w trybie jednego trafienia
+- W Hotline mode zwykłe leczenie i zwiększanie maksymalnego HP nie dawały korzyści: każde trafienie i tak zeruje całe zdrowie, a gracz ma jedną widoczną ikonę życia.
+- Mała/Wielka Apteczka oraz Nagolenniki Witalności/Nagolenniki Życia konwertują się teraz na jednorazowy amulet ratunkowy, jeśli gracz go nie ma. Jeśli amulet już jest w ekwipunku, przedmiot zamienia się w monety (2 dla małego wariantu, 3 dla dużego).
+- Opisy przedmiotów pokazują aktualny efekt trybu one-hit. W trybie poza Hotline zachowano dotychczasowe leczenie i wzrost maksymalnego HP.
+- To poprawka użyteczności i spójności systemu przedmiotów, nie zmiana reguły śmiertelności. Test Chromium sprawdza cztery przypadki; ręczny playtest nadal musi ocenić ekonomię i tempo zdobywania ratunku.

@@ -182,3 +182,9 @@ Najpierw pobierz aktualny HEAD main, stan PR/CI i status Pages; porównaj `index
 - Rozszerzono `window.__testEnemyCoverNavigation()` o dwa kamienie na bezpośredniej trasie. Po 180 klatkach wróg osiągnął cel (dystans 1,79 px), odszedł od linii środkowej o 51,56 px i nie nachodził na żadną skałę (odległości 168,40 i 98,40 px przy wymaganych 42 px).
 - To potwierdza wyłącznie deterministyczny scenariusz dwóch ustawionych w linii kamieni; nie dowodzi, że AI zawsze znajdzie drogę w ciasnych pokojach lub przy losowych układach.
 - Kolejny krok: po synchronizacji mirrora i potwierdzeniu Pages użytkownik ma wykonać ręczny playtest. Nie dodawaj pełnego A* bez dowodu z testu, że obecna heurystyka zawodzi.
+
+
+## MAX MARATON — użyteczność leczenia w one-hit (2026-10-22)
+- Audyt wykrył, że Mała/Wielka Apteczka i Nagolenniki Witalności/Nagolenniki Życia zachowywały leczenie/bonus HP mimo śmiertelności jednego trafienia.
+- Gałąź `fix/hotline-health-item-utility-2026-10-22` zmienia te cztery przedmioty w amulet ratunkowy, jeśli nie ma go w ekwipunku, lub monety w przypadku duplikatu. W trybie standardowym ich stare efekty pozostają bez zmian.
+- PR/CI trzeba zweryfikować przed scaleniem; test ręczny ekonomii nie został wykonany.

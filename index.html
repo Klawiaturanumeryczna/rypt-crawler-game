@@ -99,14 +99,15 @@ const OPISY_PRZEDMIOTOW={
  legs:['Krok +0,10 — postać pokonuje większy dystans przy ruchu.','Krok +0,20 — postać pokonuje większy dystans przy ruchu.','Maksymalne zdrowie +1 serce i leczy 1 serce.','Prędkość +0,20, ale szybkostrzelność gorsza o 1 klatkę.','Czas nietykalności po trafieniu +10 klatek.','Krok +0,15 — postać pokonuje większy dystans przy ruchu.','Obrażenia pocisków +0,25 i zostawiasz za sobą krótkotrwałe pola zadające obrażenia.','Maksymalne zdrowie +1 serce i leczy 1 serce.','Krok +0,25, ale szybkostrzelność gorsza o 2 klatki.','Czas nietykalności +20 klatek i prędkość +0,15.'],
  shot:['Obrażenia pocisków +0,25.','Obrażenia pocisków +0,50.','Szybkostrzelność lepsza o 2 klatki.','Prędkość pocisków +1.','Rozmiar pocisku +1.','Szybkostrzelność lepsza o 3 klatki.','Obrażenia +0,25, ale szybkostrzelność gorsza o 1 klatkę.','Rozmiar pocisku +2, ale prędkość pocisku −0,5.','Prędkość pocisku +1,5.','Obrażenia +1, ale szybkostrzelność gorsza o 2 klatki.']
 };
-function itemDescription(item){if(item.kategoria==='rescue')return 'Automatycznie blokuje jeden śmiertelny cios i pozostawia 1 HP. Zużywa się po aktywacji.';if(item.kategoria==='movement'){const m=MOVEMENT_TYPES[item.ruchKey];return m.desc+' Prędkość bazowa: '+m.speed.toFixed(2)+'. Wejdź w przedmiot, aby przyjąć ten styl ruchu.'}return OPISY_PRZEDMIOTOW[item.kategoria]?.[item.numer-1]||'Brak opisu.'}
+function itemDescription(item){if(item.kategoria==='rescue')return 'Automatycznie blokuje jeden śmiertelny cios i pozostawia 1 HP. Zużywa się po aktywacji.';if(HOTLINE_MIAMI_MODE&&item.kategoria==='active'&&(item.numer===1||item.numer===8))return 'W trybie jednego trafienia daje jednorazowy amulet ratunkowy; jeśli amulet już jest w ekwipunku, zamienia się w '+(item.numer===1?'2':'3')+' monety.';if(HOTLINE_MIAMI_MODE&&item.kategoria==='legs'&&(item.numer===3||item.numer===8))return 'W trybie jednego trafienia daje jednorazowy amulet ratunkowy; jeśli amulet już jest w ekwipunku, zamienia się w '+(item.numer===3?'2':'3')+' monety.';if(item.kategoria==='movement'){const m=MOVEMENT_TYPES[item.ruchKey];return m.desc+' Prędkość bazowa: '+m.speed.toFixed(2)+'. Wejdź w przedmiot, aby przyjąć ten styl ruchu.'}return OPISY_PRZEDMIOTOW[item.kategoria]?.[item.numer-1]||'Brak opisu.'}
 function maxRoomsForFloor(f){return 10}
+function grantRescueOrCoins(source,coinsIfRescueOwned=1){const rescue=DANE_GRY.przedmioty.ratunkowe[0];if(!player.items.some(item=>item.kategoria==='rescue')){player.items.push(rescue);log(source+' — otrzymujesz jednorazowy amulet ratunkowy.')}else{coins+=coinsIfRescueOwned;log(source+' — amulet już posiadasz; zamiana na '+coinsIfRescueOwned+' monety.')}updateHud()}
 function applyPassiveItem(item){
  const p=player,n=item.numer,cat=item.kategoria,notes=[];
  if(cat==='legs'){
   if(n===1||n===2||n===6||n===9){const old=p.step;p.step+=({1:.10,2:.20,6:.15,9:.25})[n];notes.push('krok '+old.toFixed(2)+' → '+p.step.toFixed(2)+' (mnożnik dystansu ruchu)');}
   if(n===4||n===10){const old=p.speed;p.speedBonus=(p.speedBonus||0)+(n===4?.2:.15);p.speed=MOVEMENT_TYPES[p.movement||'runner'].speed+p.speedBonus;notes.push('prędkość '+old.toFixed(2)+' → '+p.speed.toFixed(2));}
-  if(n===3||n===8){const oldMax=p.maxHp,oldHp=p.hp;p.maxHp+=2;p.hp=Math.min(p.maxHp,p.hp+2);notes.push('maksymalne HP '+oldMax+' → '+p.maxHp+'; zdrowie '+oldHp+' → '+p.hp);}
+  if(n===3||n===8){if(HOTLINE_MIAMI_MODE){p.items=p.items.filter(x=>x!==item);grantRescueOrCoins(item.nazwa,n===3?2:3)}else{const oldMax=p.maxHp,oldHp=p.hp;p.maxHp+=2;p.hp=Math.min(p.maxHp,p.hp+2);notes.push('maksymalne HP '+oldMax+' → '+p.maxHp+'; zdrowie '+oldHp+' → '+p.hp);}}
   if(n===4||n===9){const old=p.fireRate;p.fireRate+=n===4?1:2;notes.push('szybkostrzelność '+old+' → '+p.fireRate);}
   if(n===5||n===10){const old=p.invulnDuration;p.invulnDuration+=n===5?10:20;notes.push('nietykalność po trafieniu '+old+' → '+p.invulnDuration+' klatek');}
   if(n===7){const old=p.damage;p.damage+=.25;p.trailDamage=true;notes.push('obrażenia '+old+' → '+p.damage+'; ślad raniący wrogów');}
@@ -119,7 +120,7 @@ function applyPassiveItem(item){
 }
 function useActiveItem(item){
  const n=item.numer,oldHp=player.hp,oldCoins=coins;
- if(n===1||n===8){player.hp=Math.min(player.maxHp,player.hp+(n===1?2:4));log('ZDROWIE: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+'.')}
+ if(n===1||n===8){if(HOTLINE_MIAMI_MODE){grantRescueOrCoins(item.nazwa,n===1?2:3)}else{player.hp=Math.min(player.maxHp,player.hp+(n===1?2:4));log('ZDROWIE: '+oldHp+'/'+player.maxHp+' → '+player.hp+'/'+player.maxHp+'.')}}
  else if(n===2||n===9){coins+=n===2?2:3;log('MONETY: '+oldCoins+' → '+coins+'.')}
  else if(n===3||n===7||n===10){const targets=n===7?enemies.filter(e=>e.hp>0).sort((a,b)=>Math.hypot(a.x-player.x,a.y-player.y)-Math.hypot(b.x-player.x,b.y-player.y)).slice(0,1):enemies.filter(e=>e.hp>0);const dmg=n===3?4:n===7?10:2;targets.forEach(e=>damageEnemy(e,dmg,e.x,e.y));log('EFEKT — '+targets.length+' wrogów otrzymuje do '+dmg+' obrażeń.')}
  if(n===4||n===10){const old=enemyShots.length;enemyShots=[];log('Wrogie pociski: '+old+' → 0.')}

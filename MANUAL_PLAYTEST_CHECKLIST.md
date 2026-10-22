@@ -128,3 +128,9 @@ Dla każdej obserwacji zapisz:
 ## Dodatkowa uwaga po teście automatycznym — dwie osłony (2026-10-22)
 - [ ] W normalnej grze ustaw się tak, by dwa kamienie blokowały najkrótszą trasę przeciwnika. Sprawdź, czy wróg wybiera wiarygodne obejście, nie drga i nie zostaje w pętli.
 - [ ] Powtórz z przeciwnikiem dystansowym, strzelającym i kilkoma wrogami naraz. Test Chromium potwierdza tylko jeden deterministyczny scenariusz z dwoma kamieniami.
+
+
+## Dodatkowa kontrola przedmiotów zdrowia w one-hit (2026-10-22)
+- [ ] Podnieś Małą Apteczkę lub Nagolenniki Witalności bez amuletu: przedmiot powinien dać jednorazowy ratunek, a nie tylko nieistotne HP.
+- [ ] Z amuletem w ekwipunku podnieś/kup kolejny przedmiot zdrowia: powinien zamienić się w monety, bez stackowania ratunku.
+- [ ] Sprawdź opisy Małej/Wielkiej Apteczki i obu nagolenników przed podniesieniem, by jasno informowały o zachowaniu w trybie one-hit.
