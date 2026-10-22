@@ -287,3 +287,7 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - **Wyjaśnienie amuletu:** amulet ratunkowy automatycznie blokuje jeden śmiertelny cios i pozostawia 1 HP; zużywa się po aktywacji. W trybie jednego trafienia oferta za 2 monety kupuje tę ochronę, nie leczenie HP.
 - **Decyzja level design:** zamiast kilku niezależnych, przypadkowych kamieni, pokoje Hotline używają skupionych formacji `U`, `X`, `L`, `I`, `T`. Formacje mają dawać zarówno osłonę przed linią strzału, jak i przestrzeń do obejścia; ich jakość nadal wymaga ręcznego playtestu.
 - **Status:** PR #60 scalony do `main` jako `97d0b289f92f8651f4da0a8423a3832e63135b96`; browser smoke run `39830353160` zakończył się sukcesem. Ręczny playtest nadal otwarty.
+
+## 2026-10-22 — Player collision with cover
+- Decision: when a diagonal player step intersects a rock, attempt movement along each axis separately and retain a safe axis rather than reverting both coordinates. This should make cover feel less sticky while preserving rock collision.
+- Validation required: deterministic Chromium regression, source verification, green CI on exact PR head. Manual feel is still unverified.
