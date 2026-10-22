@@ -193,3 +193,11 @@ Najpierw pobierz aktualny HEAD main, stan PR/CI i status Pages; porównaj `index
 - Audyt wykrył, że Mała/Wielka Apteczka i Nagolenniki Witalności/Nagolenniki Życia zachowywały leczenie/bonus HP mimo śmiertelności jednego trafienia.
 - Gałąź `fix/hotline-health-item-utility-2026-10-22` zmienia te cztery przedmioty w amulet ratunkowy, jeśli nie ma go w ekwipunku, lub monety w przypadku duplikatu. W trybie standardowym ich stare efekty pozostają bez zmian.
 - PR #59 scalono jako `05aa3c9e70da03d96d826493392e4ae45f7b109a`; CI main run `39826837619` jest zielony. Po synchronizacji mirror Browser smoke `39826896790` i Pages deployment `39826897083` również przeszły. Test ręczny ekonomii nie został wykonany.
+
+## Zmiana sposobu pracy — 2026-10-22
+Po informacji zwrotnej użytkownika obowiązuje protokół z sekcji „4A. Protokół efektywnej pracy” w `NEXT_CHAT_PROMPT.md`. Priorytetem jest namacalny postęp gameplayowy. Ogranicz powtarzane odczyty GitHub/CI, grupuj powiązane zmiany, dobieraj testy do ryzyka i nie traktuj zielonego smoke testu jako dowodu dobrej rozgrywki. Ręczny playtest osłon/AI pozostaje niewykonany i nie wolno go raportować jako zaliczonego. Nie zmieniaj ani nie przesuwaj backupu.
+
+## Current gameplay task — 2026-10-22
+- Branch `fix/player-cover-slide-2026-10-22`: fix player movement sticking against rock cover. Previously any diagonal collision rolled back both axes; candidate helper retains a safe axis and only dampens the blocked velocity component.
+- Added deterministic browser regression case and source invariant. Do not claim merged or published until PR CI passes and merge/sync are verified.
+- Manual playtest of cover feel and enemy routing remains outstanding. Preserve backup branch untouched.
