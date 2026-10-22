@@ -29,7 +29,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements-test.txt
-          python -m playwright install --with-deps chromium
+          python -m playwright install chromium
       - name: Verify source invariants
         run: python verify.py
       - name: Test game in Chromium

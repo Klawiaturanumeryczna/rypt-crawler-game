@@ -163,3 +163,12 @@ Nie pytaj użytkownika, od czego zacząć. Zrób aktualny audyt kodu i CI. Wybie
 - Zmienione pliki: `index.html`, `tests/browser_smoke.py`, `verify.py`, `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md`, `MANUAL_PLAYTEST_CHECKLIST.md`, ten handoff.
 - Po zielonym CI: review diffu, otwórz PR; nie scalaj samodzielnie, dopóki wszystkie workflowy nie będą zielone. Po merge synchronizuj dokładnie zmienione pliki do mirrora, sprawdź zgodność SHA, Browser smoke i Pages deployment.
 - Użytkownik ma później wykonać playtest. Do tego czasu pathfinding i fairness ataków są niepotwierdzone; nie twierdzić, że ręcznie sprawdzono grę.
+
+
+## MAX MARATON — windup z możliwością uniku (2026-10-22)
+- Gałąź robocza: `fix/telegraph-locked-aim-2026-10-22`, utworzona z main `51572207218eac2b49645fa4b1a38008c58e2bb8`.
+- Eksperyment: zwykły strzelec 18 klatek, boss 24 klatki ostrzeżenia; kierunek zapisany przy rozpoczęciu windup, pocisk nie śledzi gracza. Ostrzeżenie anuluje się, gdy zapisany tor zostaje zasłonięty kamieniem lub wróg traci czystą linię wzroku.
+- Zmieniono `index.html`, `tests/browser_smoke.py` i `verify.py`; test Chromium przesuwa gracza w trakcie windup i sprawdza, że pocisk nadal leci w poprzedni kierunek.
+- Zaktualizowano `BALANCE_NOTES.md`, `DECISION_LOG.md`, `MANUAL_PLAYTEST_CHECKLIST.md` i `PROJECT_STATUS.md`. To eksperyment oczekujący na CI/PR; nie twierdzić, że został scalony ani wdrożony.
+- W momencie rozpoczęcia tej iteracji main HEAD to `51572207218eac2b49645fa4b1a38008c58e2bb8`. CI main dla tego SHA był długotrwale `in_progress` na kroku instalacji Playwright, a mirror browser smoke był zielony; Pages deployment był w kolejce. Sprawdź status ponownie na żywo.
+- Brak ręcznego playtestu. Nie zmieniać gałęzi backupowej.

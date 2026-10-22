@@ -115,3 +115,11 @@ Dla każdej obserwacji zapisz:
 - [ ] Zasłoń linię kamieniem w trakcie starcia. Ostrzeżenie i strzał nie mogą przechodzić przez kamień; przy utracie widoczności windup powinien się anulować.
 - [ ] Otwórz M: graf 5×2 powinien być wyśrodkowany, korytarze łączyć rzeczywiście połączone pokoje, a podpisy jasno rozróżniać START/BOSS/? oraz znaczniki sklepu/zejścia.
 - [ ] Zapisz przeglądarkę, rozdzielczość, pokój, archetyp wroga i obserwację. Zgłoś osobno: „działa”, „nie działa”, „nie wiem”.
+
+
+## Dodatkowy test — unik przed strzałem (2026-10-22)
+- [ ] Stań w czystej linii widzenia strzelca i zaczekaj, aż pojawi się linia ostrzegawcza.
+- [ ] Natychmiast przesuń się w bok. Sprawdź, czy linia pozostaje skierowana na poprzednią pozycję, a pocisk nie śledzi gracza po rozpoczęciu windup.
+- [ ] Sprawdź, czy okno reakcji jest zauważalne i nie pozwala przeciwnikowi bezkarnie strzelać z bardzo bliska.
+- [ ] W trakcie ostrzeżenia przesuń się za kamień. Windup powinien zostać anulowany, a pocisk nie może przejść przez kamień.
+- [ ] Powtórz przeciw bossowi: trzy pociski wachlarza muszą zachować kierunek oparty na zapisanym celowaniu.

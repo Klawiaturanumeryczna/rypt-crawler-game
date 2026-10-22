@@ -335,3 +335,10 @@ Testy Chromium mierzą realny czas do 95% prędkości, zmianę kierunku i drogę
 - Atak dystansowy widocznego wroga rozpoczyna windup 10 klatek; boss 16 klatek. W tym czasie na ekranie pojawia się linia celowania, a pocisk nie jest jeszcze tworzony.
 - To zmiana telegraphu i czasu reakcji, nie zmiana obrażeń: gracz nadal ginie od rzeczywistego trafienia, z wyjątkiem istniejącego jednorazowego amuletu ratunkowego.
 - Wartości są tymczasowe. Ręcznie sprawdzić, czy ostrzeżenie jest zauważalne, daje czas na unik i nie czyni strzelców bezradnymi; nie uznawać ich za finalny balans bez obserwacji.
+
+
+## Iteracja windup — zablokowany kierunek celowania (2026-10-22)
+- Poprzednie 10/16 klatek dla zwykłego strzelca/bossa było zbyt krótkim oknem do świadomej reakcji i nie testowało uniku: linia celowania oraz pocisk podążały za bieżącą pozycją gracza.
+- W nowej gałęzi eksperymentalnej windup wynosi 18 klatek dla zwykłego strzelca i 24 dla bossa (ok. 0,30/0,40 s przy 60 FPS). Kierunek zostaje zablokowany w chwili rozpoczęcia ostrzeżenia; strafe po tej chwili może ominąć pocisk.
+- Utrata linii widzenia do gracza albo zasłonięcie zapisanej linii przez kamień kasuje ostrzeżenie. Pociski nadal są blokowane przez kamienie.
+- To hipoteza poprawiająca czytelność, nie zatwierdzony balans. Test Chromium ma sprawdzić czas i blokadę kierunku; ręczny playtest nadal potrzebny do oceny reakcji i presji.

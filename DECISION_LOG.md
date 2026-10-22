@@ -245,3 +245,9 @@ Purpose: durable record of design decisions agreed in chat. This document record
 - Wrogowie dystansowi w trybie śmiertelnym mają ujawniać linię strzału przez krótki windup przed wystrzałem. To ma poprawić czytelność zagrożenia, a nie osłabiać pocisków ani zmieniać zasad one-hit.
 - Gdy kamień blokuje bezpośrednią trasę, przeciwnik powinien próbować obejścia przez punkt styczny. Implementacja jest heurystyczna; jeśli testy ręczne pokażą oscylowanie lub utknięcia przy kilku kamieniach, kolejnym krokiem będzie prosty lokalny pathfinding, nie podbijanie statystyk wrogów.
 - Wszystkie trzy zachowania wymagają zielonego CI i ręcznej oceny; automatyczne testy są tylko regresyjnymi kontraktami.
+
+
+## 2026-10-22 — windup z zablokowanym celowaniem (eksperyment)
+- Zwiększyć okno ostrzeżenia z 10/16 do 18/24 klatek (zwykły strzelec/boss) jako hipotezę do testu, nie jako finalny balans.
+- Linia ostrzegawcza musi odpowiadać miejscu/kierunkowi, do którego faktycznie poleci pocisk. Nie śledzić gracza bez końca podczas windup, bo wtedy strafe nie daje czytelnej możliwości uniknięcia ataku.
+- Jeśli linia do zapisanej pozycji jest zasłonięta kamieniem, anuluj windup. Nie zmieniaj reguły one-hit ani obrażeń pocisku.

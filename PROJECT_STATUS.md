@@ -1,4 +1,17 @@
 # Crypt Crawler — PROJECT STATUS
+Updated: 2026-10-22
+
+## AKTUALNY STAN — eksperyment Hotline Miami (nadrzędny wobec starszych notatek historycznych)
+- Źródło prawdy: prywatne repozytorium `crypt-crawler`; przed decyzją zawsze sprawdź aktualny HEAD/CI. Stan bazowy tej iteracji: main `51572207218eac2b49645fa4b1a38008c58e2bb8`.
+- Aktywny wariant gry ma 10 pokojów na piętrze (siatka 5×2), pokoje 1–9 należy oczyścić, a pokój 10 jest bossem; zejście odblokowuje się dopiero po jego pokonaniu. To tymczasowa decyzja eksperymentu HLM i zastępuje starsze notatki o 30 pokojach.
+- Zasady walki: jedno życie gracza, zwykli wrogowie giną od jednego trafienia, boss jest wyjątkiem wielotrafieniowym, kamienie blokują ruch/pociski/widoczność, strzały przyciągają pobliskich wrogów do miejsca hałasu. Restart R powinien zachować wybór broni/ruchu.
+- Scalony pakiet PR #55 poprawia wyśrodkowanie mapy, heurystyczne obchodzenie kamieni i czytelność ostrzeżenia przed strzałem. Heurystyka nie jest pełnym A* i wymaga testu ręcznego przy kilku osłonach.
+- Gałąź oczekująca na walidację `fix/telegraph-locked-aim-2026-10-22` testuje dłuższy windup (18/24 klatki) i zablokowany kierunek celowania, aby strafe pozwalał uniknąć pocisku. Nie jest jeszcze scalona ani wdrożona.
+- Nie wykonano ręcznego playtestu. CI/Chromium nie potwierdza przyjemności sterowania, uczciwości śmierci ani jakości pathfindingu.
+
+---
+
+# Crypt Crawler — PROJECT STATUS
 Updated: 2026-10-19
 
 ## Latest implementation batch — persistent profile foundation
