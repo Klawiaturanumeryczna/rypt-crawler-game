@@ -2,6 +2,11 @@
 **Aktualizacja:** 2026-10-22  
 **Ten plik jest punktem startowym dla nowej sesji.** Najpierw przeczytaj go, następnie `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md` oraz `verify.py` i `tests/browser_smoke.py`. Nie opieraj się wyłącznie na podsumowaniu rozmowy — sprawdź bieżący stan repozytorium.
 
+## Najnowszy zgłoszony problem / aktualna praca
+- Użytkownik zgłosił, że monety są nieczytelne/niedziałające, amulet za 2 monety jest niezrozumiały, przedmiot sklepu znika bez jasnej intencji zakupu, a osłony są przypadkowo rozrzucone.
+- PR #60 scalony do `main` (merge `97d0b289f92f8651f4da0a8423a3832e63135b96`; browser smoke `39830353160` success): oferty sklepu wymagają pojedynczego `E` (nie kupują się przy samym kontakcie); prompt sklepu komunikuje koszt i efekt; tryb Hotline generuje formacje kamieni `U/X/L/I/T` zapewniające sensowne zasłony. Dodano browser-smoke assertions. Następny krok: zsynchronizuj 8 wspólnych plików do mirrora, porównaj blob SHA i sprawdź najnowszy workflow Pages.
+- W grze moneta to waluta runu; amulet ratunkowy blokuje jeden śmiertelny cios i zostawia 1 HP, po czym znika. W sklepie koszt 2 monet dotyczy jednorazowego amuletu — nie leczenia HP.
+
 ## Linki i architektura repo
 - Gra grywalna (GitHub Pages): https://klawiaturanumeryczna.github.io/rypt-crawler-game/
 - SSOT — prywatne/główne repo: https://github.com/Klawiaturanumeryczna/crypt-crawler
