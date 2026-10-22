@@ -1,5 +1,13 @@
 # Crypt Crawler — notatki balansu
 
+## Aktualizacja UX/ekonomii i osłon — 2026-10-22 (PR #60 scalony; CI zielone)
+
+- Zakupy w sklepie są jawne: samo wejście w zasięg oferty nie wydaje monet. Naciśnij `E` przy ofercie; koszt pozostaje 4 monety za przedmiot pasywny, 5 za aktywny, 2 za amulet ratunkowy w trybie Hotline.
+- Amulet ratunkowy blokuje dokładnie jeden śmiertelny cios, pozostawia 1 HP i zużywa się. Nie jest leczeniem; opis oferty musi to jasno komunikować.
+- Zamiast 2–4 niezależnych kamieni w trybie Hotline generowane są zwarte formacje osłon `U`, `X`, `L`, `I`, `T` (5–7 segmentów). Testy sprawdzają różne formacje i jawny zakup, ale nie potwierdzają jeszcze, że każda formacja jest taktycznie dobra — potrzebny ręczny playtest.
+- Waluta to monety bieżącego runu; przy dalszym audycie trzeba sprawdzić osobno pickup, licznik HUD, zakup i utratę waluty po śmierci.
+
+
 Stan po wdrożeniu mechanik z 2026-10-18. To wartości startowe do testów, nie wynik testów z udziałem graczy.
 
 ## Długość piętra i boss
