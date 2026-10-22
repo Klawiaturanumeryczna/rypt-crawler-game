@@ -11,7 +11,7 @@ Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historyczn
 - **Broń (PR #64):** wybór gracza ograniczono do Precyzyjnego, Klasyka i Salwy. Bazowe odstępy to odpowiednio 48, 22 i 150 klatek; Klasyk ma 77 klatek życia pocisku zamiast 115. Browser smoke run `39838967501` przeszedł, w tym test przytrzymania strzału dla Salwy.
 - **Ruch gracza (PR #65):** wybór zawiera wyłącznie Driftera i Skoczka. Drifter ma subtelnie większą bezwładność; Skoczek wykonuje dłuższy, mocniejszy sus, a odstęp startów skoku losuje się w zakresie 20–26 klatek. Wymaga potwierdzenia przez CI i ręczny playtest.
 - **Klasy przeciwników (bieżący pakiet):** Drifter, Skoczek, Taran i Biegacz mają osobne role ruchu; Taran ma bazowe 7 HP (wcześniej 5, czyli dokładnie +2). Testy automatyczne sprawdzają role i HP. Ręczny playtest nadal potrzebny.
-- **Spawn i przeszkody (bieżący pakiet):** spawn jest związany z drzwiami wejściowymi i walidowany względem osłon, przeciwników oraz źródeł ognia; odpychający wentyl usunięto z generowania, zachowania i instrukcji. CI oraz ręczny playtest tego pakietu pozostają do potwierdzenia.
+- **Spawn i przeszkody (PR #67):** spawn jest związany z drzwiami wejściowymi i walidowany względem osłon, przeciwników oraz źródeł ognia; odpychający wentyl usunięto z generowania, zachowania i instrukcji. Browser smoke run `39841816581` przeszedł; ręczny playtest pozostaje otwarty.
 - **Pozostałe:** ręczny playtest całej pętli, potwierdzenie publikacji GitHub Pages.
 - **Nowy pakiet napraw (PR #60 scalony; merge `97d0b289f92f8651f4da0a8423a3832e63135b96`):** oferty sklepu nie kupują się już samym dotknięciem — wymagają pojedynczego naciśnięcia `E`; prompt jasno pokazuje koszt i funkcję amuletu jednego trafienia. W trybie Hotline pokoje generują zwarte układy osłon `U`, `X`, `L`, `I`, `T` zamiast 2–4 losowo rozrzuconych kamieni. Dodano testy przeglądarkowe dla jawnej interakcji i różnorodności formacji. Browser smoke dla PR #60 przeszedł (run `39830353160`). Przed uznaniem za opublikowane sprawdź synchronizację mirrora i Pages.
 - **Walidacja kodu:** PR #56 (windup i zablokowany kierunek celowania) oraz PR #57 (regresja dwóch kamieni) scalone; CI dla kodu i ostatni main run były zielone. Backup `backup/pre-hotline-miami-2026-10-22` pozostaje nietknięty na `b26b5d913fb06d0f124d92a9a17d24ae031df91c`.
@@ -323,7 +323,17 @@ Compact handoff / source of operational context for new ChatGPT sessions. This f
 - PR #57 (`a0c98e496b676429b9e04535a0d0ada6a86f2531`) dodaje deterministyczny test Chromium z dwoma kolejnymi kamieniami. CI run `39824808999` jest zielony: przeciwnik dochodzi do celu w 180 klatkach bez nakładania hitboxu na kamienie.
 - Test obejmuje jeden konkretny układ przeszkód, a nie pełną przestrzeń możliwych pokojów. Ręczny playtest wieloosłonowego pathfindingu nadal jest wymagany.
 
-## Gameplay fix in progress — player movement at cover (2026-10-22)
-- Confirmed code-level issue: player collision against a rock reverted both X and Y movement even when one axis was clear, making diagonal movement sticky at cover edges.
-- Candidate fix separates safe movement axes via `resolvePlayerCoverMovement`; browser smoke adds a deterministic diagonal-collision regression case. This branch is not merged/published yet; await CI.
-- This automated case verifies movement/collision behavior only; manual feel test remains open.
+## Current gameplay state after PR #67 — 2026-10-22
+
+- PR #61 (work protocol) and gameplay PRs #63–#67 are merged into `main`.
+- PR #63: two varied cover formations attempted per Hotline room; cover radius 14; unsafe fallback removed. Browser smoke run `39837922682` passed.
+- PR #64: player weapon selection is Precyzyjny/Klasyk/Salwa only; cooldowns 48/22/150 frames, Classic projectile life 77 frames. Browser smoke run `39838967501` passed, including held-fire cooldown behavior.
+- PR #65: only Drifter and Skoczek selectable; Drifter inertia adjusted; Skoczek leap is 10 frames at 3× with randomized start interval 20–26 frames. Browser smoke run `39839665500` passed.
+- PR #66: enemy pool is Drifter, Skoczek, Taran, Biegacz plus separate boss; Taran base HP is 7 (previously 5, exactly +2). Browser smoke run `39840886624` passed.
+- PR #67: entry-side-aware safe spawn and removal of the repelling vent from generation, active behavior and guide. Browser smoke run `39841816581` passed.
+- Main merge commit after PR #67: `dbda40e9029ebca32eae390d8ac023d072dfaa64`.
+- Source files and documentation were synchronized to public mirror `Klawiaturanumeryczna/rypt-crawler-game`; content parity was checked for `index.html`, tests, `verify.py`, status/balance/decision docs and the manual playtest checklist.
+- **GitHub Pages deployment is not verified.** The available tool path could read mirror files but could not access the Pages/Actions deployment endpoint. Do not claim the site is updated until a deployment result or live page is verified.
+- **Manual gameplay playtest has not been performed.** Use `MANUAL_PLAYTEST_CHECKLIST.md` to test spawn from all door orientations, cover/pathfinding, the two player movement styles and three weapons. Automated smoke tests do not establish subjective game feel or balance.
+- Backup `backup/pre-hotline-miami-2026-10-22` remains untouched.
+- Next work: verify the mirror's GitHub Pages deployment using an accessible Actions/deployment view; then perform or collect the manual playtest. Fix only concrete issues found—do not add full A* or new obstacle mechanics without evidence.
