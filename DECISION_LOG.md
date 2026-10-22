@@ -291,3 +291,11 @@ Purpose: durable record of design decisions agreed in chat. This document record
 ## 2026-10-22 — Player collision with cover
 - Decision: when a diagonal player step intersects a rock, attempt movement along each axis separately and retain a safe axis rather than reverting both coordinates. This should make cover feel less sticky while preserving rock collision.
 - Validation required: deterministic Chromium regression, source verification, green CI on exact PR head. Manual feel is still unverified.
+
+
+## 2026-10-22 — trzy style broni i dwa style ruchu
+
+- **Decyzja:** z wyboru gracza usunąć wszystkie style strzelania poza Precyzyjnym, Klasykiem i Salwą. Pozostałe implementacje pocisków pozostają w kodzie, aby nie uszkodzić niezależnych systemów, ale nie są oferowane jako broń startowa.
+- **Decyzja:** Precyzyjny ma wolniejsze, świadome strzelanie; Klasyk ma mniejszą szybkostrzelność i zasięg; Salwa ma twardy minimalny cooldown 150 klatek, także przy ciągłym przytrzymaniu przycisku.
+- **Decyzja:** wybór ruchu gracza zawiera wyłącznie Driftera i Skoczka. Drifter ma kontrolowaną bezwładność; Skoczek ma wyraźniejszy skok z ograniczoną losowością cooldownu. Pozostałe definicje wewnętrzne nie są automatycznie usuwane, jeśli inne mechaniki nadal z nich korzystają.
+- **Status testów:** osłony PR #63 i broń PR #64 przeszły browser smoke; ręczny playtest pozostaje otwarty.
