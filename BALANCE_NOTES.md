@@ -1,13 +1,22 @@
 ## AKTUALNY STAN IMPLEMENTACJI — 2026-10-23
 
+### Iteracja zgłoszona 2026-10-23
+- Broń: **Śrutownik** zastępuje Precyzyjnego w wyborze gracza. Jeden pocisk na strzał, odstęp 6 klatek, mały losowy rozrzut ±0,13 rad; bez wielu pocisków na raz.
+- Pokój: 900×540 px, około 23% więcej powierzchni niż wcześniej.
+- Osłony: 3 próby formacji na pokój, kamienie o promieniu 18. Wciąż wymagany ręczny test jakości losowych układów.
+- Diagnostyka: ekran śmierci wskazuje źródło ostatniego trafienia. Pułapki podłogowe nie zadają obrażeń w trybie Hotline.
+- Waluta: HUD opisuje monety jako walutę bieżącego runu.
+
+
+
 Ten blok opisuje **aktualny prototyp** i ma pierwszeństwo przed starszymi notatkami poniżej. Starsze sekcje zachowano jako historię eksperymentów; ich parametry nie muszą odpowiadać kodowi.
 
 - **Pętla piętra:** 10 pokojów w siatce 5×2; pokój 10 to boss. Przed wejściem do bossa trzeba oczyścić pozostałe 9 pokojów. Po pokonaniu bossa pojawia się przejście na kolejne piętro. Losowe wczesne wyjścia są wyłączone.
 - **Walka:** jedno rzeczywiste trafienie zabija gracza, chyba że zadziała istniejący jednorazowy amulet ratunkowy albo okno uniku. Zwykli przeciwnicy giną od jednego bezpośredniego trafienia; boss wymaga wielu.
 - **Ruch gracza:** dostępne wybory to wyłącznie **Drifter** i **Skoczek**. Nie mylić z archetypami wrogów o tych samych nazwach.
-- **Strzelanie gracza:** dostępne wybory to **Precyzyjny, Klasyk, Salwa**. Wartości i opisy dawnych broni z dalszych sekcji są historyczne, chyba że potwierdza je bieżący kod.
+- **Strzelanie gracza:** dostępne wybory to **Śrutownik, Klasyk, Salwa**. Wartości i opisy dawnych broni z dalszych sekcji są historyczne, chyba że potwierdza je bieżący kod.
 - **Przeciwnicy:** Drifter, Skoczek, Taran i Biegacz oraz osobny boss. Taran ma obecnie bazowe 7 HP. Strzelec zwykły ma 18 klatek przygotowania do strzału, boss 24; kierunek ostrzału zostaje zablokowany na początku ostrzeżenia.
-- **Osłony:** kamienie blokują ruch, pociski i widoczność. Tryb Hotline próbuje tworzyć zwarte formacje U/X/L/I/T; testy automatyczne nie dowodzą, że każdy wygenerowany układ jest taktycznie dobry.
+- **Osłony:** kamienie blokują ruch, pociski i widoczność. Tryb Hotline próbuje tworzyć trzy zwarte formacje U/X/L/I/T; kamienie mają promień 18; testy automatyczne nie dowodzą, że każdy wygenerowany układ jest taktycznie dobry.
 - **Status walidacji:** testy automatyczne/Chromium pokrywają wybrane regresje. Ręczny playtest sterowania, uczciwości śmierci, pathfindingu i balansu **nie został wykonany**; nie traktować tych cech jako zatwierdzonych.
 - **Weryfikacja źródła:** przed zmianą liczb lub mechanik sprawdź aktualny `index.html` oraz `tests/browser_smoke.py`. Nie kopiuj parametrów ze starszych sekcji bez potwierdzenia w kodzie.
 
