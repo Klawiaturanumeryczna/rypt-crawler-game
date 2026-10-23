@@ -6,7 +6,7 @@ URL = os.environ.get(
     "CRYPT_CRAWLER_LIVE_URL",
     "https://klawiaturanumeryczna.github.io/rypt-crawler-game/",
 )
-DEPLOYED_HELP_MARKER = "połączoną siatkę 5×2 (10 pokojów)"
+DEPLOYED_HELP_MARKER = "przeciwnicy w promieniu 420 px"
 
 
 def main():
