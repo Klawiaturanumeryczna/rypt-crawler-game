@@ -4,7 +4,7 @@
 - Pokój grywalny powiększono z 816×484 do 900×540 (ok. +23% powierzchni); generacja próbuje 3 formacje osłon zamiast 2, z kamieniami o promieniu 18 zamiast 14.
 - Ekran śmierci podaje teraz przyczynę ostatniego trafienia; trafienia zapisują źródło (kontakt z wrogiem, pocisk, ogień lub pułapka). W trybie Hotline pułapki podłogowe nie zadają obrażeń.
 - HUD waluty nazywa ją jawnie „MONETY (RUN)”, bo resetuje się na początku każdej próby.
-- Testy Chromium muszą potwierdzić wybór nowej broni, częstotliwość pocisków i zwiększone osłony. Ręczny playtest nadal wymagany.
+- Walidacja Chromium przeszła: source runy `39972336976` i `39972499418` — sukces. PR #74 scalony do source `main` jako `6797c294`. Mirror PR #5 scalony jako `7371790f`; mirror browser smoke `39972909369` — sukces. Zgodność SHA wszystkich 9 współdzielonych plików potwierdzona. Deployment Pages nie został niezależnie sprawdzony, a ręczny playtest nadal jest wymagany.
 
 ---
 
