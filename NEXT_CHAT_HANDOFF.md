@@ -4,6 +4,7 @@
 - Przyczyna trafienia rozszerza się o pozycję/klatkę i dane kolizji (wróg, pocisk albo ogień), by zgłoszenie śmierci dało się odtworzyć.
 - Test dodany do Chromium smoke: 5 monet wpływu, 2 wydane, saldo 3 oraz etykieta `MONETY (RUN)`.
 - Zmiany są na gałęzi `fix/economy-hit-diagnostics-2026-10-23`; przed merge sprawdź Chromium smoke oraz statyczne `verify.py`. Nie deklaruj ręcznego playtestu.
+- Zmiany scalono do source `main` (PR #76, `91104220`) i publicznego mirrora (PR #7, `72425101`). Source Chromium smoke `39975586914` i mirror smoke `39976115500` przeszły; oba workflow wykonały też `verify.py`. SHA wszystkich 7 współdzielonych plików są identyczne. Nie potwierdzono niezależnie aktualnego deploymentu Pages. Ręczny playtest nadal wymagany.
 
 ---
 
