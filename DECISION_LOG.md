@@ -1,3 +1,13 @@
+## BIEŻĄCY KONTEKST IMPLEMENTACJI — 2026-10-23
+
+Ten dziennik zapisuje decyzje projektowe i historię zmian, nie gwarantuje, że każda opisana niżej decyzja nadal jest aktywna. Dla bieżącej implementacji nadrzędne są aktualny `index.html`, testy oraz blok „STATUS AKTUALNY” w `PROJECT_STATUS.md`.
+
+- Eksperyment Hotline Miami: 10 pokojów na piętrze, siatka 5×2, boss w pokoju 10; pokoje 1–9 muszą być oczyszczone. Starsze wpisy o 30 pokojach, losowych wyjściach i bossie w innych pokojach są historyczne.
+- Wybory gracza: ruch **Drifter / Skoczek**; strzelanie **Precyzyjny / Klasyk / Salwa**. Stare nazwy archetypów gracza/arsenału nie oznaczają, że te opcje są obecnie dostępne.
+- Zasada walidacji: automatyczne testy i Chromium nie zastępują ręcznego playtestu; nie zapisuj subiektywnej jakości ruchu ani balansu jako potwierdzonej bez takiego testu.
+
+---
+
 # Crypt Crawler — Decision Log
 Updated: 2026-10-19
 Purpose: durable record of design decisions agreed in chat. This document records intent; it does not mean every feature is implemented.

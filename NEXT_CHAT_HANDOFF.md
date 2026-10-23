@@ -1,3 +1,11 @@
+## Audyt dokumentacji balansu — 2026-10-23
+
+- Dodano nadrzędne bloki aktualnego stanu do `BALANCE_NOTES.md` i `DECISION_LOG.md`, aby stare notatki o 30 pokojach, losowych wyjściach i wcześniejszych wyborach nie były odczytywane jako aktualne wymagania.
+- Przy każdej zmianie balansu potwierdzaj liczby w `index.html` i testach; sekcje historyczne mogą zawierać dawne wartości.
+- Nie wykonano ręcznego playtestu. Nie uznawaj sterowania, balansu ani nawigacji za zaakceptowane.
+
+---
+
 # Crypt Crawler — handoff dla kolejnego czatu
 **Aktualizacja:** 2026-10-22  
 **Ten plik jest punktem startowym dla nowej sesji.** Najpierw przeczytaj go, następnie `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md` oraz `verify.py` i `tests/browser_smoke.py`. Nie opieraj się wyłącznie na podsumowaniu rozmowy — sprawdź bieżący stan repozytorium.
