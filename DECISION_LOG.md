@@ -1,3 +1,9 @@
+### Decyzje — iteracja taktyczna 2026-10-23
+- Powierzchnie zmieniające prędkość ruchu usunięte: gracz ma mieć stałe, przewidywalne sterowanie niezależnie od podłogi.
+- Zwykły ruch dodany obok Driftera i Skoczka; Skoczek ma wyraźnie dłuższy sus, ale dłuższy czas odnowienia.
+- Hałas strzałów to informacja taktyczna: pobliscy wrogowie badają ostatnie miejsce strzału, ale nie uzyskują widzenia przez ściany. Puls wskazuje pozycję hałasu.
+- Broń nieco spowolniona globalnie, by osłony i pozycjonowanie miały większe znaczenie.
+
 ### Decyzja z 2026-10-23: audyt ekonomii i diagnostyka śmierci
 - Jedno źródło prawdy dla salda: `changeCoins(delta)`; osobno zapisujemy sumę wpływów i wydatków runu.
 - Śmierć w trybie one-hit ma ujawniać nie tylko typ źródła, lecz także współrzędne i kontekst kolizji, o ile są dostępne.
