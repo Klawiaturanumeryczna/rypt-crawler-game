@@ -1,22 +1,32 @@
+## Iteracja walki, osłon, rozmiaru pokoju i diagnostyki trafień — 2026-10-23
+
+- Z wyboru startowego usunięto Precyzyjnego; nowa broń **Śrutownik** strzela jednym pociskiem co 6 klatek z małym losowym odchyleniem (±0,13 rad), zamiast wypluwać wielopociskową salwę.
+- Pokój grywalny powiększono z 816×484 do 900×540 (ok. +23% powierzchni); generacja próbuje 3 formacje osłon zamiast 2, z kamieniami o promieniu 18 zamiast 14.
+- Ekran śmierci podaje teraz przyczynę ostatniego trafienia; trafienia zapisują źródło (kontakt z wrogiem, pocisk, ogień lub pułapka). W trybie Hotline pułapki podłogowe nie zadają obrażeń.
+- HUD waluty nazywa ją jawnie „MONETY (RUN)”, bo resetuje się na początku każdej próby.
+- Testy Chromium muszą potwierdzić wybór nowej broni, częstotliwość pocisków i zwiększone osłony. Ręczny playtest nadal wymagany.
+
+---
+
 ## Audyt spójności notatek — 2026-10-23
 
 - W `BALANCE_NOTES.md` i `DECISION_LOG.md` dodano jawny blok bieżącego stanu, ponieważ niższe sekcje zawierają historyczne parametry niezgodne z aktualnym eksperymentem Hotline.
-- Bieżące parametry do weryfikacji w kodzie: 10 pokojów (5×2), boss w pokoju 10 po oczyszczeniu pozostałych 9; wybór ruchu Drifter/Skoczek; wybór strzelania Precyzyjny/Klasyk/Salwa.
+- Bieżące parametry do weryfikacji w kodzie: 10 pokojów (5×2), boss w pokoju 10 po oczyszczeniu pozostałych 9; wybór ruchu Drifter/Skoczek; wybór strzelania Śrutownik/Klasyk/Salwa.
 - To zmiana dokumentacyjna. Nie oznacza ręcznego playtestu ani niezależnego potwierdzenia najnowszego deploymentu GitHub Pages.
 
 ---
 
 # STATUS AKTUALNY — sprawdź ten blok przed starszymi wpisami
 
-Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historycznymi opisami poniżej.
+Aktualizacja: 2026-10-23. Ten blok ma pierwszeństwo przed starszymi, historycznymi opisami poniżej.
 
 - **Aktualna struktura:** 10 pokojów na piętro, siatka 5×2, boss w pokoju 10; trzeba oczyścić pozostałe dziewięć pokojów przed wejściem do bossa. Wzmianki o 30 pokojach/6×5 są nieaktualne dla bieżącego kodu.
 - **Tryb walki:** gracz ginie od jednego rzeczywistego trafienia (poza jednorazowym ratunkiem i wyraźnymi oknami uniku); zwykli wrogowie giną od jednego bezpośredniego trafienia; boss wymaga wielu trafień.
 - **Ostrzeżenie strzału:** zwykły strzelec 18 klatek, boss 24; kierunek celowania blokowany na początku ostrzeżenia.
 - **Sterowanie:** WASD — ruch; strzałki — strzelanie kierunkowe; mysz + LPM — strzał do kursora; M — mapa; V — wybór ruchu; B — wybór strzelania; Spacja — aktywny przedmiot; P — pauza; R — restart.
 - **AI przy osłonach:** test Chromium dla pojedynczego kamienia i dwóch kolejnych kamieni przeszedł. To nie dowodzi ogólnej poprawności nawigacji dla wszystkich układów.
-- **Osłony (PR #63):** pokoje Hotline próbują wygenerować dwie różne formacje U/X/L/I/T; promień kolizji kamienia zmniejszono z 18 do 14, a niebezpieczny układ awaryjny bez walidacji usunięto. Browser smoke run `39837922682` przeszedł. Nie wykonano ręcznego playtestu.
-- **Broń (PR #64):** wybór gracza ograniczono do Precyzyjnego, Klasyka i Salwy. Bazowe odstępy to odpowiednio 48, 22 i 150 klatek; Klasyk ma 77 klatek życia pocisku zamiast 115. Browser smoke run `39838967501` przeszedł, w tym test przytrzymania strzału dla Salwy.
+- **Osłony (PR #63):** pokoje Hotline próbują wygenerować trzy formacje U/X/L/I/T; promień kolizji kamienia wynosi 18, a niebezpieczny układ awaryjny bez walidacji usunięto. Browser smoke run `39837922682` przeszedł. Nie wykonano ręcznego playtestu.
+- **Broń (PR #64):** wybór gracza obejmuje Śrutownik, Klasyka i Salwę. Bazowe odstępy to odpowiednio 6, 22 i 150 klatek; Klasyk ma 77 klatek życia pocisku zamiast 115. Browser smoke run `39838967501` przeszedł, w tym test przytrzymania strzału dla Salwy.
 - **Ruch gracza (PR #65):** wybór zawiera wyłącznie Driftera i Skoczka. Drifter ma subtelnie większą bezwładność; Skoczek wykonuje dłuższy, mocniejszy sus, a odstęp startów skoku losuje się w zakresie 20–26 klatek. Wymaga potwierdzenia przez CI i ręczny playtest.
 - **Klasy przeciwników (bieżący pakiet):** Drifter, Skoczek, Taran i Biegacz mają osobne role ruchu; Taran ma bazowe 7 HP (wcześniej 5, czyli dokładnie +2). Testy automatyczne sprawdzają role i HP. Ręczny playtest nadal potrzebny.
 - **Spawn i przeszkody (PR #67):** spawn jest związany z drzwiami wejściowymi i walidowany względem osłon, przeciwników oraz źródeł ognia; odpychający wentyl usunięto z generowania, zachowania i instrukcji. Browser smoke run `39841816581` przeszedł; ręczny playtest pozostaje otwarty.

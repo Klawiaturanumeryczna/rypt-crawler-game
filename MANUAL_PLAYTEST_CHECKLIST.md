@@ -13,7 +13,9 @@ Gra: https://klawiaturanumeryczna.github.io/rypt-crawler-game/
 - [ ] Spróbuj podejść do oferty bez wystarczającej liczby monet: oferta pozostaje, saldo nie zmienia się.
 - [ ] Wejdź do sklepu z amuletem już w ekwipunku: sprawdź, czy oferta nie obiecuje leczenia ani nie pobiera pieniędzy za efekt, którego nie otrzymasz.
 - [ ] Sprawdź, że zwykłe monety nadal zbierają się przez kontakt i że licznik HUD od razu pokazuje nowe saldo.
-- [ ] W kilku pokojach Hotline sprawdź formacje `U`, `X`, `L`, `I`, `T`: kamienie powinny zasłaniać pociski, zostawiać przejścia dla gracza i przeciwników oraz nie blokować wyjść.
+- [ ] W kilku pokojach Hotline sprawdź trzy formacje `U`, `X`, `L`, `I`, `T`: większe kamienie powinny zasłaniać pociski, zostawiać przejścia dla gracza i przeciwników oraz nie blokować wyjść.
+- [ ] Po śmierci sprawdź, czy ekran podaje wiarygodną przyczynę ostatniego trafienia. Zgłoś przypadek, gdy opis nie pasuje do widocznego zdarzenia.
+- [ ] Potwierdź, że w trybie Hotline nie ginie się od niewidocznej pułapki podłogowej.
 
 ## 1. Start i skróty
 
@@ -40,7 +42,8 @@ Przetestuj każdy styl przez co najmniej 20–30 sekund w otwartej przestrzeni, 
 - [ ] Strzałki kierunkowe działają bez myszy.
 - [ ] Mysz + LPM pozwala łatwo trafić w pojedynczego przeciwnika.
 - [ ] Przetestuj walkę z bliska i z daleka: pociski nie znikają zbyt wcześnie i trafienia są czytelne.
-- [ ] Przetestuj **Precyzyjny** z daleka, **Klasyk** na krótkim/średnim dystansie oraz **Salwę** na średnim dystansie.
+- [ ] Przetestuj **Śrutownik**: jeden pocisk na strzał, bardzo szybki rytm (co 6 klatek), małe losowe odchylenie i brak wielu pocisków na raz.
+- [ ] Przetestuj **Klasyk** na krótkim/średnim dystansie oraz **Salwę** na średnim dystansie.
 - [ ] Sprawdź, czy trafienie przeciwnika jest widoczne, a pociski przeciwników nie zlewają się z tłem.
 - [ ] Sprawdź, czy ruch i celowanie jednocześnie nie powodują niechcianego przełączania stanów gry.
 
@@ -98,7 +101,7 @@ Dla każdej obserwacji zapisz:
 ## 8. Hotline Miami — śmiertelna walka, osłona i szybki restart
 
 - [ ] Gracz ginie od jednego rzeczywistego trafienia; sprawdź także krótki unik Skoczka/Zwinnego i jednorazowy amulet ratunkowy.
-- [ ] Zwykły przeciwnik ginie od jednego bezpośredniego trafienia każdą z trzech dostępnych broni gracza: Precyzyjny, Klasyk i Salwa; boss pozostaje osobnym wyjątkiem wielotrafieniowym.
+- [ ] Zwykły przeciwnik ginie od jednego bezpośredniego trafienia każdą z trzech dostępnych broni gracza: Śrutownik, Klasyk i Salwa; boss pozostaje osobnym wyjątkiem wielotrafieniowym.
 - [ ] Kamienie blokują ruch gracza, ruch wroga, pociski gracza, pociski wrogów i linię widzenia.
 - [ ] Wróg próbuje obejść kamień, nie zapętla się na jego krawędzi i nie zostaje na zawsze w miejscu.
 - [ ] Strzał przyciąga pobliskich wrogów do ostatniego miejsca hałasu; po utracie widoczności wróg nie strzela przez osłonę.
@@ -106,7 +109,7 @@ Dla każdej obserwacji zapisz:
 - [ ] Wciśnięcie R w trakcie gry i po śmierci od razu zaczyna nową próbę, zachowuje wybraną broń/ruch i nie pokazuje ponownie ekranów wyboru.
 - [ ] Pierwsze serce daje amulet ratunkowy, kolejne serca zamieniają się w monety; sklep sprzedaje amulet zamiast dodatkowego HP.
 - [ ] Amulet ratunkowy nie może być kupowany/podnoszony w nieskończoność bez ograniczenia; jego zużycie jest czytelne.
-- [ ] Wybór jednej z trzech broni (Precyzyjny, Klasyk, Salwa) opisuje odstęp, prędkość i zachowanie pocisku; nie sugeruje, że DPS decyduje o zabiciu zwykłego wroga.
+- [ ] Wybór jednej z trzech broni (Śrutownik, Klasyk, Salwa) opisuje odstęp, prędkość i zachowanie pocisku; nie sugeruje, że DPS decyduje o zabiciu zwykłego wroga.
 - [ ] Przejdź przez pokoje 1–9, odblokuj bossa w pokoju 10, pokonaj go i zejdź na następne piętro; stan pokojów i wyjścia musi przetrwać cofanie.
 - [ ] Zapisz każde nieoczekiwane trafienie jako krok/oczekiwane/rzeczywiste/powtarzalność/waga. Nie uznawaj samej wysokiej trudności za dowód dobrej walki.
 

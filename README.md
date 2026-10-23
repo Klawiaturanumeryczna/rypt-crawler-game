@@ -18,7 +18,7 @@ Otwórz `index.html` w nowoczesnej przeglądarce albo zagraj w [publiczny build 
 - **P** — pauza / powrót do gry.
 - **R** — natychmiastowy restart runu, zachowujący wybrany styl ruchu i strzelania.
 
-Style ruchu i strzelania wybiera się na początku runu. W aktualnym prototypie style ruchu różnią się szybkością, bezwładnością, sposobem skręcania lub krótkim oknem uniku. Nie używaj starszych instrukcji mówiących, że M zmienia ruch albo Shift jest ogólnym przyciskiem uniku — nie opisują bieżącego mapowania.
+Style ruchu i strzelania wybiera się na początku runu. Dostępne bronie to **Śrutownik** (jeden pocisk co 6 klatek z małym losowym odchyleniem), **Klasyk** i **Salwa**. Śrutownik nie wystrzeliwuje wielu pocisków naraz. W aktualnym prototypie style ruchu różnią się szybkością, bezwładnością, sposobem skręcania lub krótkim oknem uniku. Nie używaj starszych instrukcji mówiących, że M zmienia ruch albo Shift jest ogólnym przyciskiem uniku — nie opisują bieżącego mapowania.
 
 ## Pętla rozgrywki
 
@@ -32,7 +32,9 @@ Style ruchu i strzelania wybiera się na początku runu. W aktualnym prototypie 
 
 - **Gracz ginie od jednego rzeczywistego trafienia.** Krótkie okna uniku oraz istniejący jednorazowy amulet ratunkowy są wyjątkami wynikającymi z mechaniki, nie dodatkowym standardowym HP.
 - **Zwykli przeciwnicy giną od jednego bezpośredniego trafienia.** Boss jest wyjątkiem i wymaga wielu trafień.
-- Kamienie pełnią funkcję osłony: blokują ruch, pociski i linię widzenia. Strzał gracza tworzy krótkotrwałe źródło hałasu, które przyciąga pobliskich wrogów do ostatniej znanej pozycji.
+- Pokój grywalny ma 900×540 px. Generator próbuje ustawić trzy formacje osłon na pokój; większe kamienie blokują ruch, pociski i linię widzenia. Strzał gracza tworzy krótkotrwałe źródło hałasu, które przyciąga pobliskich wrogów do ostatniej znanej pozycji.
+- Ekran śmierci pokazuje źródło ostatniego trafienia, aby ułatwić diagnozę pozornie niewidzialnych zagrożeń. Pułapki podłogowe nie zadają obrażeń w trybie Hotline.
+- Monety są walutą bieżącego runu; HUD oznacza je jako „MONETY (RUN)”.
 - Strzelec musi mieć czystą linię widzenia. Przed strzałem pokazuje linię ostrzegawczą; obecny eksperyment używa 18 klatek przygotowania dla zwykłego strzelca i 24 dla bossa. Kierunek celowania jest blokowany na początku ostrzeżenia.
 - Przeciwnicy próbują obchodzić kamienie. Testy automatyczne obejmują pojedynczą osłonę i jeden scenariusz z dwoma kamieniami, ale nie dowodzą poprawnego zachowania w każdym układzie.
 - Ręczny test nadal musi ocenić czytelność ostrzeżeń, uczciwość śmierci, płynność ruchu i ogólną frajdę.

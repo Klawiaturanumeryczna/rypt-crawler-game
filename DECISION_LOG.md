@@ -1,9 +1,16 @@
 ## BIEŻĄCY KONTEKST IMPLEMENTACJI — 2026-10-23
 
+- Decyzja z 2026-10-23: **Śrutownik** zastępuje Precyzyjnego w dostępnym arsenale; strzela pojedynczym pociskiem co 6 klatek, z losowym odchyleniem ±0,13 rad. Nie emituje salwy wielu pocisków.
+- Pokój grywalny zwiększono do 900×540 px; osłony to 3 formacje na pokój z promieniem kamieni 18.
+- Przyczyna trafienia musi być widoczna na ekranie śmierci, by diagnozować zgłoszenia o „niewidzialnym” zagrożeniu. Pułapki podłogowe nie zadają obrażeń w trybie Hotline.
+- Monety są walutą runu, nie trwałą: HUD pokazuje „MONETY (RUN)”.
+
+
+
 Ten dziennik zapisuje decyzje projektowe i historię zmian, nie gwarantuje, że każda opisana niżej decyzja nadal jest aktywna. Dla bieżącej implementacji nadrzędne są aktualny `index.html`, testy oraz blok „STATUS AKTUALNY” w `PROJECT_STATUS.md`.
 
 - Eksperyment Hotline Miami: 10 pokojów na piętrze, siatka 5×2, boss w pokoju 10; pokoje 1–9 muszą być oczyszczone. Starsze wpisy o 30 pokojach, losowych wyjściach i bossie w innych pokojach są historyczne.
-- Wybory gracza: ruch **Drifter / Skoczek**; strzelanie **Precyzyjny / Klasyk / Salwa**. Stare nazwy archetypów gracza/arsenału nie oznaczają, że te opcje są obecnie dostępne.
+- Wybory gracza: ruch **Drifter / Skoczek**; strzelanie **Śrutownik / Klasyk / Salwa**. Stare nazwy archetypów gracza/arsenału nie oznaczają, że te opcje są obecnie dostępne.
 - Zasada walidacji: automatyczne testy i Chromium nie zastępują ręcznego playtestu; nie zapisuj subiektywnej jakości ruchu ani balansu jako potwierdzonej bez takiego testu.
 
 ---

@@ -1,3 +1,13 @@
+## Najnowsza iteracja rozgrywki — 2026-10-23
+
+- Nowa broń startowa **Śrutownik** zastępuje Precyzyjnego: 1 pocisk na strzał, odstęp 6 klatek, losowe odchylenie ±0,13 rad. Dostępne bronie: Śrutownik, Klasyk, Salwa.
+- Pokój ma 900×540 px (wcześniej 816×484; ok. +23% powierzchni). Generacja Hotline próbuje 3 formacje osłon; kamienie mają promień 18.
+- Ekran śmierci pokazuje przyczynę ostatniego trafienia. Sprawdzaj ją przy zgłoszeniach „niewidzialnych” śmierci; w Hotline pułapki podłogowe nie zadają obrażeń.
+- HUD waluty wyświetla „MONETY (RUN)”; waluta jest resetowana przy rozpoczęciu nowej próby, nie jest walutą trwałą.
+- Zmiany są na gałęzi `fix/scatter-cover-room-coins` i muszą przejść Chromium smoke, zanim trafią do `main` oraz publicznego mirrora. Nie deklaruj ręcznego playtestu.
+
+---
+
 ## Audyt dokumentacji balansu — 2026-10-23
 
 - Dodano nadrzędne bloki aktualnego stanu do `BALANCE_NOTES.md` i `DECISION_LOG.md`, aby stare notatki o 30 pokojach, losowych wyjściach i wcześniejszych wyborach nie były odczytywane jako aktualne wymagania.
@@ -7,7 +17,7 @@
 ---
 
 # Crypt Crawler — handoff dla kolejnego czatu
-**Aktualizacja:** 2026-10-22  
+**Aktualizacja:** 2026-10-23  
 **Ten plik jest punktem startowym dla nowej sesji.** Najpierw przeczytaj go, następnie `PROJECT_STATUS.md`, `DECISION_LOG.md`, `BALANCE_NOTES.md` oraz `verify.py` i `tests/browser_smoke.py`. Nie opieraj się wyłącznie na podsumowaniu rozmowy — sprawdź bieżący stan repozytorium.
 
 ## Najnowszy zgłoszony problem / aktualna praca
