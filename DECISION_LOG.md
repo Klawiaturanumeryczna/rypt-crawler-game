@@ -1,3 +1,8 @@
+### Decyzja z 2026-10-23: audyt ekonomii i diagnostyka śmierci
+- Jedno źródło prawdy dla salda: `changeCoins(delta)`; osobno zapisujemy sumę wpływów i wydatków runu.
+- Śmierć w trybie one-hit ma ujawniać nie tylko typ źródła, lecz także współrzędne i kontekst kolizji, o ile są dostępne.
+- Jeśli raport wskazuje dystans większy niż suma promieni, to jest konkretny błąd kolizji do naprawienia; nie zgadujemy przyczyny bez danych.
+
 ## BIEŻĄCY KONTEKST IMPLEMENTACJI — 2026-10-23
 
 - Decyzja z 2026-10-23: **Śrutownik** zastępuje Precyzyjnego w dostępnym arsenale; strzela pojedynczym pociskiem co 6 klatek, z losowym odchyleniem ±0,13 rad. Nie emituje salwy wielu pocisków.
