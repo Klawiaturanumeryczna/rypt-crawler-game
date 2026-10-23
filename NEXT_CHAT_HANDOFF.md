@@ -1,3 +1,12 @@
+## Kontynuacja: monety i „niewidzialne” zgony — 2026-10-23
+
+- Monety są teraz księgowane przez `changeCoins(delta)`; `coinsEarned` i `coinsSpent` są resetowane przy nowym runie i zapisywane w podsumowaniu śmierci. Oczekiwany niezmiennik: saldo końcowe = zebrano − wydano.
+- Przyczyna trafienia rozszerza się o pozycję/klatkę i dane kolizji (wróg, pocisk albo ogień), by zgłoszenie śmierci dało się odtworzyć.
+- Test dodany do Chromium smoke: 5 monet wpływu, 2 wydane, saldo 3 oraz etykieta `MONETY (RUN)`.
+- Zmiany są na gałęzi `fix/economy-hit-diagnostics-2026-10-23`; przed merge sprawdź Chromium smoke oraz statyczne `verify.py`. Nie deklaruj ręcznego playtestu.
+
+---
+
 ## Najnowsza iteracja rozgrywki — 2026-10-23
 
 - Nowa broń startowa **Śrutownik** zastępuje Precyzyjnego: 1 pocisk na strzał, odstęp 6 klatek, losowe odchylenie ±0,13 rad. Dostępne bronie: Śrutownik, Klasyk, Salwa.
