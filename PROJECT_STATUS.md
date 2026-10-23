@@ -1,3 +1,12 @@
+## Walidacja i publikacja — 2026-10-23
+
+- Source PR #78 scalony do `main` jako `ab4917d7`; browser smoke + `verify.py` przeszły w runie `39982364718`.
+- Publiczny mirror PR #9 scalony jako `b3b129ac`; browser smoke + `verify.py` przeszły w runie `39982996642`.
+- Deployment GitHub Pages zakończył się sukcesem (`39984014697`), a live Pages smoke przeszedł na unikalnym markerze nowego builda (`39984015049`).
+- Ręczny playtest sterowania i ocena taktycznej jakości losowych układów nadal wymagają sprawdzenia przez człowieka.
+
+---
+
 ## Aktualna iteracja taktyczna — 2026-10-23
 
 - Canvas zwiększony do 1200×760; pokój zajmuje 1152×712 z równym, cienkim marginesem. Mapa piętra skaluje się do nowego canvasa.
