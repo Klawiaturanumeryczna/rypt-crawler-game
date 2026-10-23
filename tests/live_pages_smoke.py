@@ -52,8 +52,9 @@ def main():
             # Exercise the real published startup flow: title -> weapon -> movement -> gameplay.
             page.locator("#startBtn").click()
             expect(page.locator("#overlayTitle")).to_have_text("WYBIERZ STYL STRZELANIA")
-            page.locator("button.fire-precision").click()
+            page.locator("button.fire-scatter").click()
             expect(page.locator("#overlayTitle")).to_have_text("WYBIERZ STYL RUCHU")
+            expect(page.locator("#moveChoices .moveChoice")).to_have_count(3)
             page.locator("button.move-drifter").click()
             expect(page.locator("#overlay")).to_be_hidden()
             expect(page.locator("#floor")).to_have_text("1")
