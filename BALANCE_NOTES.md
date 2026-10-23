@@ -1,3 +1,8 @@
+### Iteracja ekonomii i diagnostyki — 2026-10-23
+- Każda zmiana salda korzysta z `changeCoins(delta)`; run zapisuje sumę zebranych i wydanych monet, a saldo ma się z nimi zgadzać.
+- Ekran śmierci zawiera przyczynę, pozycję gracza, numer klatki i dane kolizji dostępne dla danego źródła obrażeń.
+- Wymagane testy: dodatnia i ujemna transakcja, natychmiastowy HUD, równanie `saldo = zebrano - wydano`, szczegóły trafienia.
+
 ## AKTUALNY STAN IMPLEMENTACJI — 2026-10-23
 
 ### Iteracja zgłoszona 2026-10-23
