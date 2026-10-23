@@ -1,3 +1,12 @@
+## Walidacja i publikacja — 2026-10-23
+
+- Source PR #78 scalony do `main` jako `ab4917d7`; browser smoke + `verify.py` przeszły w runie `39982364718`.
+- Publiczny mirror PR #9 scalony jako `b3b129ac`; browser smoke + `verify.py` przeszły w runie `39982996642`.
+- Deployment GitHub Pages zakończył się sukcesem (`39984014697`), a live Pages smoke przeszedł na unikalnym markerze nowego builda (`39984015049`).
+- Ręczny playtest sterowania i ocena taktycznej jakości losowych układów nadal wymagają sprawdzenia przez człowieka.
+
+---
+
 ## Najnowsze zmiany — 2026-10-23
 
 Gałąź robocza: `feat/tactical-layout-movement-audio-2026-10-23`.
