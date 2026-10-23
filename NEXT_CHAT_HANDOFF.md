@@ -4,7 +4,7 @@
 - Pokój ma 900×540 px (wcześniej 816×484; ok. +23% powierzchni). Generacja Hotline próbuje 3 formacje osłon; kamienie mają promień 18.
 - Ekran śmierci pokazuje przyczynę ostatniego trafienia. Sprawdzaj ją przy zgłoszeniach „niewidzialnych” śmierci; w Hotline pułapki podłogowe nie zadają obrażeń.
 - HUD waluty wyświetla „MONETY (RUN)”; waluta jest resetowana przy rozpoczęciu nowej próby, nie jest walutą trwałą.
-- Zmiany są na gałęzi `fix/scatter-cover-room-coins` i muszą przejść Chromium smoke, zanim trafią do `main` oraz publicznego mirrora. Nie deklaruj ręcznego playtestu.
+- Zmiany scalono: source PR #74 (`6797c294`), mirror PR #5 (`7371790f`). Source Chromium runy `39972336976` / `39972499418` oraz mirror run `39972909369` przeszły. Wszystkie 9 współdzielonych plików mają zgodne blob SHA. Nie potwierdzono niezależnie najnowszego deploymentu Pages; ręczny playtest pozostaje otwarty.
 
 ---
 
