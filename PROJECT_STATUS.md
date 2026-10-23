@@ -1,3 +1,11 @@
+## Audyt spójności notatek — 2026-10-23
+
+- W `BALANCE_NOTES.md` i `DECISION_LOG.md` dodano jawny blok bieżącego stanu, ponieważ niższe sekcje zawierają historyczne parametry niezgodne z aktualnym eksperymentem Hotline.
+- Bieżące parametry do weryfikacji w kodzie: 10 pokojów (5×2), boss w pokoju 10 po oczyszczeniu pozostałych 9; wybór ruchu Drifter/Skoczek; wybór strzelania Precyzyjny/Klasyk/Salwa.
+- To zmiana dokumentacyjna. Nie oznacza ręcznego playtestu ani niezależnego potwierdzenia najnowszego deploymentu GitHub Pages.
+
+---
+
 # STATUS AKTUALNY — sprawdź ten blok przed starszymi wpisami
 
 Aktualizacja: 2026-10-22. Ten blok ma pierwszeństwo przed starszymi, historycznymi opisami poniżej.
