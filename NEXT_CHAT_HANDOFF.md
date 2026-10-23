@@ -1,3 +1,16 @@
+## Najnowsze zmiany — 2026-10-23
+
+Gałąź robocza: `feat/tactical-layout-movement-audio-2026-10-23`.
+
+- Dopasowanie mapy: canvas 1200×760, pokój 1152×712, pełna mapa skaluje się do rozmiaru canvasa; shell może mieć do 1200 px.
+- Większe osłony: promień 30, większe odstępy w formacjach, losowo 4–7 kamieni w wariancie bez formacji.
+- Usunięto wpływ podłoża na prędkość i generowanie piasku/lodu; dziury nie są już losowane. Źródła ognia pozostają rzadkim zagrożeniem.
+- Dodano Zwykły (powolny ruch bez specjalnych mechanik), zwiększono skok Skoczka do 4.1×/12 klatek, odnowienie 28–35 klatek.
+- Bronie nieco osłabione (cooldown ×1.12, prędkość pocisków ×0.95). Hałas po strzale: promień 420, czas 105 klatek, puls wizualny.
+- Przed merge trzeba potwierdzić testy; ręczny playtest nadal wymagany.
+
+---
+
 ## Kontynuacja: monety i „niewidzialne” zgony — 2026-10-23
 
 - Monety są teraz księgowane przez `changeCoins(delta)`; `coinsEarned` i `coinsSpent` są resetowane przy nowym runie i zapisywane w podsumowaniu śmierci. Oczekiwany niezmiennik: saldo końcowe = zebrano − wydano.
