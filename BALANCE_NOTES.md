@@ -1,3 +1,10 @@
+### Aktualny balans taktyczny — 2026-10-23
+- Bazowe odstępy broni: mnożnik ×1.12, minimalnie 7 klatek; prędkość pocisków ×0.95.
+- Skoczek: 12 klatek susów przy ×4.1 prędkości, losowe odnowienie 28–35 klatek.
+- Zwykły: prędkość 2.8, ruch natychmiastowy bez zrywu/bezwładności.
+- Kamienie osłon: promień 30; losowe układy bez formacji tworzą 4–7 większych kamieni. Trzy formacje próbują wygenerować taktyczne osłony w pokoju.
+- Nie generujemy pól piasku/lodu ani dziur spowalniających gracza. Hałas strzału: promień 420, 105 klatek.
+
 ### Iteracja ekonomii i diagnostyki — 2026-10-23
 - Każda zmiana salda korzysta z `changeCoins(delta)`; run zapisuje sumę zebranych i wydanych monet, a saldo ma się z nimi zgadzać.
 - Ekran śmierci zawiera przyczynę, pozycję gracza, numer klatki i dane kolizji dostępne dla danego źródła obrażeń.

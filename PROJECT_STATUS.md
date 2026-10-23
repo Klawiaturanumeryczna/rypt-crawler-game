@@ -1,3 +1,14 @@
+## Aktualna iteracja taktyczna — 2026-10-23
+
+- Canvas zwiększony do 1200×760; pokój zajmuje 1152×712 z równym, cienkim marginesem. Mapa piętra skaluje się do nowego canvasa.
+- Osłony: trzy próby formacji na pokój; kamienie w formacjach mają promień 30, a losowe pokoje generują 4–7 większych kamieni. Piasek/lód/pułapki terenowe nie generują się jako modyfikatory prędkości.
+- Style ruchu dostępne graczowi: Zwykły (2.8, bez mechaniki specjalnej), Drifter (bezwładność), Skoczek (4.1× prędkości przez 12 klatek, odnowienie 28–35 klatek).
+- Wszystkie bronie otrzymały ok. 12% dłuższy bazowy odstęp i 5% mniejszą prędkość pocisków; Śrutownik ma minimum 7 klatek między strzałami.
+- Strzał tworzy hałas na 420 px przez 105 klatek; puls wizualny oznacza miejsce strzału. Wrogowie poza widocznością badają ostatni hałas.
+- Wymagane: Chromium smoke i statyczne `verify.py`. Ręczny playtest oraz niezależne sprawdzenie GitHub Pages nadal otwarte.
+
+---
+
 ## Dalsza iteracja: bilans monet i diagnostyka trafień — 2026-10-23
 
 - Wszystkie zmiany salda runu przechodzą przez `changeCoins(delta)`, który prowadzi liczniki `coinsEarned` i `coinsSpent`; ekran śmierci pokazuje saldo, sumę wpływów i wydatków.
