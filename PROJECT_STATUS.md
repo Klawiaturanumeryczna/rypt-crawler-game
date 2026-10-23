@@ -4,6 +4,7 @@
 - Zebrane/wydane monety muszą spełniać `saldo = zebrano - wydano`. HUD ma oznaczenie `MONETY (RUN)` już w początkowym ekranie, a nie dopiero po uruchomieniu runu.
 - Przy śmiertelnym trafieniu zapisujemy klatkę i pozycję gracza oraz — zależnie od źródła — pozycję/radius wroga, pocisku albo źródła ognia. Ekran śmierci pokazuje dane potrzebne do odróżnienia faktycznej kolizji od pozornie niewidzialnego trafienia.
 - Smoke test sprawdza księgowanie +5 / −2, etykietę HUD i obecność szczegółowej diagnostyki. Ręczny playtest nadal wymagany.
+- Source PR #76 scalony do `main` jako `91104220`; Chromium smoke (run `39975586914`) oraz `verify.py` zakończyły się sukcesem. Mirror PR #7 scalony jako `72425101`; jego Chromium smoke (run `39976115500`) i `verify.py` również przeszły. Siedem współdzielonych plików ma identyczne blob SHA w source i mirror. Publicznego deploymentu Pages nie udało się niezależnie potwierdzić; ręczny playtest nadal wymagany.
 
 ---
 
