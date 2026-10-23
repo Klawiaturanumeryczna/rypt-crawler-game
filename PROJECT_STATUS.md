@@ -1,3 +1,12 @@
+## Dalsza iteracja: bilans monet i diagnostyka trafień — 2026-10-23
+
+- Wszystkie zmiany salda runu przechodzą przez `changeCoins(delta)`, który prowadzi liczniki `coinsEarned` i `coinsSpent`; ekran śmierci pokazuje saldo, sumę wpływów i wydatków.
+- Zebrane/wydane monety muszą spełniać `saldo = zebrano - wydano`. HUD ma oznaczenie `MONETY (RUN)` już w początkowym ekranie, a nie dopiero po uruchomieniu runu.
+- Przy śmiertelnym trafieniu zapisujemy klatkę i pozycję gracza oraz — zależnie od źródła — pozycję/radius wroga, pocisku albo źródła ognia. Ekran śmierci pokazuje dane potrzebne do odróżnienia faktycznej kolizji od pozornie niewidzialnego trafienia.
+- Smoke test sprawdza księgowanie +5 / −2, etykietę HUD i obecność szczegółowej diagnostyki. Ręczny playtest nadal wymagany.
+
+---
+
 ## Iteracja walki, osłon, rozmiaru pokoju i diagnostyki trafień — 2026-10-23
 
 - Z wyboru startowego usunięto Precyzyjnego; nowa broń **Śrutownik** strzela jednym pociskiem co 6 klatek z małym losowym odchyleniem (±0,13 rad), zamiast wypluwać wielopociskową salwę.
