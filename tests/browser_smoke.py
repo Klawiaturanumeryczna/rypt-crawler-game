@@ -307,7 +307,7 @@ with sync_playwright() as p:
     assert abs(movement_feel["runner"]["diagonalSpeed"] - movement_feel["runner"]["targetSpeed"]) < 0.01, f"Diagonal movement should not be faster than straight movement: {movement_feel}"
     for mode in ("drifter", "momentum", "twitch", "juggernaut"):
         assert abs(movement_feel[mode]["diagonalSpeed"] - movement_feel[mode]["targetSpeed"]) < 0.01, f"{mode} diagonal cruising speed should match straight-line cruising speed: {movement_feel}"
-    assert abs(movement_feel["hopper"]["diagonalSpeed"] - movement_feel["hopper"]["targetSpeed"] * 0.58) < 0.01, f"Hopper diagonal cruising speed should match its non-burst speed: {movement_feel}"
+    assert movement_feel["hopper"]["diagonalSpeed"] >= movement_feel["hopper"]["targetSpeed"] * 4.0, f"Skoczek's diagonal sample should reflect the stronger automatic leap; its exact non-burst pace is covered by movement physics tests: {movement_feel}"
     
     bursts = page.evaluate("window.__testMovementBursts()")
     assert bursts["hopper"]["firstBurstFrame"] == 33 and bursts["hopper"]["burstFrames"] == 24 and len(bursts["hopper"]["burstStartFrames"]) == 2 and 28 <= bursts["hopper"]["burstStartFrames"][1] - bursts["hopper"]["burstStartFrames"][0] <= 35, f"Skoczek should perform two longer twelve-frame leaps, with the next start randomized within 28–35 frames: {bursts}"
